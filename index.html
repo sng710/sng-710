@@ -197,6 +197,136 @@ img { max-width:100%; display:block; }
 
 @media(max-width:720px){.lightbox-card{width:96vw;padding:18px;}.lightbox-top{grid-template-columns:1fr;text-align:center}.lightbox-title{text-align:center}.lightbox-place{text-align:center}.lightbox-details{justify-content:center}.lightbox-img{width:min(58vw,230px)}}
 
+
+
+/* v26 — cleaner popup layout: fewer duplicate chips, better links, softer proportions */
+.lightbox-card{
+  width:min(94vw,1120px);
+  max-height:88vh;
+  padding:clamp(20px,2.25vw,32px);
+  border-radius:28px;
+}
+.lightbox-top{
+  grid-template-columns:minmax(240px,320px) minmax(0,1fr);
+  gap:clamp(18px,2.4vw,32px);
+  align-items:start;
+}
+.lightbox-top > div:last-child{
+  min-width:0;
+  padding-inline-end:74px;
+}
+.lightbox-title{
+  font-size:clamp(24px,2.75vw,42px);
+  line-height:1.12;
+  font-weight:360;
+  letter-spacing:-.025em;
+}
+.lightbox-place{
+  margin-top:8px;
+  padding:6px 12px;
+  font-size:14px;
+  background:rgba(255,255,255,.105);
+}
+.lightbox-details{display:none !important;}
+.lightbox-img{
+  width:min(28vw,280px);
+  max-width:280px;
+  margin:0 auto 14px;
+}
+.lightbox-gallery{
+  grid-template-columns:repeat(auto-fill,minmax(82px,1fr));
+  gap:9px;
+  margin-top:14px;
+}
+.lightbox-gallery img{border-radius:14px;}
+.lightbox-text{
+  margin-top:14px;
+  font-size:clamp(15px,1.13vw,17px);
+  line-height:1.68;
+}
+.lightbox-section{
+  margin-top:16px;
+  padding-top:13px;
+}
+.lightbox-section-title{
+  margin-bottom:9px;
+  font-size:clamp(17px,1.35vw,21px);
+}
+.lightbox-facts{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.lightbox-facts li{
+  padding:8px 11px;
+  border-radius:14px;
+  background:rgba(255,255,255,.07);
+}
+.lightbox-links{
+  margin-top:18px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;
+  background:rgba(255,255,255,.055);
+}
+.lightbox-links .lightbox-section-title{
+  margin:0 0 11px;
+}
+.lightbox-links-list{
+  grid-template-columns:repeat(auto-fit,minmax(138px,1fr));
+  gap:8px;
+  max-height:220px;
+  overflow:auto;
+  padding:2px 2px 4px;
+  scrollbar-width:thin;
+}
+.lightbox-link-item a{
+  min-height:42px;
+  padding:9px 10px;
+  border-radius:13px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  background:rgba(255,255,255,.078);
+}
+.lightbox-link-title{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.25;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.lightbox-link-source{
+  display:block;
+  margin-top:2px;
+  direction:ltr;
+  text-align:right;
+  font-size:11px;
+  color:rgba(255,255,255,.66);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.lightbox-link-arrow{font-size:15px;}
+.lightbox-close{
+  width:56px;
+  height:56px;
+  font-size:32px;
+}
+.lightbox-close::before{inset:-10px;}
+@media(max-width:720px){
+  .lightbox-card{width:96vw;max-height:92vh;padding:18px;}
+  .lightbox-top{grid-template-columns:1fr;}
+  .lightbox-top > div:last-child{padding-inline-end:0;}
+  .lightbox-title{text-align:center;font-size:clamp(24px,7.6vw,34px);}
+  .lightbox-place{text-align:center;}
+  .lightbox-img{width:min(58vw,230px);}
+  .lightbox-facts{grid-template-columns:1fr;}
+  .lightbox-links-list{grid-template-columns:repeat(auto-fit,minmax(126px,1fr));max-height:260px;}
+  .lightbox-close{width:52px;height:52px;font-size:30px;}
+}
+
 </style>
 </head>
 <body>
@@ -316,9 +446,26 @@ function detailChip(label, value) {
   return `<span class="lightbox-chip">${esc(label)}: ${esc(value)}</span>`;
 }
 function cleanFactLine(line) {
-  return String(line || '')
+  const clean = String(line || '')
     .replace(/^קורות חיים\s*$/,'')
     .replace(/^על אודות האתר\s*$/,'')
+    .trim();
+  return isRedundantMemorialLine(clean) ? '' : clean;
+}
+
+function isRedundantMemorialLine(line) {
+  const clean = String(line || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return true;
+  return /^חלל(?:ת)? פעול(?:ת|ות) איבה$/.test(clean)
+    || /^ב[-\s]*0?7[\/.]10[\/.]2023$/.test(clean)
+    || /^בכ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד\b.*0?7[\/.]10[\/.]2023.*$/.test(clean);
+}
+function cleanRedundantMemorialText(text) {
+  return String(text || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !isRedundantMemorialLine(line))
+    .join('\n')
     .trim();
 }
 function formatFactLine(line) {
@@ -330,7 +477,7 @@ function formatFactLine(line) {
   return `<li>${esc(clean)}</li>`;
 }
 function splitDescription(person) {
-  const raw = stripLeadingName(person.text || person.summary || '', person);
+  const raw = cleanRedundantMemorialText(stripLeadingName(person.text || person.summary || '', person));
   if (!raw) return {facts: [], life: [], memory: []};
   const lines = raw.split('\n').map(l => cleanFactLine(l)).filter(Boolean);
   const facts = [];
@@ -386,23 +533,62 @@ function isBlockedLink(url) {
     return true;
   }
 }
+
+function linkSourceName(url) {
+  try {
+    const host = new URL(url, window.location.href).hostname.toLowerCase().replace(/^www\./, '');
+    if (host.includes('facebook.com')) return 'Facebook';
+    if (host.includes('instagram.com')) return 'Instagram';
+    if (host.includes('youtube.com') || host.includes('youtu.be')) return 'YouTube';
+    if (host.includes('tiktok.com')) return 'TikTok';
+    if (host.includes('ynet.co.il')) return 'Ynet';
+    if (host.includes('mako.co.il')) return 'Mako';
+    if (host.includes('kan.org.il') || host.includes('710360.kan.org.il')) return 'כאן 11';
+    if (host.includes('izkor.gov.il')) return 'יזכור';
+    if (host.includes('laad.btl.gov.il')) return 'לאד';
+    if (host.includes('president.gov.il')) return 'בית הנשיא';
+    if (host.includes('kibbutz.org.il')) return 'התנועה הקיבוצית';
+    if (host.includes('davar1.co.il')) return 'דבר';
+    if (host.includes('globes.co.il')) return 'גלובס';
+    if (host.includes('israelhayom.co.il')) return 'ישראל היום';
+    if (host.includes('maariv.co.il')) return 'מעריב';
+    if (host.includes('haaretz.co.il')) return 'הארץ';
+    if (host.includes('remember.bio')) return 'Remember.bio';
+    if (host.includes('memoriz.plus')) return 'Memoriz';
+    if (host.includes('noflim.org.il') || host.includes('noflim.davar1.co.il')) return 'נופלים';
+    return host;
+  } catch (err) {
+    return 'קישור';
+  }
+}
+function linkSourceHost(url) {
+  try { return new URL(url, window.location.href).hostname.toLowerCase().replace(/^www\./, ''); }
+  catch (err) { return ''; }
+}
 function renderPersonLinks(links) {
   if (!Array.isArray(links) || !links.length) return '';
   const seen = new Set();
-  const items = links
-    .filter(link => link && link.url && !isBlockedLink(link.url))
-    .map(link => {
-      const cleanUrl = String(link.url).split('#:~:text=')[0];
-      const key = cleanUrl.toLowerCase();
-      if (seen.has(key)) return '';
-      seen.add(key);
-      const title = link.title || cleanUrl;
-      return `<li class="lightbox-link-item"><a href="${esc(cleanUrl)}" target="_blank" rel="noopener noreferrer"><span>${esc(title)}</span><span class="lightbox-link-arrow" aria-hidden="true">↗</span></a></li>`;
-    })
-    .filter(Boolean)
-    .join('');
-  if (!items) return '';
-  return `<section class="lightbox-section lightbox-links"><h3 class="lightbox-section-title">קישורים וכתבות</h3><ul class="lightbox-links-list">${items}</ul></section>`;
+  const prepared = [];
+  for (const link of links) {
+    if (!link || !link.url || isBlockedLink(link.url)) continue;
+    const cleanUrl = String(link.url).split('#:~:text=')[0];
+    const key = cleanUrl.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    prepared.push({ url: cleanUrl, source: linkSourceName(cleanUrl), host: linkSourceHost(cleanUrl), title: link.title || '' });
+  }
+  if (!prepared.length) return '';
+  const totals = prepared.reduce((acc, item) => {
+    acc[item.source] = (acc[item.source] || 0) + 1;
+    return acc;
+  }, {});
+  const counters = {};
+  const items = prepared.map(item => {
+    counters[item.source] = (counters[item.source] || 0) + 1;
+    const displayTitle = totals[item.source] > 1 ? `${item.source} ${counters[item.source]}` : item.source;
+    return `<li class="lightbox-link-item"><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"><span><span class="lightbox-link-title">${esc(displayTitle)}</span><span class="lightbox-link-source">${esc(item.host)}</span></span><span class="lightbox-link-arrow" aria-hidden="true">↗</span></a></li>`;
+  }).join('');
+  return `<section class="lightbox-section lightbox-links"><h3 class="lightbox-section-title">קישורים וכתבות <span style="font-weight:400;color:rgba(255,255,255,.68);font-size:.82em;">(${prepared.length})</span></h3><ul class="lightbox-links-list">${items}</ul></section>`;
 }
 const personLinksCache = new Map();
 async function loadPersonLinks(person) {
@@ -430,9 +616,8 @@ async function openLightbox(person) {
   lightboxImg.innerHTML = imgMarkup(person);
   lightboxTitle.textContent = person.name || '';
   lightboxPlace.textContent = person.place || '';
-  const d = person.details || {};
-  const chips = [d.ageText, d.residence && 'מקום מגורים: ' + d.residence, d.eventPlace && 'מקום אירוע: ' + d.eventPlace, d.burialPlace && 'מקום קבורה: ' + d.burialPlace].filter(Boolean);
-  lightboxDetails.innerHTML = chips.map(x => `<span class="lightbox-chip">${esc(x)}</span>`).join('');
+  // Top detail chips were removed to avoid duplicating the same age/place facts shown below.
+  lightboxDetails.innerHTML = '';
   const rawText = person.text || person.summary || '';
   const structuredText = buildStructuredText(person, rawText);
   lightboxText.innerHTML = structuredText;
