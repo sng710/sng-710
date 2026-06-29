@@ -10,8 +10,8 @@
   --leaf-landscape: url("assets/bg/leaf-landscape.webp");
   --leaf-portrait: url("assets/bg/leaf-portrait.webp");
   --white: #fbfdff;
-  --paper-blue: #2e427a;
-  --paper-deep: #1d315e;
+  --paper-blue: #283b6f;
+  --paper-deep: #182a52;
   --line: rgba(0,213,223,.72);
   --font: "Heebo", "Assistant", "Noto Sans Hebrew", Arial, sans-serif;
   --stroke: rgba(248,251,255,.82);
@@ -46,20 +46,20 @@ img { max-width:100%; display:block; }
 .pdf-bg {
   position:relative; isolation:isolate; overflow:hidden;
   background:
-    radial-gradient(circle at 18% 45%, rgba(255,255,255,.14), transparent 24%),
-    linear-gradient(90deg, rgba(27,53,102,.50) 0%, rgba(46,66,122,.74) 36%, rgba(46,66,122,.94) 100%),
+    radial-gradient(circle at 18% 45%, rgba(255,255,255,.10), transparent 24%),
+    linear-gradient(90deg, rgba(18,42,88,.58) 0%, rgba(40,59,111,.80) 36%, rgba(40,59,111,.96) 100%),
     var(--leaf-landscape) left center / cover no-repeat,
     var(--paper-blue);
 }
 .pdf-bg::before {
   content:""; position:absolute; inset:0; z-index:0;
   background: var(--leaf-landscape) left center / cover no-repeat;
-  opacity:.28; mix-blend-mode:screen; filter:contrast(1.02) brightness(1.00);
+  opacity:.23; mix-blend-mode:screen; filter:contrast(1.03) brightness(.94);
   pointer-events:none;
 }
 .pdf-bg::after {
   content:""; position:absolute; inset:0; z-index:0;
-  background:linear-gradient(90deg,rgba(11,34,72,.36) 0%, rgba(46,66,122,.22) 42%, rgba(46,66,122,.39) 100%);
+  background:linear-gradient(90deg,rgba(7,24,55,.45) 0%, rgba(40,59,111,.30) 42%, rgba(40,59,111,.48) 100%);
   pointer-events:none;
 }
 .pdf-bg>* { position:relative; z-index:1; }
