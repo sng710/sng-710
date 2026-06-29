@@ -407,7 +407,7 @@ function renderPersonLinks(links) {
 const personLinksCache = new Map();
 async function loadPersonLinks(person) {
   const inlineLinks = Array.isArray(person.links) ? person.links : [];
-  const file = person.linksFile || person.linksPath || '';
+  const file = person.linksFile || person.linksPath || (person.id ? `assets/people/${person.id}/links.json` : '');
   if (!file) return inlineLinks;
   if (personLinksCache.has(file)) return inlineLinks.concat(personLinksCache.get(file));
   try {
