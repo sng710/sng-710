@@ -289,18 +289,19 @@ img { max-width:100%; display:block; }
   background:rgba(255,255,255,.078);
 }
 .lightbox-link-title{
-  display:block;
-  font-size:14px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  font-size:13.5px;
   font-weight:700;
   line-height:1.25;
-  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 .lightbox-link-source{
   display:block;
-  margin-top:2px;
-  direction:ltr;
+  margin-top:3px;
+  direction:rtl;
   text-align:right;
   font-size:11px;
   color:rgba(255,255,255,.66);
@@ -565,6 +566,51 @@ function linkSourceHost(url) {
   try { return new URL(url, window.location.href).hostname.toLowerCase().replace(/^www\./, ''); }
   catch (err) { return ''; }
 }
+function decodeLinkText(value) {
+  try { value = decodeURIComponent(String(value || '').replace(/\+/g, ' ')); } catch (err) { value = String(value || ''); }
+  return value
+    .replace(/[\-_]+/g, ' ')
+    .replace(/\.(html?|aspx|php)$/i, '')
+    .replace(/posts|videos|photos|photo|reel/g, ' ')
+    .replace(/זל/g, 'ז״ל')
+    .replace(/היד/g, 'הי״ד')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function inferLinkTitleFromUrl(url) {
+  try {
+    const parsed = new URL(url, window.location.href);
+    const blocked = new Set(['posts','videos','photos','photo','reel','p','watch','status','article','item','news','memory','memorial','fallen','fallen-information','names','victims','site','he','en','page','web','mobile','local_news','featured','activism','judaism','magazine','content','newstv','programs','media.aspx']);
+    const parts = parsed.pathname.split('/').filter(Boolean);
+    const candidates = parts.map(decodeLinkText).filter(part => {
+      if (!part || part.length < 5) return false;
+      if (blocked.has(part.toLowerCase())) return false;
+      if (/^\d+$/.test(part)) return false;
+      if (!/[א-ת]/.test(part) && part.length < 24) return false;
+      if (/^[a-z0-9]{8,}$/i.test(part)) return false;
+      return true;
+    });
+    candidates.sort((a,b) => ((b.split(' ').length >= 3) - (a.split(' ').length >= 3)) || b.length - a.length);
+    const best = candidates[0] || '';
+    return best.length > 118 ? best.slice(0,118) + '…' : best;
+  } catch (err) {
+    return '';
+  }
+}
+function isGenericLinkTitle(title) {
+  const value = String(title || '').trim();
+  if (!value) return true;
+  if (/^(Facebook|Instagram|YouTube|TikTok|Ynet|Mako|Remember\.bio|Memoriz|CBS News|gov\.il|[^\s]+\.[^\s]+)\s*[–-]/i.test(value)) return true;
+  if (/^(כאן 11|יזכור|לאד|בית הנשיא|התנועה הקיבוצית|דבר|גלובס|ישראל היום|מעריב|הארץ|נופלים|צה״ל|יזכור חרבות ברזל)\s*[–-]/.test(value)) return true;
+  return ['כתבה','סרטון','עמוד הנצחה','קישור'].includes(value);
+}
+function bestLinkTitle(link, cleanUrl, source) {
+  const explicit = String((link && (link.title || link.label || link.name)) || '').trim();
+  const inferred = inferLinkTitleFromUrl(cleanUrl);
+  if (inferred && (isGenericLinkTitle(explicit) || inferred.length > explicit.length)) return inferred;
+  if (explicit) return explicit;
+  return source || 'קישור';
+}
 function renderPersonLinks(links) {
   if (!Array.isArray(links) || !links.length) return '';
   const seen = new Set();
@@ -575,18 +621,12 @@ function renderPersonLinks(links) {
     const key = cleanUrl.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    prepared.push({ url: cleanUrl, source: linkSourceName(cleanUrl), host: linkSourceHost(cleanUrl), title: link.title || '' });
+    const source = link.source || linkSourceName(cleanUrl);
+    prepared.push({ url: cleanUrl, source, title: bestLinkTitle(link, cleanUrl, source) });
   }
   if (!prepared.length) return '';
-  const totals = prepared.reduce((acc, item) => {
-    acc[item.source] = (acc[item.source] || 0) + 1;
-    return acc;
-  }, {});
-  const counters = {};
   const items = prepared.map(item => {
-    counters[item.source] = (counters[item.source] || 0) + 1;
-    const displayTitle = totals[item.source] > 1 ? `${item.source} ${counters[item.source]}` : item.source;
-    return `<li class="lightbox-link-item"><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"><span><span class="lightbox-link-title">${esc(displayTitle)}</span><span class="lightbox-link-source">${esc(item.host)}</span></span><span class="lightbox-link-arrow" aria-hidden="true">↗</span></a></li>`;
+    return `<li class="lightbox-link-item"><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"><span><span class="lightbox-link-title">${esc(item.title)}</span><span class="lightbox-link-source">${esc(item.source)}</span></span><span class="lightbox-link-arrow" aria-hidden="true">↗</span></a></li>`;
   }).join('');
   return `<section class="lightbox-section lightbox-links"><h3 class="lightbox-section-title">קישורים וכתבות <span style="font-weight:400;color:rgba(255,255,255,.68);font-size:.82em;">(${prepared.length})</span></h3><ul class="lightbox-links-list">${items}</ul></section>`;
 }
