@@ -445,6 +445,69 @@ body{
   .lightbox-gallery.is-slideshow img{transition:none;transform:none;}
 }
 
+
+/* v38 — desktop-only full memorial list below the hero, without changing the top rotating area */
+.desktop-memory-panel{display:none;}
+@media (min-width:861px) and (orientation:landscape){
+  .fade-dedication{display:none;}
+  .desktop-memory-panel{
+    display:flex;
+    flex-direction:row-reverse;
+    align-items:flex-start;
+    gap:clamp(28px,4vw,72px);
+    width:min(1500px,92vw);
+    margin:clamp(30px,4.5vw,76px) auto clamp(120px,10vh,170px);
+    padding:clamp(18px,2vw,30px);
+    border-radius:36px;
+    background:linear-gradient(145deg, rgba(12,28,60,.28), rgba(255,255,255,.045));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.10), 0 22px 70px rgba(0,0,0,.18);
+    backdrop-filter:blur(4px);
+    direction:rtl;
+  }
+  .desktop-memory-all-grid{
+    flex:1 1 70%;
+    min-width:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(78px,1fr));
+    gap:clamp(15px,1.5vw,24px) clamp(10px,1.15vw,18px);
+    align-items:start;
+    justify-items:center;
+    padding:clamp(8px,1vw,16px) 0;
+  }
+  .desktop-memory-all-grid .memory-slot{
+    min-height:0;
+    cursor:pointer;
+  }
+  .desktop-memory-all-grid .photo-holder{
+    width:clamp(62px,4.7vw,94px);
+  }
+  .desktop-memory-all-grid .slot-name{
+    margin-top:8px;
+    font-size:clamp(9.5px,.72vw,12.8px);
+    line-height:1.08;
+    max-width:128%;
+  }
+  .desktop-memory-copy{
+    flex:0 0 min(420px,32%);
+    position:sticky;
+    top:clamp(34px,5vw,82px);
+    align-self:flex-start;
+    padding:clamp(20px,2vw,32px);
+    border-radius:30px;
+    background:rgba(10,24,54,.32);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+  }
+  .desktop-memory-copy .dedication{
+    text-align:right;
+    font-size:clamp(20px,1.45vw,28px);
+    line-height:1.42;
+  }
+}
+@media (min-width:1500px) and (orientation:landscape){
+  .desktop-memory-all-grid{grid-template-columns:repeat(auto-fill,minmax(86px,1fr));}
+  .desktop-memory-all-grid .photo-holder{width:clamp(72px,4.4vw,102px);}
+}
+
 </style>
 </head>
 <body>
@@ -467,6 +530,13 @@ body{
     <div class="fade-grid" id="posterGrid" aria-label="תמונות מתחלפות של הנופלות והנופלים"></div>
     <p class="dedication fade-dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
     <div id="emptySearch" class="empty-search">לא נמצאו תוצאות לחיפוש הזה.</div>
+  </section>
+
+  <section class="desktop-memory-panel" aria-label="רשימת כל הנופלות והנופלים">
+    <div class="desktop-memory-all-grid" id="desktopAllGrid" aria-label="כל התמונות ברשימה מלאה"></div>
+    <div class="desktop-memory-copy">
+      <p class="dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
+    </div>
   </section>
 </div>
 
@@ -957,6 +1027,7 @@ const statusText = document.getElementById('statusText');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const emptySearch = document.getElementById('emptySearch');
+const desktopAllGrid = document.getElementById('desktopAllGrid');
 let slotsCount = 6;
 let startIndex = 0;
 let active = filteredPeople();
@@ -992,8 +1063,25 @@ function setCard(card, person) {
     openLightbox(person);
   };
 }
+let desktopAllGridKey = '';
+function renderDesktopAllPeople() {
+  if (!desktopAllGrid) return;
+  const key = active.map(p => p.id || p.name || '').join('|');
+  if (key === desktopAllGridKey) return;
+  desktopAllGridKey = key;
+  desktopAllGrid.innerHTML = '';
+  active.forEach(person => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'memory-slot';
+    btn.innerHTML = '<span class="photo-holder"></span><span class="slot-name"></span>';
+    setCard(btn, person);
+    desktopAllGrid.appendChild(btn);
+  });
+}
 function render() {
   active = filteredPeople();
+  renderDesktopAllPeople();
   emptySearch.classList.toggle('show', !active.length);
   if (!active.length) {
     cards.forEach(card => setCard(card, null));
