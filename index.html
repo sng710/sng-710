@@ -175,6 +175,11 @@ img { max-width:100%; display:block; }
 .lightbox-img{margin:0 auto 16px;}
 .lightbox-title{text-align:right;font-size:clamp(28px,3.6vw,48px);}
 .lightbox-place{margin:10px 0 0;text-align:right;}
+
+.lightbox-actions{margin-top:12px;display:flex;justify-content:flex-start;gap:8px;flex-wrap:wrap;align-items:center;}
+.person-link-button{appearance:none;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.09);color:#fff;padding:8px 13px;font:inherit;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.13);}
+.person-link-button:hover,.person-link-button:focus-visible{background:rgba(255,255,255,.16);outline:2px solid rgba(128,225,245,.75);outline-offset:2px;}
+@media(max-width:720px){.lightbox-actions{justify-content:center}.person-link-button{font-size:13px;padding:8px 12px;}}
 .lightbox-details{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start;}
 .lightbox-chip{display:inline-flex;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.10);font-size:14px;color:rgba(255,255,255,.86);}
 .lightbox-text{margin-top:18px;line-height:1.72;font-size:clamp(15px,1.35vw,18px);color:rgba(255,255,255,.92);white-space:pre-line;text-align:right;}
@@ -553,6 +558,7 @@ body{
       <div>
         <h2 class="lightbox-title" id="lightboxTitle"></h2>
         <div class="lightbox-place" id="lightboxPlace"></div>
+        <div class="lightbox-actions"><button class="person-link-button" type="button" id="copyPersonLink" aria-label="העתקת קישור ישיר לאדם זה">העתקת קישור אישי</button></div>
         <div class="lightbox-details" id="lightboxDetails"></div>
         <div class="lightbox-text" id="lightboxText"></div>
       </div>
@@ -573,6 +579,7 @@ const lightboxDetails = document.getElementById('lightboxDetails');
 const lightboxText = document.getElementById('lightboxText');
 const lightboxGallery = document.getElementById('lightboxGallery');
 const lightboxClose = document.getElementById('lightboxClose');
+const copyPersonLink = document.getElementById('copyPersonLink');
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 function imgMarkup(person) {
@@ -968,14 +975,85 @@ function placeLightboxPhotos(person, photos) {
   // Mobile: gallery appears after the summary and before the links.
   return mobile ? renderPersonPhotos(list, person) : '';
 }
+
+function personDirectKey(person) {
+  return (person && person.id) ? String(person.id) : '';
+}
+function personDirectUrl(person) {
+  const key = personDirectKey(person);
+  return key ? `${window.location.origin}${window.location.pathname}${window.location.search}#${encodeURIComponent(key)}` : window.location.href;
+}
+function currentPersonHashKey() {
+  const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
+  if (!rawHash) return '';
+  let decoded = rawHash;
+  try { decoded = decodeURIComponent(rawHash); } catch (err) {}
+  if (decoded.startsWith('person=')) decoded = decoded.slice('person='.length);
+  return decoded.trim();
+}
+function findPersonByDirectKey(key) {
+  const cleaned = String(key || '').trim();
+  if (!cleaned) return null;
+  return people.find(p => p.id === cleaned) || null;
+}
+function personFromCurrentUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return findPersonByDirectKey(params.get('person') || params.get('id') || currentPersonHashKey());
+}
+function setPersonHash(person) {
+  const key = personDirectKey(person);
+  if (!key) return;
+  const encoded = encodeURIComponent(key);
+  if (window.location.hash.slice(1) === encoded) return;
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${encoded}`);
+}
+function clearPersonHash(personKey) {
+  const current = currentPersonHashKey();
+  if (!current || (personKey && current !== personKey)) return;
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+}
+function setupCopyPersonLink(person) {
+  if (!copyPersonLink) return;
+  const url = personDirectUrl(person);
+  copyPersonLink.textContent = 'העתקת קישור אישי';
+  copyPersonLink.onclick = async (event) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      copyPersonLink.textContent = 'הקישור הועתק';
+    } catch (err) {
+      window.prompt('העתיקי את הקישור הישיר:', url);
+      copyPersonLink.textContent = 'קישור אישי';
+    }
+    window.setTimeout(() => {
+      if (copyPersonLink && lightbox.classList.contains('is-open') && activeLightboxPersonKey === personDirectKey(person)) {
+        copyPersonLink.textContent = 'העתקת קישור אישי';
+      }
+    }, 2200);
+  };
+}
+function openPersonFromUrl() {
+  const person = personFromCurrentUrl();
+  if (person) {
+    openLightbox(person, {updateUrl:false});
+  } else if (lightbox.classList.contains('is-open')) {
+    closeLightbox(null, {clearUrl:false});
+  }
+}
+
 let lastFocusedBeforeLightbox = null;
 let activeLightboxPersonKey = '';
 let suppressLightboxOpenUntil = 0;
-async function openLightbox(person) {
+async function openLightbox(person, options = {}) {
   if (Date.now() < suppressLightboxOpenUntil) return;
   stopLightboxPhotoRotation();
   lastFocusedBeforeLightbox = document.activeElement;
   activeLightboxPersonKey = person.id || person.name || '';
+  if (options.updateUrl !== false) setPersonHash(person);
+  setupCopyPersonLink(person);
   lightboxImg.innerHTML = imgMarkup(person);
   lightboxTitle.textContent = person.name || '';
   lightboxPlace.textContent = person.place || '';
@@ -1000,7 +1078,7 @@ async function openLightbox(person) {
     startLightboxPhotoRotation();
   }
 }
-function closeLightbox(event) {
+function closeLightbox(event, options = {}) {
   // Guard against mobile click-through: after closing, ignore card taps for a short moment.
   suppressLightboxOpenUntil = Date.now() + 650;
   if (event) {
@@ -1009,7 +1087,9 @@ function closeLightbox(event) {
     if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
   }
   if (!lightbox.classList.contains('is-open')) return;
+  const closingPersonKey = activeLightboxPersonKey;
   activeLightboxPersonKey = '';
+  if (options.clearUrl !== false) clearPersonHash(closingPersonKey);
   stopLightboxPhotoRotation();
   lightbox.classList.remove('is-open');
   lightbox.setAttribute('aria-hidden','true');
@@ -1136,6 +1216,8 @@ buildCards(); refresh();
 searchInput.addEventListener('input', refresh);
 prevBtn.addEventListener('click', () => { move(-1, true); startTimer(); });
 nextBtn.addEventListener('click', () => { move(1, true); startTimer(); });
+window.addEventListener('hashchange', openPersonFromUrl);
+setTimeout(openPersonFromUrl, 120);
 
 </script>
 </body>
