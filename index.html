@@ -514,53 +514,204 @@ body{
 }
 
 
-/* v41 — consistent people-card behavior and alignment across all sections */
-.memory-slot{
-  width:100%;
-  min-width:0;
-  display:grid;
-  grid-template-rows:auto minmax(2.35em,auto);
-  justify-items:center;
-  align-content:start;
-  gap:0;
-  border-radius:26px;
-  appearance:none;
-  -webkit-appearance:none;
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;
+/* v42 — designer alignment polish: closer to the attached InDesign reference */
+@media (min-width:861px) and (orientation:landscape){
+  body{padding-bottom:96px;}
+
+  .pdf-bg{
+    background:
+      radial-gradient(circle at 18% 45%, rgba(255,255,255,.085), transparent 23%),
+      linear-gradient(90deg, rgba(18,42,88,.48) 0%, rgba(38,58,108,.72) 38%, rgba(42,61,111,.96) 100%),
+      var(--leaf-landscape) left center / cover no-repeat,
+      var(--paper-blue);
+  }
+  .pdf-bg::before{
+    opacity:.30;
+    filter:contrast(1.04) brightness(.98) saturate(.82);
+  }
+  .pdf-bg::after{
+    background:linear-gradient(90deg,rgba(8,24,54,.30) 0%, rgba(40,59,111,.18) 45%, rgba(40,59,111,.35) 100%);
+  }
+
+  .fade-poster{
+    height:calc(100svh - 58px);
+    min-height:720px;
+    padding-bottom:0;
+  }
+  .fade-hero{
+    top:25.4%;
+    left:4.9%;
+    width:34.6%;
+  }
+  .rule{
+    height:1.35px;
+    opacity:.72;
+    background:linear-gradient(90deg,transparent,rgba(0,213,223,.65) 8%,rgba(0,213,223,.65) 92%,transparent);
+  }
+  .title-lockup{
+    grid-template-columns:minmax(0,1.07fr) minmax(0,.92fr);
+    gap:5.2%;
+    padding-block:3.2% 3.55%;
+  }
+  .poem{
+    font-size:clamp(28px,2.42vw,43px);
+    line-height:1.17;
+    font-weight:300;
+    letter-spacing:-.038em;
+  }
+  .main-title{
+    font-size:clamp(60px,5.05vw,96px);
+    line-height:.86;
+    font-weight:400;
+    letter-spacing:-.056em;
+  }
+
+  .fade-grid{
+    top:17.8%;
+    right:4.9%;
+    width:43.2%;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(34px,5.8vh,62px) 9.4%;
+  }
+
+  .memory-slot{
+    appearance:none;
+    -webkit-appearance:none;
+    min-height:clamp(166px,11.6vw,218px);
+    display:grid;
+    grid-template-rows:auto minmax(2.35em,auto);
+    justify-items:center;
+    align-items:start;
+    border-radius:0;
+  }
+  .fade-grid .photo-holder,
+  .desktop-memory-all-grid .photo-holder{
+    background:rgba(20,39,78,.18);
+    box-shadow:0 0 0 clamp(2px,.16vw,4px) rgba(248,251,255,.78);
+  }
+  .photo-holder img{
+    transform:none;
+    filter:grayscale(1) contrast(1.05) brightness(.98);
+  }
+  .fade-grid .photo-holder{
+    width:clamp(112px,7.05vw,148px);
+  }
+  .slot-name{
+    min-height:2.3em;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    margin-top:clamp(12px,.98vw,16px);
+    font-weight:500;
+  }
+  .fade-grid .slot-name{
+    font-size:clamp(12px,.86vw,16px);
+    line-height:1.16;
+  }
+  .memory-slot:focus-visible{
+    outline:none;
+    border-radius:0;
+  }
+  .memory-slot:focus-visible .photo-holder{
+    box-shadow:
+      0 0 0 clamp(2px,.16vw,4px) rgba(248,251,255,.84),
+      0 0 0 clamp(5px,.42vw,8px) rgba(119,218,238,.64);
+  }
+  .memory-slot:hover .photo-holder{
+    transform:translateY(-2px) scale(1.015);
+    box-shadow:
+      0 0 0 clamp(2px,.16vw,4px) rgba(248,251,255,.86),
+      0 14px 30px rgba(0,0,0,.16);
+  }
+
+  .toolbar{
+    width:min(880px,78vw);
+    bottom:16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(13,29,60,.76);
+    backdrop-filter:blur(14px);
+    box-shadow:0 18px 44px rgba(0,0,0,.26);
+    padding:9px 12px;
+  }
+  .toolbar input{
+    min-width:0;
+    width:min(410px,37vw);
+    padding:10px 16px;
+    background:rgba(255,255,255,.075);
+  }
+  .tool-btn{
+    min-width:82px;
+    padding:9px 14px;
+    background:rgba(255,255,255,.075);
+  }
+  .tool-meta{
+    min-width:82px;
+    text-align:center;
+  }
+
+  .desktop-memory-panel{
+    gap:clamp(38px,5vw,86px);
+    width:min(1510px,92vw);
+    margin:clamp(46px,5vw,82px) auto clamp(120px,10vh,170px);
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+  }
+  .desktop-memory-all-grid{
+    flex:1 1 72%;
+    grid-template-columns:repeat(auto-fill,minmax(104px,1fr));
+    gap:clamp(28px,2.6vw,44px) clamp(24px,2vw,38px);
+    padding:8px 0 0;
+  }
+  .desktop-memory-all-grid .memory-slot{
+    min-height:clamp(142px,9.5vw,178px);
+  }
+  .desktop-memory-all-grid .photo-holder{
+    width:clamp(82px,5.2vw,112px);
+  }
+  .desktop-memory-all-grid .slot-name{
+    margin-top:clamp(10px,.85vw,14px);
+    font-size:clamp(11px,.8vw,14px);
+    line-height:1.14;
+    max-width:132%;
+  }
+  .desktop-memory-copy{
+    flex:0 0 min(430px,31%);
+    top:clamp(52px,6.5vw,96px);
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  .desktop-memory-copy::before,
+  .desktop-memory-copy::after{
+    content:"";
+    display:block;
+    height:1.35px;
+    width:100%;
+    margin:0 0 clamp(22px,2vw,34px);
+    background:linear-gradient(90deg,transparent,rgba(0,213,223,.65) 8%,rgba(0,213,223,.65) 92%,transparent);
+  }
+  .desktop-memory-copy::after{
+    margin:clamp(22px,2vw,34px) 0 0;
+  }
+  .desktop-memory-copy .dedication{
+    text-align:right;
+    font-size:clamp(19px,1.45vw,27px);
+    line-height:1.34;
+    letter-spacing:-.035em;
+  }
 }
-.memory-slot .photo-holder,
-.memory-slot .slot-name,
-.memory-slot img{pointer-events:none;}
-.memory-slot .photo-holder{flex:0 0 auto;}
-.memory-slot .slot-name{
-  width:100%;
-  max-width:168px;
-  min-height:2.35em;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-}
-.memory-slot:hover .photo-holder,
-.memory-slot:focus-visible .photo-holder{transform:translateY(-2px) scale(1.025);}
-.fade-grid .memory-slot{min-height:clamp(160px,10.6vw,215px);}
-.desktop-memory-all-grid .memory-slot{
-  min-height:clamp(112px,7.4vw,148px);
-  padding:2px 2px 5px;
-}
-.desktop-memory-all-grid .slot-name{
-  max-width:112px;
-  min-height:2.45em;
-  align-items:flex-start;
-}
-.memory-slot.is-empty{pointer-events:none;}
-.memory-slot:disabled{cursor:default;}
-@media(max-width:860px),(orientation:portrait){
-  .fade-grid .memory-slot{min-height:clamp(188px,42vw,270px);}
-  .fade-grid .slot-name{max-width:min(210px,44vw);min-height:2.25em;}
-}
-@media(max-width:520px){
-  .fade-grid .memory-slot{min-height:clamp(172px,43vw,240px);}
+
+@media (min-width:861px) and (orientation:landscape) and (max-width:1180px){
+  .fade-grid{right:3.4%;width:47.5%;gap:clamp(28px,4.8vh,48px) 7%;}
+  .fade-grid .photo-holder{width:clamp(100px,8.1vw,128px);}
+  .fade-hero{left:4.3%;width:36%;}
+  .main-title{font-size:clamp(52px,5.2vw,78px);}
+  .poem{font-size:clamp(24px,2.55vw,34px);}
 }
 
 </style>
@@ -894,50 +1045,24 @@ async function loadPersonLinks(person) {
 }
 
 const personTextCache = new Map();
-function hashUEncodedFilePath(file) {
-  const value = String(file || '');
-  if (!value) return '';
-  const slash = value.lastIndexOf('/');
-  const dir = slash >= 0 ? value.slice(0, slash + 1) : '';
-  const name = slash >= 0 ? value.slice(slash + 1) : value;
-  const encodedName = Array.from(name).map(ch => {
-    const code = ch.codePointAt(0);
-    return code > 127 ? `%23U${code.toString(16).padStart(4, '0')}` : ch;
-  }).join('');
-  return dir + encodedName;
-}
-function uniqueTextCandidates(items) {
-  const seen = new Set();
-  return items.filter(Boolean).filter(item => {
-    const key = String(item);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
 async function loadPersonText(person) {
   const inlineText = person && typeof person.text === 'string' ? person.text : '';
   const fallback = inlineText || (person && person.summary ? person.summary : '');
   const file = person && (person.textFile || person.textPath) ? (person.textFile || person.textPath) : '';
   if (!file) return fallback;
   if (personTextCache.has(file)) return personTextCache.get(file) || fallback;
-  const candidates = uniqueTextCandidates([file, hashUEncodedFilePath(file)]);
-  for (const candidate of candidates) {
-    try {
-      const response = await fetch(candidate, { cache: 'no-cache' });
-      if (!response.ok) throw new Error('text file not found');
-      const txt = await response.text();
-      const cleanTxt = String(txt || '').trim();
-      if (cleanTxt) {
-        personTextCache.set(file, cleanTxt);
-        return cleanTxt;
-      }
-    } catch (err) {}
+  try {
+    const response = await fetch(file, { cache: 'no-cache' });
+    if (!response.ok) throw new Error('text file not found');
+    const txt = await response.text();
+    const cleanTxt = String(txt || '').trim();
+    personTextCache.set(file, cleanTxt);
+    return cleanTxt || fallback;
+  } catch (err) {
+    personTextCache.set(file, '');
+    return fallback;
   }
-  personTextCache.set(file, '');
-  return fallback;
 }
-
 
 function uniqueList(items) {
   const seen = new Set();
@@ -1224,34 +1349,19 @@ function buildCards() {
   }
 }
 function setCard(card, person) {
-  if (!card) return;
-  card.type = 'button';
   if (!person) {
     card.style.visibility = 'hidden';
-    card.classList.add('is-empty');
-    card.disabled = true;
-    card.tabIndex = -1;
-    card.removeAttribute('aria-label');
-    card.removeAttribute('title');
-    delete card.dataset.personId;
     card.onclick = null;
-    card.innerHTML = '<span class="photo-holder"></span><span class="slot-name"></span>';
     return;
   }
   card.style.visibility = '';
-  card.classList.remove('is-empty');
-  card.disabled = false;
-  card.tabIndex = 0;
-  card.dataset.personId = person.id || '';
-  card.setAttribute('aria-label', `פתיחת עמוד הזיכרון של ${person.name || ''}`);
-  card.setAttribute('title', person.name || '');
   card.innerHTML = `<span class="photo-holder">${imgMarkup(person)}</span><span class="slot-name">${esc(person.name)}</span>`;
   card.onclick = (event) => {
-    if (event) {
+    if (event && Date.now() < suppressLightboxOpenUntil) {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
-    if (Date.now() < suppressLightboxOpenUntil) return;
     openLightbox(person);
   };
 }
