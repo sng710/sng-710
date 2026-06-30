@@ -427,7 +427,7 @@ body{
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <div class="lightbox-backdrop" data-close="1"></div>
   <article class="lightbox-card" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
-    <button class="lightbox-close" type="button" id="lightboxClose" data-close="1" aria-label="סגירה" title="סגירה" onclick="closeLightbox(event)" onpointerdown="closeLightbox(event)">×</button>
+    <button class="lightbox-close" type="button" id="lightboxClose" data-close="1" aria-label="סגירה" title="סגירה" onclick="closeLightbox(event)" onpointerdown="event.preventDefault(); event.stopPropagation();">×</button>
     <div class="lightbox-top">
       <div>
         <div class="lightbox-img" id="lightboxImg"></div>
@@ -750,7 +750,9 @@ function placeLightboxPhotos(person) {
 }
 let lastFocusedBeforeLightbox = null;
 let activeLightboxPersonKey = '';
+let suppressLightboxOpenUntil = 0;
 async function openLightbox(person) {
+  if (Date.now() < suppressLightboxOpenUntil) return;
   lastFocusedBeforeLightbox = document.activeElement;
   activeLightboxPersonKey = person.id || person.name || '';
   lightboxImg.innerHTML = imgMarkup(person);
@@ -772,7 +774,13 @@ async function openLightbox(person) {
   }
 }
 function closeLightbox(event) {
-  if (event) { event.preventDefault(); event.stopPropagation(); }
+  // Guard against mobile click-through: after closing, ignore card taps for a short moment.
+  suppressLightboxOpenUntil = Date.now() + 650;
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+  }
   if (!lightbox.classList.contains('is-open')) return;
   activeLightboxPersonKey = '';
   lightbox.classList.remove('is-open');
@@ -791,9 +799,15 @@ function handleClosePointer(event){
     closeLightbox(event);
   }
 }
-lightboxClose.addEventListener('pointerdown', closeLightbox, true);
+function stopLightboxPointer(event){
+  // Do not close on pointerdown. On mobile this can hide the overlay before the following click,
+  // which may hit a person card underneath and open another popup. Close only on click/Escape.
+  if (!lightbox.classList.contains('is-open')) return;
+  event.stopPropagation();
+}
+lightboxClose.addEventListener('pointerdown', stopLightboxPointer, true);
 lightboxClose.addEventListener('click', closeLightbox, true);
-lightbox.addEventListener('pointerdown', handleClosePointer, true);
+lightbox.addEventListener('pointerdown', stopLightboxPointer, true);
 lightbox.addEventListener('click', handleClosePointer, true);
 document.addEventListener('keydown', e => {
   if (!lightbox.classList.contains('is-open')) return;
@@ -832,7 +846,14 @@ function setCard(card, person) {
   }
   card.style.visibility = '';
   card.innerHTML = `<span class="photo-holder">${imgMarkup(person)}</span><span class="slot-name">${esc(person.name)}</span>`;
-  card.onclick = () => openLightbox(person);
+  card.onclick = (event) => {
+    if (event && Date.now() < suppressLightboxOpenUntil) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    openLightbox(person);
+  };
 }
 function render() {
   active = filteredPeople();
