@@ -2,12 +2,11 @@ const ROTATION_INTERVAL_MS = 9000;
 const POPUP_CLOSE_GUARD_MS = 650;
 const GALLERY_SLIDE_MS = 3600;
 const CARD_FADE_MS = 520;
-const CARD_IMAGE_ROTATION_MS = 4200;
 
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=51', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=54', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -26,14 +25,6 @@ function esc(s) { return String(s || '').replace(/[&<>"']/g, ch => ({'&':'&amp;'
 function imgMarkup(person) {
   const src = person.image || (person.photos && person.photos[0]) || '';
   return src ? `<img src="${esc(src)}" alt="${esc(person.name)}" loading="lazy">` : '';
-}
-function cardPhotoList(person) {
-  if (!person) return [];
-  return uniqueList([person.image].concat(person.cardPhotos || [], person.photos || []).filter(Boolean));
-}
-function cardPhotoMarkup(person) {
-  const photos = cardPhotoList(person);
-  return photos.map((src, i) => `<img class="card-photo${i === 0 ? ' is-active' : ''}" src="${esc(src)}" alt="${esc(person.name)}${photos.length > 1 ? ' — תמונה ' + (i + 1) : ''}" loading="${i === 0 ? 'eager' : 'lazy'}">`).join('');
 }
 function normalizeHebText(s) {
   return String(s || '')
@@ -364,13 +355,6 @@ async function loadPersonPhotos(person) {
     return explicit;
   }
 }
-async function loadAllCardPhotos() {
-  const results = await Promise.allSettled(people.map(async person => {
-    person.cardPhotos = await loadPersonPhotos(person);
-  }));
-  return results;
-}
-
 function personPhotoImages(photos, person) {
   const list = uniqueList(photos);
   return list.map((src, i) => `<img src="${esc(src)}" alt="${esc(person.name)} — תמונה ${i+1}" loading="lazy" class="${i === 0 ? 'is-active' : ''}">`).join('');
@@ -632,8 +616,9 @@ function setCard(card, person) {
     return;
   }
   card.style.visibility = '';
-  const photos = cardPhotoList(person);
-  card.innerHTML = `<span class="photo-holder" data-photo-count="${photos.length}">${cardPhotoMarkup(person)}</span><span class="slot-name">${esc(person.name)}</span>`;
+  // Main page and full list always show the original portrait only.
+  // Inner photos rotate only inside the popup gallery.
+  card.innerHTML = `<span class="photo-holder">${imgMarkup(person)}</span><span class="slot-name">${esc(person.name)}</span>`;
   card.onclick = (event) => {
     if (event && Date.now() < suppressLightboxOpenUntil) {
       event.preventDefault();
@@ -644,11 +629,9 @@ function setCard(card, person) {
   };
 }
 let desktopAllGridKey = '';
-let cardPhotoDataVersion = 0;
-let cardPhotoTimer = null;
 function renderDesktopAllPeople() {
   if (!desktopAllGrid) return;
-  const key = active.map(p => p.id || p.name || '').join('|') + '|photos:' + cardPhotoDataVersion;
+  const key = active.map(p => p.id || p.name || '').join('|');
   if (key === desktopAllGridKey) return;
   desktopAllGridKey = key;
   desktopAllGrid.innerHTML = '';
@@ -660,25 +643,6 @@ function renderDesktopAllPeople() {
     setCard(btn, person);
     desktopAllGrid.appendChild(btn);
   });
-}
-function stopCardPhotoRotation() {
-  if (cardPhotoTimer) clearInterval(cardPhotoTimer);
-  cardPhotoTimer = null;
-}
-function rotateCardPhotos() {
-  document.querySelectorAll('.photo-holder[data-photo-count]').forEach(holder => {
-    const imgs = Array.from(holder.querySelectorAll('.card-photo'));
-    if (imgs.length < 2) return;
-    const activeIndex = Math.max(0, imgs.findIndex(img => img.classList.contains('is-active')));
-    imgs[activeIndex].classList.remove('is-active');
-    imgs[(activeIndex + 1) % imgs.length].classList.add('is-active');
-  });
-}
-function startCardPhotoRotation() {
-  stopCardPhotoRotation();
-  const hasRotatingPhotos = Array.from(document.querySelectorAll('.photo-holder[data-photo-count]'))
-    .some(holder => Number(holder.dataset.photoCount || 0) > 1);
-  if (hasRotatingPhotos) cardPhotoTimer = setInterval(rotateCardPhotos, CARD_IMAGE_ROTATION_MS);
 }
 function setupFullListToggle() {
   if (!fullListPanel || !fullListToggle) return;
@@ -702,7 +666,6 @@ function render() {
   if (!active.length) {
     cards.forEach(card => setCard(card, null));
     statusText.textContent = '0 תוצאות';
-    stopCardPhotoRotation();
     return;
   }
   if (startIndex >= active.length) startIndex = 0;
@@ -710,7 +673,6 @@ function render() {
   for (let i=0; i<slotsCount; i++) setCard(cards[i], visiblePeople[i] || null);
   const end = Math.min(active.length, startIndex + visiblePeople.length);
   statusText.textContent = `${startIndex + 1}-${end} מתוך ${active.length}`;
-  startCardPhotoRotation();
 }
 function move(direction, withFade=true) {
   if (!active.length) return;
@@ -745,11 +707,6 @@ async function initApp() {
   buildCards();
   setupFullListToggle();
   refresh();
-  loadAllCardPhotos().then(() => {
-    cardPhotoDataVersion++;
-    desktopAllGridKey = '';
-    render();
-  });
   searchInput.addEventListener('input', refresh);
   prevBtn.addEventListener('click', () => { move(-1, true); startTimer(); });
   nextBtn.addEventListener('click', () => { move(1, true); startTimer(); });
