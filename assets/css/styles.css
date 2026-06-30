@@ -955,3 +955,108 @@ body{
     display:none !important;
   }
 }
+
+
+/* v53 — zoomed-out portraits + continuous leaf background */
+.rekama-wrap{
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(255,255,255,.08), transparent 24%),
+    linear-gradient(90deg, rgba(18,42,88,.50) 0%, rgba(40,59,111,.72) 36%, rgba(40,59,111,.93) 100%),
+    var(--leaf-landscape) left top / cover fixed no-repeat,
+    var(--paper-blue) !important;
+}
+.rekama-wrap::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background:var(--leaf-landscape) left top / cover no-repeat;
+  opacity:.34;
+  mix-blend-mode:screen;
+  filter:contrast(1.04) brightness(1.03) saturate(.86);
+  pointer-events:none;
+}
+.rekama-wrap::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background:linear-gradient(90deg,rgba(8,24,54,.28) 0%, rgba(40,59,111,.12) 45%, rgba(40,59,111,.30) 100%);
+  pointer-events:none;
+}
+.rekama-wrap > *{
+  position:relative;
+  z-index:1;
+}
+.pdf-bg{
+  background:transparent !important;
+}
+.pdf-bg::before,
+.pdf-bg::after{
+  display:none !important;
+}
+.desktop-memory-panel{
+  position:relative;
+  z-index:1;
+}
+
+/* Make the visible portraits less cropped and remove the colored holder background */
+.photo-holder,
+.fade-grid .photo-holder,
+.desktop-memory-all-grid .photo-holder{
+  background:transparent !important;
+  box-shadow:0 0 0 clamp(2px,.16vw,4px) rgba(248,251,255,.84), 0 12px 26px rgba(0,0,0,.12) !important;
+}
+.photo-holder img,
+.photo-holder .card-photo{
+  object-fit:cover !important;
+  object-position:center 34% !important;
+  transform:scale(1.015) !important;
+  background:transparent !important;
+}
+.photo-holder .card-photo.is-active{
+  transform:scale(1.0) !important;
+}
+.lightbox-img{
+  background:transparent !important;
+}
+.lightbox-img img{
+  object-position:center 34% !important;
+  transform:scale(1.0) !important;
+  background:transparent !important;
+}
+@media (min-width:861px) and (orientation:landscape){
+  .rekama-wrap{
+    background:
+      radial-gradient(circle at 18% 45%, rgba(255,255,255,.08), transparent 24%),
+      linear-gradient(90deg, rgba(18,42,88,.44) 0%, rgba(40,59,111,.68) 36%, rgba(40,59,111,.91) 100%),
+      var(--leaf-landscape) left top / cover fixed no-repeat,
+      var(--paper-blue) !important;
+  }
+  .desktop-memory-panel{
+    padding-bottom:clamp(60px,8vh,130px);
+  }
+}
+@media(max-width:860px),(orientation:portrait){
+  .rekama-wrap{
+    background:
+      radial-gradient(circle at 24% 30%, rgba(255,255,255,.12), transparent 26%),
+      linear-gradient(90deg, rgba(30,56,105,.34), rgba(46,66,122,.84)),
+      var(--leaf-portrait) center top / cover fixed no-repeat,
+      var(--paper-blue) !important;
+  }
+  .rekama-wrap::before{
+    background:var(--leaf-portrait) center top / cover no-repeat;
+    opacity:.40;
+  }
+  .rekama-wrap::after{
+    background:linear-gradient(90deg, rgba(30,56,105,.18), rgba(46,66,122,.42));
+  }
+  .photo-holder img,
+  .photo-holder .card-photo{
+    object-position:center 34% !important;
+    transform:scale(1.0) !important;
+  }
+}
