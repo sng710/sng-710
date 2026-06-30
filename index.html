@@ -398,6 +398,53 @@ body{
   #lightboxGallery:not([hidden]){display:none !important;}
 }
 
+
+/* v36 — optional auto gallery files + gentle slideshow inside popup */
+.lightbox-gallery.is-slideshow{
+  display:block !important;
+  position:relative;
+  width:100%;
+  aspect-ratio:4/3;
+  min-height:150px;
+  max-height:none !important;
+  overflow:hidden !important;
+  padding:0 !important;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+}
+.lightbox-gallery.is-slideshow img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:18px;
+  opacity:0;
+  transform:scale(1.015);
+  transition:opacity .85s ease, transform 4.8s ease;
+  box-shadow:none;
+}
+.lightbox-gallery.is-slideshow img.is-active{
+  opacity:1;
+  transform:scale(1);
+}
+.lightbox-photo-section .lightbox-gallery.is-slideshow{
+  margin-top:12px;
+  max-height:none;
+}
+@media(max-width:720px){
+  .lightbox-gallery.is-slideshow{
+    aspect-ratio:1/1;
+    min-height:210px;
+    border-radius:20px;
+  }
+  .lightbox-gallery.is-slideshow img{border-radius:20px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .lightbox-gallery.is-slideshow img{transition:none;transform:none;}
+}
+
 </style>
 </head>
 <body>
@@ -719,23 +766,105 @@ async function loadPersonLinks(person) {
   }
 }
 
+function uniqueList(items) {
+  const seen = new Set();
+  return (Array.isArray(items) ? items : []).filter(Boolean).filter(item => {
+    const key = String(item).trim();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+function explicitPersonPhotos(person) {
+  return uniqueList(Array.isArray(person.photos) ? person.photos : []);
+}
+const personPhotosCache = new Map();
+function autoPhotoCandidates(person) {
+  if (!person || !person.id) return [];
+  const base = `assets/people/${person.id}/photos`;
+  const candidates = [];
+  // Main recommended naming: photo-01.webp, photo-02.webp ... photo-30.webp
+  for (let i = 1; i <= 30; i++) candidates.push(`${base}/photo-${String(i).padStart(2, '0')}.webp`);
+  // Also supported, just in case: gallery-01.webp, gallery-02.webp ... gallery-30.webp
+  for (let i = 1; i <= 30; i++) candidates.push(`${base}/gallery-${String(i).padStart(2, '0')}.webp`);
+  return candidates;
+}
+function probeImage(src) {
+  return new Promise(resolve => {
+    if (!src) return resolve(null);
+    const img = new Image();
+    let done = false;
+    const finish = ok => {
+      if (done) return;
+      done = true;
+      resolve(ok ? src : null);
+    };
+    img.onload = () => finish(true);
+    img.onerror = () => finish(false);
+    setTimeout(() => finish(false), 4500);
+    img.src = src;
+  });
+}
+async function loadPersonPhotos(person) {
+  const explicit = explicitPersonPhotos(person);
+  if (!person || !person.id) return explicit;
+  if (personPhotosCache.has(person.id)) return uniqueList(explicit.concat(personPhotosCache.get(person.id)));
+  const explicitSet = new Set(explicit);
+  const candidates = autoPhotoCandidates(person).filter(src => !explicitSet.has(src));
+  try {
+    const found = (await Promise.all(candidates.map(probeImage))).filter(Boolean);
+    personPhotosCache.set(person.id, found);
+    return uniqueList(explicit.concat(found));
+  } catch (err) {
+    personPhotosCache.set(person.id, []);
+    return explicit;
+  }
+}
 function personPhotoImages(photos, person) {
-  const list = Array.isArray(photos) ? photos.filter(Boolean) : [];
-  return list.map((src, i) => `<img src="${esc(src)}" alt="${esc(person.name)} — תמונה ${i+1}" loading="lazy">`).join('');
+  const list = uniqueList(photos);
+  return list.map((src, i) => `<img src="${esc(src)}" alt="${esc(person.name)} — תמונה ${i+1}" loading="lazy" class="${i === 0 ? 'is-active' : ''}">`).join('');
 }
 function isMobileLightboxLayout() {
   return window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
 }
-function renderPersonPhotos(photos, person) {
-  const imgs = personPhotoImages(photos, person);
-  if (!imgs) return '';
-  return `<section class="lightbox-section lightbox-photo-section"><h3 class="lightbox-section-title">גלריית תמונות</h3><div class="lightbox-gallery lightbox-inline-gallery">${imgs}</div></section>`;
+let lightboxPhotoTimer = null;
+function stopLightboxPhotoRotation() {
+  if (lightboxPhotoTimer) clearInterval(lightboxPhotoTimer);
+  lightboxPhotoTimer = null;
 }
-function placeLightboxPhotos(person) {
-  const photos = Array.isArray(person.photos) ? person.photos.filter(Boolean) : [];
+function startLightboxPhotoRotation() {
+  stopLightboxPhotoRotation();
+  const galleries = Array.from(lightbox.querySelectorAll('.lightbox-gallery.is-slideshow'));
+  if (!galleries.length || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  galleries.forEach(gallery => {
+    const imgs = Array.from(gallery.querySelectorAll('img'));
+    imgs.forEach((img, i) => img.classList.toggle('is-active', i === 0));
+  });
+  lightboxPhotoTimer = setInterval(() => {
+    if (!lightbox.classList.contains('is-open')) return stopLightboxPhotoRotation();
+    galleries.forEach(gallery => {
+      const imgs = Array.from(gallery.querySelectorAll('img'));
+      if (imgs.length < 2) return;
+      let activeIndex = imgs.findIndex(img => img.classList.contains('is-active'));
+      if (activeIndex < 0) activeIndex = 0;
+      imgs[activeIndex].classList.remove('is-active');
+      imgs[(activeIndex + 1) % imgs.length].classList.add('is-active');
+    });
+  }, 3600);
+}
+function renderPersonPhotos(photos, person) {
+  const list = uniqueList(photos);
+  const imgs = personPhotoImages(list, person);
+  if (!imgs) return '';
+  const slideshowClass = list.length > 1 ? ' is-slideshow' : '';
+  return `<section class="lightbox-section lightbox-photo-section"><h3 class="lightbox-section-title">גלריית תמונות</h3><div class="lightbox-gallery lightbox-inline-gallery${slideshowClass}">${imgs}</div></section>`;
+}
+function placeLightboxPhotos(person, photos) {
+  const list = uniqueList(photos);
   const mobile = isMobileLightboxLayout();
-  const imgs = personPhotoImages(photos, person);
+  const imgs = personPhotoImages(list, person);
   if (lightboxGallery) {
+    lightboxGallery.classList.toggle('is-slideshow', !!imgs && !mobile && list.length > 1);
     if (imgs && !mobile) {
       // Desktop/tablet: original placement under the main portrait, in the left column.
       lightboxGallery.innerHTML = imgs;
@@ -743,16 +872,18 @@ function placeLightboxPhotos(person) {
     } else {
       lightboxGallery.innerHTML = '';
       lightboxGallery.hidden = true;
+      lightboxGallery.classList.remove('is-slideshow');
     }
   }
   // Mobile: gallery appears after the summary and before the links.
-  return mobile ? renderPersonPhotos(photos, person) : '';
+  return mobile ? renderPersonPhotos(list, person) : '';
 }
 let lastFocusedBeforeLightbox = null;
 let activeLightboxPersonKey = '';
 let suppressLightboxOpenUntil = 0;
 async function openLightbox(person) {
   if (Date.now() < suppressLightboxOpenUntil) return;
+  stopLightboxPhotoRotation();
   lastFocusedBeforeLightbox = document.activeElement;
   activeLightboxPersonKey = person.id || person.name || '';
   lightboxImg.innerHTML = imgMarkup(person);
@@ -762,15 +893,20 @@ async function openLightbox(person) {
   lightboxDetails.innerHTML = '';
   const rawText = person.text || person.summary || '';
   const structuredText = buildStructuredText(person, rawText);
-  const galleryHtml = placeLightboxPhotos(person);
+  const initialPhotos = explicitPersonPhotos(person);
+  let galleryHtml = placeLightboxPhotos(person, initialPhotos);
   lightboxText.innerHTML = structuredText + galleryHtml;
   lightbox.classList.add('is-open');
   lightbox.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
   setTimeout(() => lightboxClose.focus({preventScroll:true}), 0);
-  const links = await loadPersonLinks(person);
+  startLightboxPhotoRotation();
+
+  const [photos, links] = await Promise.all([loadPersonPhotos(person), loadPersonLinks(person)]);
   if (activeLightboxPersonKey === (person.id || person.name || '') && lightbox.classList.contains('is-open')) {
+    galleryHtml = placeLightboxPhotos(person, photos);
     lightboxText.innerHTML = structuredText + galleryHtml + renderPersonLinks(links);
+    startLightboxPhotoRotation();
   }
 }
 function closeLightbox(event) {
@@ -783,6 +919,7 @@ function closeLightbox(event) {
   }
   if (!lightbox.classList.contains('is-open')) return;
   activeLightboxPersonKey = '';
+  stopLightboxPhotoRotation();
   lightbox.classList.remove('is-open');
   lightbox.setAttribute('aria-hidden','true');
   document.body.style.overflow = '';
