@@ -445,104 +445,6 @@ body{
   .lightbox-gallery.is-slideshow img{transition:none;transform:none;}
 }
 
-
-/* v37 — desktop only: show the full people list on the right, no rotation */
-@media (min-width:861px) and (orientation:landscape){
-  .fade-poster{
-    height:auto;
-    min-height:max(calc(100svh - 70px), 980px);
-    display:grid;
-    grid-template-columns:minmax(300px,34%) minmax(0,1fr);
-    grid-template-rows:auto auto;
-    column-gap:clamp(28px,4vw,70px);
-    row-gap:clamp(20px,3vh,44px);
-    align-items:center;
-    padding:clamp(36px,5vh,72px) 3.6% clamp(126px,12vh,164px) 4.8%;
-    direction:ltr;
-  }
-  .fade-hero{
-    position:relative;
-    top:auto;
-    left:auto;
-    width:100%;
-    grid-column:1;
-    grid-row:1;
-    align-self:end;
-    text-align:center;
-    direction:rtl;
-  }
-  .fade-dedication{
-    position:relative;
-    left:auto;
-    top:auto;
-    width:100%;
-    grid-column:1;
-    grid-row:2;
-    align-self:start;
-    justify-self:center;
-    margin:0;
-    direction:rtl;
-    font-size:clamp(16px,1.18vw,22px);
-  }
-  .fade-grid{
-    position:relative;
-    top:auto;
-    right:auto;
-    width:100%;
-    grid-column:2;
-    grid-row:1 / span 2;
-    align-self:center;
-    justify-self:stretch;
-    direction:rtl;
-  }
-  .fade-grid.is-all-people{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(74px,1fr));
-    gap:clamp(13px,1.45vw,24px) clamp(11px,1.25vw,22px);
-    align-content:center;
-    justify-items:center;
-    max-height:none;
-    overflow:visible;
-    padding:4px 0;
-  }
-  .fade-grid.is-all-people .memory-slot{
-    min-height:0;
-  }
-  .fade-grid.is-all-people .photo-holder{
-    width:clamp(58px,4.35vw,86px);
-  }
-  .fade-grid.is-all-people .slot-name{
-    margin-top:7px;
-    font-size:clamp(9.5px,.68vw,12.5px);
-    line-height:1.08;
-    max-width:118%;
-  }
-  .fade-grid.is-all-people .memory-slot.is-fading .photo-holder,
-  .fade-grid.is-all-people .memory-slot.is-fading .slot-name{
-    opacity:1;
-    transform:none;
-    filter:none;
-  }
-  .empty-search{
-    position:relative;
-    top:auto;
-    right:auto;
-    width:min(500px,100%);
-    grid-column:2;
-    grid-row:1 / span 2;
-    justify-self:center;
-    align-self:center;
-    direction:rtl;
-  }
-  .toolbar .tool-btn{
-    display:none;
-  }
-}
-@media (min-width:1500px) and (orientation:landscape){
-  .fade-grid.is-all-people{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));}
-  .fade-grid.is-all-people .photo-holder{width:clamp(68px,4.1vw,92px);}
-}
-
 </style>
 </head>
 <body>
@@ -1061,21 +963,14 @@ let active = filteredPeople();
 let cards = [];
 let timer = null;
 
-function isDesktopAllPeopleLayout() {
-  return !!(window.matchMedia && window.matchMedia('(min-width: 861px) and (orientation: landscape)').matches);
-}
-function makeMemoryCard() {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'memory-slot';
-  btn.innerHTML = '<span class="photo-holder"></span><span class="slot-name"></span>';
-  return btn;
-}
-function buildCards(count = slotsCount) {
+function buildCards() {
   posterGrid.innerHTML = '';
   cards = [];
-  for (let i=0; i<count; i++) {
-    const btn = makeMemoryCard();
+  for (let i=0; i<slotsCount; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'memory-slot';
+    btn.innerHTML = '<span class="photo-holder"></span><span class="slot-name"></span>';
     posterGrid.appendChild(btn);
     cards.push(btn);
   }
@@ -1099,20 +994,7 @@ function setCard(card, person) {
 }
 function render() {
   active = filteredPeople();
-  const allPeopleMode = isDesktopAllPeopleLayout();
-  posterGrid.classList.toggle('is-all-people', allPeopleMode);
-  if (prevBtn) prevBtn.hidden = allPeopleMode;
-  if (nextBtn) nextBtn.hidden = allPeopleMode;
   emptySearch.classList.toggle('show', !active.length);
-
-  if (allPeopleMode) {
-    buildCards(active.length);
-    active.forEach((person, i) => setCard(cards[i], person));
-    statusText.textContent = active.length ? `${active.length} מתוך ${people.length}` : '0 תוצאות';
-    return;
-  }
-
-  if (cards.length !== slotsCount) buildCards(slotsCount);
   if (!active.length) {
     cards.forEach(card => setCard(card, null));
     statusText.textContent = '0 תוצאות';
@@ -1125,7 +1007,6 @@ function render() {
   statusText.textContent = `${startIndex + 1}-${end} מתוך ${active.length}`;
 }
 function move(direction, withFade=true) {
-  if (isDesktopAllPeopleLayout()) return;
   if (!active.length) return;
   if (withFade) cards.forEach(c => c.classList.add('is-fading'));
   setTimeout(() => {
@@ -1139,18 +1020,13 @@ function move(direction, withFade=true) {
 }
 function startTimer() {
   clearInterval(timer);
-  if (!isDesktopAllPeopleLayout() && active.length > slotsCount) timer = setInterval(() => move(1, true), 9000);
+  if (active.length > slotsCount) timer = setInterval(() => move(1, true), 9000);
 }
 function refresh() { startIndex = 0; render(); startTimer(); }
 buildCards(); refresh();
 searchInput.addEventListener('input', refresh);
 prevBtn.addEventListener('click', () => { move(-1, true); startTimer(); });
 nextBtn.addEventListener('click', () => { move(1, true); startTimer(); });
-let resizeRefreshTimer = null;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeRefreshTimer);
-  resizeRefreshTimer = setTimeout(() => { render(); startTimer(); }, 160);
-});
 
 </script>
 </body>
