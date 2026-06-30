@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://sng710.github.io/sng-710/assets/bg/leaf-landscape.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/bg/leaf-landscape.webp" type="image/webp">
-<link rel="stylesheet" href="assets/css/styles.css?v=50">
+<link rel="stylesheet" href="assets/css/styles.css?v=51">
 
 </head>
 <body>
@@ -35,10 +35,15 @@
     <div id="emptySearch" class="empty-search">לא נמצאו תוצאות לחיפוש הזה.</div>
   </section>
 
-  <section class="desktop-memory-panel" aria-label="רשימת כל הנופלות והנופלים">
-    <div class="desktop-memory-all-grid" id="desktopAllGrid" aria-label="כל התמונות ברשימה מלאה"></div>
-    <div class="desktop-memory-copy">
-      <p class="dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
+  <section class="desktop-memory-panel is-collapsed" id="fullListPanel" aria-label="רשימת כל הנופלות והנופלים">
+    <div class="desktop-memory-panel-head">
+      <button class="full-list-toggle" id="fullListToggle" type="button" aria-expanded="false" aria-controls="fullListBody">הצגת הרשימה המלאה</button>
+    </div>
+    <div class="desktop-memory-panel-body" id="fullListBody">
+      <div class="desktop-memory-all-grid" id="desktopAllGrid" aria-label="כל התמונות ברשימה מלאה"></div>
+      <div class="desktop-memory-copy">
+        <p class="dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
+      </div>
     </div>
   </section>
 </div>
@@ -64,7 +69,7 @@
 </div>
 
 
-<script src="assets/js/app.js?v=50" defer></script>
+<script src="assets/js/app.js?v=51" defer></script>
 
 </body>
 </html>

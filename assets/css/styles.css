@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
 :root {
-  --leaf-landscape: url("assets/bg/leaf-landscape.webp");
-  --leaf-portrait: url("assets/bg/leaf-portrait.webp");
+  --leaf-landscape: url("../bg/leaf-landscape.webp");
+  --leaf-portrait: url("../bg/leaf-portrait.webp");
   --white: #fbfdff;
   --paper-blue: #283b6f;
   --paper-deep: #182a52;
@@ -709,4 +709,153 @@ body{
   .fade-hero{left:4.3%;width:36%;}
   .main-title{font-size:clamp(52px,5.2vw,78px);}
   .poem{font-size:clamp(24px,2.55vw,34px);}
+}
+
+
+/* v51 — visible leaf background, larger unified portraits, collapsible full list, fixed controls */
+.pdf-bg::before{
+  opacity:.42;
+  filter:contrast(1.06) brightness(1.03) saturate(.9);
+}
+.pdf-bg::after{
+  background:linear-gradient(90deg,rgba(8,24,54,.22) 0%, rgba(40,59,111,.12) 45%, rgba(40,59,111,.28) 100%);
+}
+.photo-holder{position:relative;}
+.photo-holder .card-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 24%;
+  opacity:0;
+  transform:scale(1.11);
+  transition:opacity 1.05s ease, transform 5.4s ease;
+}
+.photo-holder .card-photo.is-active{
+  opacity:1;
+  transform:scale(1.06);
+}
+.photo-holder .card-photo:first-child:last-child{
+  position:static;
+  opacity:1;
+}
+@media (prefers-reduced-motion: reduce){
+  .photo-holder .card-photo{transition:none;transform:scale(1.06);}
+}
+
+.toolbar{
+  position:fixed !important;
+  top:auto !important;
+  bottom:0 !important;
+  left:50% !important;
+  transform:translate3d(-50%,0,0) !important;
+  will-change:transform;
+}
+@media (min-width:861px) and (orientation:landscape){
+  body{padding-bottom:112px;}
+  .toolbar{bottom:18px !important;}
+
+  .fade-grid{
+    width:46.6%;
+    right:4.25%;
+    gap:clamp(34px,5.2vh,58px) 7.8%;
+  }
+  .fade-grid .photo-holder{
+    width:clamp(138px,8.45vw,184px);
+  }
+  .fade-grid .slot-name{
+    font-size:clamp(14px,1vw,19px);
+    line-height:1.15;
+    max-width:15ch;
+  }
+
+  .desktop-memory-panel{
+    display:block !important;
+    width:min(1510px,92vw);
+    margin:clamp(38px,4.6vw,76px) auto clamp(120px,10vh,170px);
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+    direction:rtl;
+  }
+  .desktop-memory-panel-head{
+    display:flex;
+    justify-content:center;
+    margin:0 auto clamp(24px,2.2vw,36px);
+  }
+  .full-list-toggle{
+    appearance:none;
+    border:1px solid rgba(255,255,255,.20);
+    border-radius:999px;
+    background:rgba(13,29,60,.55);
+    color:#fff;
+    padding:12px 22px;
+    font-size:clamp(15px,1vw,18px);
+    font-weight:600;
+    box-shadow:0 14px 34px rgba(0,0,0,.18), inset 0 0 0 1px rgba(255,255,255,.06);
+    backdrop-filter:blur(10px);
+  }
+  .full-list-toggle:hover,
+  .full-list-toggle:focus-visible{
+    background:rgba(255,255,255,.12);
+    outline:3px solid rgba(128,225,245,.62);
+    outline-offset:3px;
+  }
+  .desktop-memory-panel-body{
+    display:flex;
+    flex-direction:row-reverse;
+    align-items:flex-start;
+    gap:clamp(38px,5vw,86px);
+    width:100%;
+  }
+  .desktop-memory-panel.is-collapsed .desktop-memory-panel-body{
+    display:none;
+  }
+  .desktop-memory-all-grid{
+    flex:1 1 72%;
+    grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    gap:clamp(32px,2.9vw,48px) clamp(26px,2.1vw,40px);
+  }
+  .desktop-memory-all-grid .memory-slot{
+    min-height:clamp(174px,11vw,220px);
+  }
+  .desktop-memory-all-grid .photo-holder{
+    width:clamp(112px,6.6vw,146px);
+  }
+  .desktop-memory-all-grid .slot-name{
+    font-size:clamp(13px,.96vw,17px);
+    line-height:1.16;
+    max-width:15ch;
+  }
+  .desktop-memory-copy{
+    flex:0 0 min(430px,31%);
+  }
+}
+@media (min-width:861px) and (orientation:landscape) and (max-width:1180px){
+  .fade-grid{
+    width:50%;
+    right:3%;
+    gap:clamp(28px,4.4vh,46px) 6.5%;
+  }
+  .fade-grid .photo-holder{width:clamp(120px,9.4vw,148px);}
+  .fade-grid .slot-name{font-size:clamp(13px,1.05vw,16px);}
+}
+@media(max-width:860px),(orientation:portrait){
+  .pdf-bg::before{opacity:.48;}
+  .toolbar{
+    bottom:0 !important;
+    width:100% !important;
+    border-radius:0 !important;
+  }
+  .fade-grid .photo-holder{
+    width:clamp(142px,34vw,222px);
+  }
+  .fade-grid .slot-name{
+    font-size:clamp(16px,4.3vw,24px);
+    line-height:1.15;
+    max-width:15ch;
+  }
 }
