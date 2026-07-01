@@ -1167,3 +1167,99 @@ body{
 .lightbox-facts{
   margin-top:2px !important;
 }
+
+
+/* v57 — פופ-אפ מתומצת יותר + עלה כמעט שקוף */
+.lightbox-card{
+  overflow:hidden !important;
+}
+.lightbox-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:var(--leaf-landscape) left center / cover no-repeat;
+  opacity:.075;
+  filter:contrast(1.06) brightness(1.08) saturate(.9);
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.lightbox-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:radial-gradient(circle at 30% 18%, rgba(255,255,255,.055), transparent 34%),
+             linear-gradient(145deg, rgba(46,66,122,.35), rgba(18,33,67,.62));
+  pointer-events:none;
+}
+.lightbox-card > *{
+  position:relative;
+  z-index:1;
+}
+.lightbox-personal-details{
+  text-align:right;
+}
+.lightbox-about-person{
+  text-align:right;
+}
+.lightbox-about-person .lightbox-section-title{
+  font-size:clamp(24px,2.15vw,34px) !important;
+}
+.lightbox-lead-paragraph{
+  font-size:clamp(17px,1.15vw,20px) !important;
+  line-height:1.86 !important;
+  color:rgba(255,255,255,.92) !important;
+  max-width:74ch;
+  margin-inline:auto !important;
+}
+.lightbox-full-story{
+  margin-top:22px;
+  text-align:right;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;
+  background:rgba(255,255,255,.055);
+  overflow:hidden;
+}
+.lightbox-full-story > summary{
+  cursor:pointer;
+  list-style:none;
+  padding:13px 16px;
+  font-weight:700;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.lightbox-full-story > summary::-webkit-details-marker{
+  display:none;
+}
+.lightbox-full-story > summary::after{
+  content:"＋";
+  font-size:20px;
+  line-height:1;
+  opacity:.82;
+}
+.lightbox-full-story[open] > summary::after{
+  content:"−";
+}
+.lightbox-full-story-body{
+  padding:0 16px 16px;
+}
+.lightbox-subsection{
+  margin-top:18px;
+}
+.lightbox-subtitle{
+  margin:0 0 10px;
+  padding-bottom:7px;
+  border-bottom:1px solid rgba(255,255,255,.22);
+  font-size:clamp(18px,1.25vw,23px);
+  color:#fff;
+}
+@media(max-width:860px),(orientation:portrait){
+  .lightbox-card::before{
+    background:var(--leaf-portrait) center top / cover no-repeat;
+    opacity:.085;
+  }
+}
