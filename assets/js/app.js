@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=61', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=62', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -644,8 +644,7 @@ function closeLightbox(event, options = {}) {
   if (options.clearUrl !== false) clearPersonHash(closingPersonKey);
   stopLightboxPhotoRotation();
 
-  // Move focus out of the popup before aria-hidden=true, otherwise browsers warn that
-  // a focused descendant is being hidden from assistive technologies.
+  // Move focus out of the popup before aria-hidden=true, so assistive tech never sees a focused element being hidden.
   const restoreTarget = lastFocusedBeforeLightbox && document.contains(lastFocusedBeforeLightbox) ? lastFocusedBeforeLightbox : null;
   if (document.activeElement && lightbox.contains(document.activeElement)) {
     if (restoreTarget && typeof restoreTarget.focus === 'function') {
