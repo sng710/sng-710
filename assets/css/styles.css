@@ -1339,3 +1339,35 @@ body{
   padding:6px !important;
   box-sizing:border-box !important;
 }
+
+
+/* v64 — allow popup scrolling all the way to the full story */
+.lightbox-card{
+  max-height:min(92svh, 920px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain !important;
+  scroll-behavior:smooth;
+}
+.lightbox-text{
+  overflow:visible !important;
+}
+.lightbox-full-story,
+.lightbox-full-story-body{
+  overflow:visible !important;
+}
+.lightbox-full-story{
+  scroll-margin-top:24px;
+}
+@media(max-width:720px){
+  .lightbox{
+    padding:12px !important;
+    align-items:start !important;
+    place-items:start center !important;
+  }
+  .lightbox-card{
+    width:96vw !important;
+    max-height:calc(100svh - 24px) !important;
+  }
+}

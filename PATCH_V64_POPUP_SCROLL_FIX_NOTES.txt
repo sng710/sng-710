@@ -1,0 +1,17 @@
+V64 — popup scrolling fix
+
+Issue:
+- The popup could show the short text, but scrolling down to the full story was blocked.
+- Cause: an older popup style used `.lightbox-card { overflow:hidden !important; }` for the leaf background layer. That overrode earlier scroll styles.
+
+Fix:
+- Added a final CSS override so `.lightbox-card` uses `overflow-y:auto !important`.
+- Kept horizontal overflow hidden only.
+- Added mobile-safe popup height using `100svh`.
+- Kept full story open and visible.
+- Bumped cache to v=64.
+
+Files updated:
+- index.html
+- assets/css/styles.css
+- assets/js/app.js
