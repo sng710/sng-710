@@ -1413,3 +1413,27 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
 .lightbox-img img,
 .lightbox-gallery img,
 .lightbox-inline-gallery img{background:#d7e0ec !important;}
+
+
+/* v69 — slight portrait zoom so backgrounds fill the circular frame more cleanly */
+.photo-holder img{
+  transform: scale(1.055) !important;
+  transform-origin: center center;
+}
+
+.lightbox-img img{
+  transform: scale(1.055) !important;
+  transform-origin: center center;
+}
+
+.desktop-memory-all-grid .photo-holder img,
+.fade-grid .photo-holder img{
+  transform: scale(1.055) !important;
+}
+
+/* Keep popup rotating gallery images just very slightly closer too */
+.lightbox-gallery img,
+.lightbox-inline-gallery img{
+  transform: scale(1.03) !important;
+  transform-origin: center center;
+}

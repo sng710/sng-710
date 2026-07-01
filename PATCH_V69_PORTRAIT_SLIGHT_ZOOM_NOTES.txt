@@ -1,0 +1,11 @@
+V69 — slight portrait zoom
+
+What changed:
+- Kept the unified portrait background color.
+- Added a very small zoom to the visible portrait images so the background fills the circular frame better.
+- This should reduce the side gaps/cuts without heavy cropping.
+- Updated cache version to v69.
+
+Updated files:
+- index.html
+- assets/css/styles.css
