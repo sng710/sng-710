@@ -1,0 +1,10 @@
+V68 — softer portrait background
+
+Changes:
+- Replaced the very light blue portrait background with a slightly darker soft blue-gray tone
+  so it contrasts better with white shirts.
+- Updated cache version to v68.
+
+Updated files:
+- index.html
+- assets/css/styles.css

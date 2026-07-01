@@ -1398,3 +1398,18 @@ img.js-auto-transparent-bg{background:#eef4ff !important;}
 .lightbox-img img,
 .lightbox-gallery img,
 .lightbox-inline-gallery img{background:#eef4ff !important;}
+
+
+/* v68 — softer portrait background with more contrast from white shirts */
+img.js-auto-transparent-bg{background:#d7e0ec !important;}
+.photo-holder,
+.fade-grid .photo-holder,
+.desktop-memory-all-grid .photo-holder,
+.lightbox-img,
+.lightbox-gallery,
+.lightbox-inline-gallery{background:#d7e0ec !important;}
+.photo-holder img,
+.photo-holder .card-photo,
+.lightbox-img img,
+.lightbox-gallery img,
+.lightbox-inline-gallery img{background:#d7e0ec !important;}
