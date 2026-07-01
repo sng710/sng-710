@@ -1437,3 +1437,24 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
   transform: scale(1.03) !important;
   transform-origin: center center;
 }
+
+
+/* v70 — slightly more zoom so only the very top of the shoulders is visible */
+.photo-holder img,
+.photo-holder .card-photo,
+.desktop-memory-all-grid .photo-holder img,
+.fade-grid .photo-holder img{
+  transform: scale(1.125) !important;
+  transform-origin: center center;
+}
+
+.lightbox-img img{
+  transform: scale(1.125) !important;
+  transform-origin: center center;
+}
+
+.lightbox-gallery img,
+.lightbox-inline-gallery img{
+  transform: scale(1.08) !important;
+  transform-origin: center center;
+}
