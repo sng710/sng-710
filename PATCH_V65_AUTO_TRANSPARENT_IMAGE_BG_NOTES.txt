@@ -1,0 +1,11 @@
+V65 — automatic white/checkerboard portrait background cleanup
+
+What changed:
+- Portrait and gallery image tags now get `js-auto-transparent-bg`.
+- JavaScript removes only the light white/checkerboard background that is connected to the outer top/side edges of the image.
+- The algorithm intentionally does not seed from the bottom edge, so white shirts are less likely to be removed.
+- If a browser blocks canvas processing for any image, the original image remains visible.
+- Cache-bust updated to v=65.
+
+Important:
+- This is a browser-side visual cleanup. The best permanent result is still to export PNG/WebP images with real alpha transparency.

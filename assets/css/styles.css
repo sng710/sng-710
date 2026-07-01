@@ -1371,3 +1371,15 @@ body{
     max-height:calc(100svh - 24px) !important;
   }
 }
+
+
+/* v65 — image white/checkerboard background cleanup support */
+img.js-auto-transparent-bg{
+  background:transparent !important;
+}
+.photo-holder,
+.lightbox-img,
+.lightbox-gallery,
+.lightbox-inline-gallery{
+  background:transparent !important;
+}
