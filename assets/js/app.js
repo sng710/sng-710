@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=54', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=56', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -79,9 +79,14 @@ function filteredPeople() {
   });
 }
 function cleanFactLine(line) {
-  const clean = String(line || '')
-    .replace(/^קורות חיים\s*$/,'')
+  let clean = String(line || '')
+    .replace(/^קורות חיים(?:\s+ונפילה)?\s*$/,'')
+    .replace(/^סיפור חיים\s*$/,'')
     .replace(/^על אודות האתר\s*$/,'')
+    .replace(/^פרטים אישיים והנצחה\s*$/,'פרטים אישיים')
+    .replace(/^מקום קבורה\s*[:：]/,'מקום מנוחה:')
+    .replace(/^הובא למנוחת עולמים\s+/,'מקום מנוחה: ')
+    .replace(/^הובאה למנוחת עולמים\s+/,'מקום מנוחה: ')
     .trim();
   return isRedundantMemorialLine(clean) ? '' : clean;
 }
@@ -90,6 +95,7 @@ function isRedundantMemorialLine(line) {
   const clean = String(line || '').replace(/\s+/g, ' ').trim();
   if (!clean) return true;
   return /^חלל(?:ת)? פעול(?:ת|ות) איבה$/.test(clean)
+    || /^מקום\s+(?:ה)?אירוע\s*[:：]/.test(clean)
     || /^ב[-\s]*0?7[\/.]10[\/.]2023$/.test(clean)
     || /^בכ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד\b.*0?7[\/.]10[\/.]2023.*$/.test(clean);
 }
@@ -111,38 +117,44 @@ function formatFactLine(line) {
 }
 function splitDescription(person) {
   const raw = cleanRedundantMemorialText(stripLeadingName(person.text || person.summary || '', person));
-  if (!raw) return {facts: [], life: [], memory: []};
+  if (!raw) return {facts: [], life: [], event: [], memory: []};
+  const headingOnly = /^(פרטים אישיים|פרטים אישיים והנצחה|סיפור חיים|סיפור חייו|סיפור חייה|קורות חיים|קורות חיים ונפילה|דרך, עשייה ואהבות|נפילתו|נפילתה|חטיפתו ונפילתו|חטיפתה ונפילתה|שבעה באוקטובר והימים שאחריו|דמותו וזכרו|דמותה וזכרה|דמות וזיכרון|דברי זיכרון|זיכרון ומילים מהלב|על מצבתו נכתב|על מצבתה נכתב|מילים שנחקקו)$/;
   const lines = raw.split('\n').map(l => cleanFactLine(l)).filter(Boolean);
   const facts = [];
   const body = [];
   let inBody = false;
   for (const line of lines) {
-    if (/^קורות חיים/.test(line)) { inBody = true; continue; }
-    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^נולד|^נולדה|^תאריך|^התגורר|^התגוררה|^מקום אירוע|^מקום קבורה|^משפחה:|^קרבה משפחתית:|^שאירים|^חלל|^חללת|^בכ?["'׳״\- ]|^הובא|^הובאה|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
+    if (headingOnly.test(line)) { inBody = true; continue; }
+    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^נולד|^נולדה|^תאריך|^התגורר|^התגוררה|^מקום מנוחה|^מקום קבורה|^משפחה:|^קרבה משפחתית:|^שאירים|^הובא|^הובאה|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
     if (!inBody && isFact) facts.push(line);
     else { inBody = true; body.push(line); }
   }
   const paragraphs = body.join('\n').split(/\n{2,}|(?<=\.)\s*(?=[א-ת])/).map(p => p.trim()).filter(Boolean);
   const memory = [];
+  const event = [];
   const life = [];
   for (const p of paragraphs) {
-    if (/כתבו|ספדו|נזכור|יזכרו|יזכרו|חבריו|משפחת|בקיבוץ|כתב:|כתבה:|אמר/.test(p)) memory.push(p);
+    if (/כתבו|ספדו|נזכור|יזכרו|חבריו|חברותיה|משפחת|אשתו|אמו|אביו|אחיו|אחותו|בתו|בנו|כתב:|כתבה:|אמר|סיפר|סיפרה|על מצבת/.test(p)) memory.push(p);
+    else if (/7\s*באוקטובר|שבעה באוקטובר|שמחת תורה|כ״ב בתשרי|כ"ב בתשרי|נרצח|נרצחה|נפל|נפלה|נהרג|נהרגה|נחטף|נחטפה|שבי|ממ״ד|ממ"ד|מחבלים|כיתת הכוננות|קרב|הגן|הגנה|פונה|הובא למנוחות|הובאה למנוחות/.test(p)) event.push(p);
     else life.push(p);
   }
-  return {facts, life: life.length ? life : paragraphs, memory};
+  return {facts, life: life.length ? life : paragraphs.filter(p => !memory.includes(p) && !event.includes(p)), event, memory};
 }
 function renderDescription(person) {
   const parts = splitDescription(person);
   const blocks = [];
   if (parts.facts.length) {
-    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">פרטים אישיים והנצחה</h3><ul class="lightbox-facts">${parts.facts.map(formatFactLine).join('')}</ul></section>`);
+    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">פרטים אישיים</h3><ul class="lightbox-facts">${parts.facts.map(formatFactLine).join('')}</ul></section>`);
   }
-  const lifeParas = parts.life.filter(p => !parts.memory.includes(p));
+  const lifeParas = parts.life.filter(p => !parts.memory.includes(p) && !parts.event.includes(p));
   if (lifeParas.length) {
-    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">קורות חיים ונפילה</h3>${lifeParas.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('')}</section>`);
+    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">סיפור חיים</h3>${lifeParas.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('')}</section>`);
+  }
+  if (parts.event.length) {
+    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">שבעה באוקטובר והימים שאחריו</h3>${parts.event.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('')}</section>`);
   }
   if (parts.memory.length) {
-    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">דברי זיכרון</h3>${parts.memory.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('')}</section>`);
+    blocks.push(`<section class="lightbox-section"><h3 class="lightbox-section-title">זיכרון ומילים מהלב</h3>${parts.memory.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('')}</section>`);
   }
   if (!blocks.length) return '<div class="no-text-note">טרם נוסף טקסט לתצוגה עבור אדם זה.</div>';
   return blocks.join('');

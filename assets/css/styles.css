@@ -1060,3 +1060,110 @@ body{
     transform:scale(1.0) !important;
   }
 }
+
+
+/* v55 — static top-left search bar, scrolls away with the page */
+.rekama-wrap{
+  position:relative;
+}
+.toolbar{
+  position:absolute !important;
+  top:18px !important;
+  bottom:auto !important;
+  left:18px !important;
+  right:auto !important;
+  transform:none !important;
+  width:min(448px, calc(100vw - 36px)) !important;
+  max-width:448px !important;
+  z-index:900 !important;
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:7px !important;
+  padding:7px 8px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-top:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(10,24,52,.64) !important;
+  backdrop-filter:blur(15px) !important;
+  box-shadow:0 14px 34px rgba(0,0,0,.22) !important;
+  direction:rtl;
+}
+.toolbar input{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  width:auto !important;
+  max-width:none !important;
+  height:38px !important;
+  padding:8px 13px !important;
+  font-size:14px !important;
+  border-radius:999px !important;
+}
+.tool-btn{
+  flex:0 0 auto !important;
+  min-width:0 !important;
+  height:36px !important;
+  padding:7px 10px !important;
+  font-size:13px !important;
+  line-height:1 !important;
+}
+.tool-meta{
+  flex:0 0 auto !important;
+  min-width:52px !important;
+  font-size:12px !important;
+  line-height:1.1 !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+@media(max-width:720px){
+  .toolbar{
+    top:10px !important;
+    left:10px !important;
+    right:10px !important;
+    width:auto !important;
+    max-width:none !important;
+    padding:7px !important;
+    gap:6px !important;
+  }
+  .toolbar input{
+    height:36px !important;
+    font-size:13px !important;
+    padding:8px 12px !important;
+  }
+  .tool-btn{
+    height:34px !important;
+    padding:7px 9px !important;
+    font-size:12px !important;
+  }
+  .tool-meta{
+    display:none !important;
+  }
+}
+
+
+/* v56 — אחידות כותרות בטקסטי הזיכרון */
+.lightbox-section-title{
+  font-size:clamp(22px,2vw,32px) !important;
+  font-weight:800 !important;
+  line-height:1.22 !important;
+  margin:0 0 16px !important;
+  padding-bottom:10px !important;
+  border-bottom:1px solid rgba(255,255,255,.36) !important;
+  color:#fff !important;
+  letter-spacing:-.025em !important;
+}
+.lightbox-section{
+  margin-top:28px !important;
+  padding-top:0 !important;
+  border-top:0 !important;
+}
+.lightbox-section:first-child{
+  margin-top:8px !important;
+}
+.lightbox-paragraph{
+  margin:0 0 14px !important;
+}
+.lightbox-facts{
+  margin-top:2px !important;
+}

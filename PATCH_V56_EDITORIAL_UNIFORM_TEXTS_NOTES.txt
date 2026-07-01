@@ -1,0 +1,110 @@
+V56 — דוח אחידות ועריכת טקסטים
+
+קבצי TXT שנבדקו: 87
+קבצי TXT שעודכנו בפועל: 87
+
+הוסרו/נוקו:
+- שורות "מקום אירוע": 86
+- שורות "חלל/חללת פעולת איבה": 29
+- שורות UI/פרסומות/נרות זיכרון לא רלוונטיות: 0
+
+קבצים אחרונים ששולבו ידנית לפני הניקוי:
+- assets/people/modi_a/text/אמיר מרדכי (מודי).txt
+- assets/people/aran_g/text/גורן ארן.txt
+- assets/people/amir_n/text/נעים אמיר.txt
+- assets/people/alon_s/text/שמריז אלון לולו.txt
+
+כותרות התצוגה באתר שונו ל:
+- פרטים אישיים
+- סיפור חיים
+- שבעה באוקטובר והימים שאחריו
+- זיכרון ומילים מהלב
+
+קבצים שעודכנו:
+- assets/people/alon_s/text/שמריז אלון לולו.txt
+- assets/people/amir_n/text/נעים אמיר.txt
+- assets/people/angeline_a/text/אנגלין אגירה.txt
+- assets/people/arad_p/text/פנסה ארד סמוקהון.txt
+- assets/people/aran_g/text/גורן ארן.txt
+- assets/people/avi_h/text/הנדי אברהם חננאל.txt
+- assets/people/aviad_a/text/אדרי אביעד.txt
+- assets/people/aviv_b/text/ברעם אביב.txt
+- assets/people/aviv_k/text/קוץ אביב.txt
+- assets/people/aviv_w/text/ורטהיים אביב.txt
+- assets/people/bilha_e/text/אפשטיין בלהה.txt
+- assets/people/chaim_l/text/ליבנה חיים.txt
+- assets/people/daniel_p/text/פלד דניאל.txt
+- assets/people/david_k/text/קציר דוד קצקו.txt
+- assets/people/david_s/text/שוורצמן דוד אלברטו.txt
+- assets/people/dikla_a/text/ערבה דקלה.txt
+- assets/people/dorit_w/text/ורטהיים דורית (כסלו).txt
+- assets/people/eitan_z/text/זיו איתן.txt
+- assets/people/eliko_r/text/רייכנשטיין הכהן אליקו.txt
+- assets/people/elitzur_h/text/חגבי אליצור צוריאל.txt
+- assets/people/eliyahu_o/text/אורגד אליהו.txt
+- assets/people/evgeny_g/text/גלסקי יבגני.txt
+- assets/people/gila_p/text/פלד גילה.txt
+- assets/people/guy_a/text/אדמוני גיא.txt
+- assets/people/hadar_b/text/ברדיצסקי רוזנפלד הדר.txt
+- assets/people/ilan_f/text/פיורנטינו אילן.txt
+- assets/people/itay_b/text/ברדיצסקי איתי.txt
+- assets/people/joshua_m/text/מולל גושוע לואיטו.txt
+- assets/people/keshet_z/text/זוהר קשת.txt
+- assets/people/lili_i/text/איתמרי לילי.txt
+- assets/people/livnat_k/text/קוץ ליבנת.txt
+- assets/people/maayan_i/text/עידן מעיין.txt
+- assets/people/maya_b/text/בן דוד מאיה.txt
+- assets/people/michal_a/text/אדמוני מיכל.txt
+- assets/people/mira_s/text/שטהל מירה.txt
+- assets/people/modi_a/text/אמיר מרדכי (מודי).txt
+- assets/people/nadav_a/text/עמיקם נדב.txt
+- assets/people/nadav_g/text/גולדשטיין אלמוג נדב יהודה.txt
+- assets/people/naomi_d/text/דגני נעמי.txt
+- assets/people/naor_h/text/חסידים נאור ניסים.txt
+- assets/people/neta_e/text/אפשטיין נטע.txt
+- assets/people/nira_r/text/רונן נירה.txt
+- assets/people/niral_z/text/זיני ניראל.txt
+- assets/people/nitzan_l/text/ליבשטיין ניצן.txt
+- assets/people/niv_r/text/רביב ניב.txt
+- assets/people/noam_e/text/אליקים נועם.txt
+- assets/people/ofir_l/text/אופיר ליבשטיין.txt
+- assets/people/ofir_s/text/שושני אופיר.txt
+- assets/people/omer_h/text/חרמש עומר.txt
+- assets/people/omer_z/text/עומר צדיקביץ.txt
+- assets/people/ori_r/text/רוסו אורי שמעון.txt
+- assets/people/orly_s/text/שוורצמן פינקו אורלי.txt
+- assets/people/ram_i/text/איתמרי רם.txt
+- assets/people/ran_p/text/פוסלושני רן רנוש.txt
+- assets/people/roee_i/text/עידן רועי.txt
+- assets/people/rotem_k/text/קוץ רותם.txt
+- assets/people/salem_p/text/פלג סאלם.txt
+- assets/people/seta_h/text/סטה הומסורן.txt
+- assets/people/shachaf_b/text/ברגשטיין שחף.txt
+- assets/people/shachar_a/text/אביאני שחר.txt
+- assets/people/shlomi_d/text/דוידוביץ שלומי.txt
+- assets/people/shlomo_r/text/רון שלמה צבי.txt
+- assets/people/shoshi_b/text/ברוש שושנה שושי.txt
+- assets/people/sivan_e/text/אלקבץ סיון.txt
+- assets/people/smadar_i/text/עידן סמדר.txt
+- assets/people/tal_a/text/אילון טל.txt
+- assets/people/tamar_p/text/פלש תמר סינדי.txt
+- assets/people/tami_p/text/פלג זיו תמי.txt
+- assets/people/techelet_z/text/זוהר תכלת.txt
+- assets/people/tomer_a/text/ערבה אליעז תומר.txt
+- assets/people/tova_g/text/גורן טובה.txt
+- assets/people/tzachi_i/text/עידן צחי.txt
+- assets/people/yahav_w/text/וינר יהב.txt
+- assets/people/yam_g/text/גולדשטיין אלמוג ים.txt
+- assets/people/yaniv_z/text/זוהר יניב.txt
+- assets/people/yasmin_z/text/זוהר יסמין.txt
+- assets/people/yehonatan_h/text/חגבי יהונתן.txt
+- assets/people/yiftach_k/text/קוץ יפתח.txt
+- assets/people/yigal_p/text/פלש יגאל.txt
+- assets/people/yizhar_h/text/חגבי יזהר.txt
+- assets/people/yizhar_p/text/פלד יזהר.txt
+- assets/people/yonatan_k/text/קוץ יונתן.txt
+- assets/people/yotam_h/text/חיים יותם.txt
+- assets/people/yuval_b/text/בויום יובל.txt
+- assets/people/yuval_s/text/סלומון יובל.txt
+- assets/people/ziv_h/text/חגבי זיו.txt
+- assets/people/ziv_s/text/שפירא זיו פפה.txt
