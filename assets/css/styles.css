@@ -1373,7 +1373,7 @@ body{
 }
 
 
-/* v65 — image white/checkerboard background cleanup support */
+/* v66 — checkerboard-only background cleanup support */
 img.js-auto-transparent-bg{
   background:transparent !important;
 }
@@ -1383,3 +1383,18 @@ img.js-auto-transparent-bg{
 .lightbox-inline-gallery{
   background:transparent !important;
 }
+
+
+/* v67 — fast unified portrait background (no runtime image processing) */
+img.js-auto-transparent-bg{background:#eef4ff !important;}
+.photo-holder,
+.fade-grid .photo-holder,
+.desktop-memory-all-grid .photo-holder,
+.lightbox-img,
+.lightbox-gallery,
+.lightbox-inline-gallery{background:#eef4ff !important;}
+.photo-holder img,
+.photo-holder .card-photo,
+.lightbox-img img,
+.lightbox-gallery img,
+.lightbox-inline-gallery img{background:#eef4ff !important;}

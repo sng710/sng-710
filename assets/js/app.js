@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=65', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=66', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -27,158 +27,17 @@ function imgMarkup(person) {
   return src ? `<img class="js-auto-transparent-bg" src="${esc(src)}" alt="${esc(person.name)}" loading="lazy">` : '';
 }
 
+
 const AUTO_TRANSPARENT_BG_CACHE = new Map();
 let autoTransparentBgObserver = null;
 let autoTransparentBgApplyScheduled = false;
 
-function isAutoBgPixel(data, idx) {
-  const a = data[idx + 3];
-  if (a < 12) return true;
-  const r = data[idx];
-  const g = data[idx + 1];
-  const b = data[idx + 2];
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  // Matches white / off-white / light gray checkerboard backgrounds.
-  // Kept strict enough so white shirts are not removed unless connected to the outer background.
-  return r >= 226 && g >= 226 && b >= 226 && (max - min) <= 22;
-}
-
-function makeImageBackgroundTransparent(img) {
-  if (!img || img.dataset.bgCleaned === '1' || img.dataset.bgCleaned === 'pending') return;
-  const originalSrc = img.currentSrc || img.src || '';
-  if (!originalSrc || originalSrc.startsWith('data:')) return;
-
-  const run = () => {
-    const src = img.currentSrc || img.src || originalSrc;
-    if (!src || src.startsWith('data:')) return;
-
-    if (AUTO_TRANSPARENT_BG_CACHE.has(src)) {
-      img.src = AUTO_TRANSPARENT_BG_CACHE.get(src);
-      img.dataset.bgCleaned = '1';
-      return;
-    }
-
-    img.dataset.bgCleaned = 'pending';
-
-    const source = new Image();
-    source.crossOrigin = 'anonymous';
-    source.decoding = 'async';
-
-    source.onload = () => {
-      try {
-        const w = source.naturalWidth || source.width;
-        const h = source.naturalHeight || source.height;
-        if (!w || !h || w * h > 6000000) {
-          img.dataset.bgCleaned = 'skip';
-          return;
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        if (!ctx) {
-          img.dataset.bgCleaned = 'skip';
-          return;
-        }
-
-        ctx.drawImage(source, 0, 0, w, h);
-        const imageData = ctx.getImageData(0, 0, w, h);
-        const data = imageData.data;
-        const seen = new Uint8Array(w * h);
-        const stack = [];
-
-        const push = (x, y) => {
-          if (x < 0 || x >= w || y < 0 || y >= h) return;
-          const pos = y * w + x;
-          if (seen[pos]) return;
-          const idx = pos * 4;
-          if (!isAutoBgPixel(data, idx)) return;
-          seen[pos] = 1;
-          stack.push(pos);
-        };
-
-        // Seed from top + upper side edges only. This removes the outer background
-        // while protecting white shirts that touch the bottom edge.
-        const sideLimit = Math.floor(h * 0.72);
-        for (let x = 0; x < w; x++) push(x, 0);
-        for (let y = 0; y < sideLimit; y++) {
-          push(0, y);
-          push(w - 1, y);
-        }
-
-        while (stack.length) {
-          const pos = stack.pop();
-          const x = pos % w;
-          const y = Math.floor(pos / w);
-          const idx = pos * 4;
-          data[idx + 3] = 0;
-          push(x + 1, y);
-          push(x - 1, y);
-          push(x, y + 1);
-          push(x, y - 1);
-        }
-
-        // Soft cleanup for checkerboard edge pixels touching transparent area.
-        const copyAlpha = new Uint8Array(w * h);
-        for (let i = 0; i < copyAlpha.length; i++) copyAlpha[i] = data[i * 4 + 3];
-        for (let y = 1; y < h - 1; y++) {
-          for (let x = 1; x < w - 1; x++) {
-            const pos = y * w + x;
-            const idx = pos * 4;
-            if (copyAlpha[pos] === 0 || !isAutoBgPixel(data, idx)) continue;
-            const touchesTransparent =
-              copyAlpha[pos - 1] === 0 ||
-              copyAlpha[pos + 1] === 0 ||
-              copyAlpha[pos - w] === 0 ||
-              copyAlpha[pos + w] === 0;
-            if (touchesTransparent) data[idx + 3] = Math.min(data[idx + 3], 45);
-          }
-        }
-
-        ctx.putImageData(imageData, 0, 0);
-        const cleaned = canvas.toDataURL('image/png');
-        AUTO_TRANSPARENT_BG_CACHE.set(src, cleaned);
-        img.src = cleaned;
-        img.dataset.bgCleaned = '1';
-      } catch (err) {
-        // If the browser blocks canvas access for any image, keep the original image.
-        img.dataset.bgCleaned = 'skip';
-      }
-    };
-
-    source.onerror = () => {
-      img.dataset.bgCleaned = 'skip';
-    };
-
-    source.src = src;
-  };
-
-  if (img.complete && img.naturalWidth) run();
-  else img.addEventListener('load', run, { once: true });
-}
-
-function applyAutoTransparentBackgrounds(root = document) {
-  if (!root || !root.querySelectorAll) return;
-  root.querySelectorAll('img.js-auto-transparent-bg').forEach(makeImageBackgroundTransparent);
-}
-
-function scheduleAutoTransparentBackgrounds(root = document) {
-  if (autoTransparentBgApplyScheduled) return;
-  autoTransparentBgApplyScheduled = true;
-  window.requestAnimationFrame(() => {
-    autoTransparentBgApplyScheduled = false;
-    applyAutoTransparentBackgrounds(root);
-  });
-}
-
-function startAutoTransparentBackgrounds() {
-  scheduleAutoTransparentBackgrounds(document);
-  if (autoTransparentBgObserver || !window.MutationObserver) return;
-  autoTransparentBgObserver = new MutationObserver(() => scheduleAutoTransparentBackgrounds(document));
-  autoTransparentBgObserver.observe(document.body, { childList: true, subtree: true });
-}
+// v67 — disabled runtime background processing for faster loading.
+// Portraits now use a unified light-blue holder background instead.
+function makeImageBackgroundTransparent(img) { return; }
+function applyAutoTransparentBackgrounds(root = document) { return; }
+function scheduleAutoTransparentBackgrounds(root = document) { return; }
+function startAutoTransparentBackgrounds() { return; }
 function normalizeHebText(s) {
   return String(s || '')
     .replace(/[״“”]/g, '"')
