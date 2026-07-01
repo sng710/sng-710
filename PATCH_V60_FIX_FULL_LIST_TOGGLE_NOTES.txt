@@ -1,0 +1,12 @@
+V60 — תיקון שגיאת app.js בגלילת הרשימה
+
+מה תוקן:
+- הוסר קריאה ישנה ל-startCardPhotoRotation שכבר לא קיימת מאז שהעברנו את סיבוב התמונות רק לפופ-אפ.
+- זו הייתה הסיבה לשגיאה:
+  Uncaught ReferenceError: startCardPhotoRotation is not defined
+- עודכן cache-bust ל-v=60 עבור app.js, styles.css ו-people.json.
+
+קבצים שהתעדכנו:
+- index.html
+- assets/js/app.js
+- assets/css/styles.css

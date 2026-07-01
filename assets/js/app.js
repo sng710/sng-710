@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=58', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=60', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -759,7 +759,6 @@ function setupFullListToggle() {
   fullListToggle.addEventListener('click', () => {
     fullListPanel.classList.toggle('is-collapsed');
     update();
-    startCardPhotoRotation();
   });
   update();
 }
