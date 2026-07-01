@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=57', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=58', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -147,6 +147,14 @@ function cleanPersonDisplayName(name) {
     .replace(/\s+ז״ל\s*$/i, '')
     .trim();
 }
+function getPersonFirstName(person) {
+  if (person && person.firstNameHebrew) return String(person.firstNameHebrew).trim();
+  const clean = cleanPersonDisplayName(person && person.name ? person.name : '');
+  if (!clean) return '';
+  const parts = clean.split(/\s+/).filter(Boolean);
+  // Fallback only: most people now have firstNameHebrew in people.json.
+  return parts[0] || clean;
+}
 function splitIntoSentences(text) {
   return String(text || '')
     .replace(/\s+/g, ' ')
@@ -232,7 +240,7 @@ function renderDescription(person) {
     blocks.push(`<section class="lightbox-section lightbox-personal-details"><h3 class="lightbox-section-title">פרטים אישיים</h3><ul class="lightbox-facts">${parts.facts.map(formatFactLine).join('')}</ul></section>`);
   }
 
-  const aboutTitle = `על ${esc(cleanPersonDisplayName(person.name) || 'האדם')}`;
+  const aboutTitle = `על ${esc(getPersonFirstName(person) || cleanPersonDisplayName(person.name) || 'האדם')}`;
   const aboutParagraphs = buildShortAboutText(person, parts);
   if (aboutParagraphs.length) {
     blocks.push(`<section class="lightbox-section lightbox-about-person"><h3 class="lightbox-section-title">${aboutTitle}</h3>${aboutParagraphs.map(p => `<p class="lightbox-paragraph lightbox-lead-paragraph">${esc(p)}</p>`).join('')}</section>`);

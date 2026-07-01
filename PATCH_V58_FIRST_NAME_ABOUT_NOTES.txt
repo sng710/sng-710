@@ -1,0 +1,12 @@
+V58 — כותרת "על" לפי שם פרטי בלבד
+
+מה השתנה:
+- הכותרת בפופ-אפ השתנתה מ"על שם מלא" ל"על שם פרטי".
+- נוסף שדה firstNameHebrew לכל האנשים ב-assets/data/people.json.
+- למשל אצל רון שלמה צבי הכותרת תוצג: "על שלמה".
+- עודכן cache-bust ל-v=58.
+
+קבצים שהתעדכנו:
+- index.html
+- assets/js/app.js
+- assets/data/people.json
