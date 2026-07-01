@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=60', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=61', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -125,7 +125,7 @@ function splitDescription(person) {
   let inBody = false;
   for (const line of lines) {
     if (headingOnly.test(line)) { inBody = true; continue; }
-    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^נולד|^נולדה|^תאריך|^התגורר|^התגוררה|^מקום מנוחה|^מקום קבורה|^משפחה:|^קרבה משפחתית:|^שאירים|^הובא|^הובאה|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
+    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^אח\s+|^אחות\s+|^אב\s+|^אם\s+|^בעלה\s+|^אשתו\s+|^בן זוג|^בת זוג|^נולד|^נולדה|^תאריך|^\d{1,2}[./]\d{1,2}[./]\d{2,4}\s*[–-]|^מקום מגורים|^התגורר|^התגוררה|^גדל|^גדלה|^מקום מנוחה|^מקום קבורה|^תפקיד|^שירת|^סרן|^רס״ן|^רב-סמל|^חבר כיתת|^סגן רבש|^משפחה:|^קרבה משפחתית:|^שאירים|^הובא|^הובאה|^חלקה|^שורה|^קבר|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
     if (!inBody && isFact) facts.push(line);
     else { inBody = true; body.push(line); }
   }
@@ -138,7 +138,8 @@ function splitDescription(person) {
     else if (/7\s*באוקטובר|שבעה באוקטובר|שמחת תורה|כ״ב בתשרי|כ"ב בתשרי|נרצח|נרצחה|נפל|נפלה|נהרג|נהרגה|נחטף|נחטפה|שבי|ממ״ד|ממ"ד|מחבלים|כיתת הכוננות|קרב|הגן|הגנה|פונה|הובא למנוחות|הובאה למנוחות/.test(p)) event.push(p);
     else life.push(p);
   }
-  return {facts, life: life.length ? life : paragraphs.filter(p => !memory.includes(p) && !event.includes(p)), event, memory};
+  const finalLife = life.length ? life : paragraphs.filter(p => !memory.includes(p) && !event.includes(p));
+  return {facts, life: finalLife, event, memory, allParagraphs: paragraphs};
 }
 
 function cleanPersonDisplayName(name) {
@@ -193,31 +194,25 @@ function pickMeaningfulParagraphs(list, maxItems = 2, used = new Set()) {
   return out;
 }
 function buildShortAboutText(person, parts) {
+  const primary = makeConciseParagraph(person.summary || '', 2, 460);
+  if (primary) return [primary];
+
   const used = new Set();
-  const primary = makeConciseParagraph(person.summary || '', 3, 620);
-  if (primary) used.add(normalizeForCompare(primary));
+  const fromLife = pickMeaningfulParagraphs(parts.life, 1, used);
+  if (fromLife.length) return fromLife.map(p => makeConciseParagraph(p, 2, 460));
 
-  const extras = [];
-  // Bring one human/life detail and, when available, one memory sentence.
-  extras.push(...pickMeaningfulParagraphs(parts.life, 1, used));
-  extras.push(...pickMeaningfulParagraphs(parts.memory, 1, used));
+  const fromEvent = pickMeaningfulParagraphs(parts.event, 1, used);
+  if (fromEvent.length) return fromEvent.map(p => makeConciseParagraph(p, 2, 460));
 
-  // If there is no person.summary, use more from the text itself.
-  if (!primary) {
-    extras.unshift(...pickMeaningfulParagraphs(parts.event, 1, used));
-  }
-
-  const paragraphs = [];
-  if (primary) paragraphs.push(primary);
-  for (const p of extras) {
-    if (paragraphs.length >= 3) break;
-    paragraphs.push(p);
-  }
-  return paragraphs;
+  const fromMemory = pickMeaningfulParagraphs(parts.memory, 1, used);
+  return fromMemory.map(p => makeConciseParagraph(p, 2, 460));
 }
 function renderFullStoryDetails(parts) {
   const storyBlocks = [];
-  const renderParas = paras => paras.map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`).join('');
+  const renderParas = paras => (Array.isArray(paras) ? paras : [])
+    .filter(Boolean)
+    .map(p => `<p class="lightbox-paragraph">${esc(p)}</p>`)
+    .join('');
 
   if (parts.life && parts.life.length) {
     storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">סיפור חיים</h4>${renderParas(parts.life)}</section>`);
@@ -229,8 +224,13 @@ function renderFullStoryDetails(parts) {
     storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">זיכרון ומילים מהלב</h4>${renderParas(parts.memory)}</section>`);
   }
 
+  // Fallback: if categorization missed the text, still show the full story instead of leaving only the short summary.
+  if (!storyBlocks.length && parts.allParagraphs && parts.allParagraphs.length) {
+    storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">הסיפור המלא</h4>${renderParas(parts.allParagraphs)}</section>`);
+  }
+
   if (!storyBlocks.length) return '';
-  return `<details class="lightbox-full-story"><summary>לקריאת הסיפור המלא</summary><div class="lightbox-full-story-body">${storyBlocks.join('')}</div></details>`;
+  return `<details class="lightbox-full-story" open><summary>לקריאת הסיפור המלא</summary><div class="lightbox-full-story-body">${storyBlocks.join('')}</div></details>`;
 }
 
 function renderDescription(person) {
@@ -643,6 +643,18 @@ function closeLightbox(event, options = {}) {
   activeLightboxPersonKey = '';
   if (options.clearUrl !== false) clearPersonHash(closingPersonKey);
   stopLightboxPhotoRotation();
+
+  // Move focus out of the popup before aria-hidden=true, otherwise browsers warn that
+  // a focused descendant is being hidden from assistive technologies.
+  const restoreTarget = lastFocusedBeforeLightbox && document.contains(lastFocusedBeforeLightbox) ? lastFocusedBeforeLightbox : null;
+  if (document.activeElement && lightbox.contains(document.activeElement)) {
+    if (restoreTarget && typeof restoreTarget.focus === 'function') {
+      restoreTarget.focus({preventScroll:true});
+    } else if (typeof document.activeElement.blur === 'function') {
+      document.activeElement.blur();
+    }
+  }
+
   lightbox.classList.remove('is-open', 'is-loading');
   lightbox.setAttribute('aria-hidden','true');
   document.body.style.overflow = '';

@@ -1295,3 +1295,52 @@ body{
 .lightbox-gallery.is-slideshow{
   background:transparent !important;
 }
+
+
+/* v61 — true full-image display: no circle crop, no zoom, transparent holders */
+.photo-holder,
+.fade-grid .photo-holder,
+.desktop-memory-all-grid .photo-holder,
+.lightbox-img{
+  border-radius:0 !important;
+  overflow:visible !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+.photo-holder img,
+.photo-holder .card-photo,
+.lightbox-img img,
+.lightbox-gallery img,
+.lightbox-gallery.is-slideshow img{
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  background:transparent !important;
+}
+
+.photo-holder img,
+.photo-holder .card-photo{
+  width:100% !important;
+  height:100% !important;
+  border-radius:0 !important;
+  filter:grayscale(1) contrast(1.04) brightness(.99) !important;
+}
+
+.lightbox-img img,
+.lightbox-gallery img,
+.lightbox-gallery.is-slideshow img{
+  border-radius:18px !important;
+}
+
+.lightbox-gallery,
+.lightbox-gallery.is-slideshow{
+  background:transparent !important;
+}
+
+.lightbox-full-story{
+  display:block !important;
+}
+.lightbox-full-story[open] .lightbox-full-story-body{
+  display:block !important;
+}
