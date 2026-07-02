@@ -1488,3 +1488,33 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
   background:#d7dfeb !important;
   filter:none !important;
 }
+
+
+/* v72 — make personal details the first clear section in every popup */
+.lightbox-personal-details{
+  order:-10;
+  margin-top:0 !important;
+  padding:clamp(13px,1.2vw,18px) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-radius:20px !important;
+  background:rgba(255,255,255,.075) !important;
+}
+.lightbox-personal-details .lightbox-section-title{
+  margin:0 0 12px !important;
+  font-size:clamp(20px,1.55vw,26px) !important;
+}
+.lightbox-personal-details .lightbox-facts{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr)) !important;
+  gap:8px !important;
+}
+.lightbox-personal-details .lightbox-facts li{
+  margin:0 !important;
+  background:rgba(255,255,255,.082) !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+}
+@media(max-width:720px){
+  .lightbox-personal-details .lightbox-facts{
+    grid-template-columns:1fr !important;
+  }
+}

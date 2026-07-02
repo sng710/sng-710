@@ -1,0 +1,13 @@
+V72 — personal details at the top of every popup
+
+Changes:
+- Every popup now builds a top “פרטים אישיים” section.
+- Existing personal-detail lines are extracted from each person's text and shown first.
+- If details are missing, the code adds relevant fallback details from people.json: place, role and age.
+- More line types are recognized as personal details: parents, siblings, spouse/partner, birth, place, role, rank, unit, date, burial, family left behind and memorial board.
+- Cache inside app.js was updated to people.json?v=72.
+
+Updated files:
+- assets/js/app.js
+- assets/css/styles.css
+- assets/data/people.json
