@@ -1,0 +1,13 @@
+V73 — faster top rotation + family adjacency
+
+Changes:
+- Top image rotation interval changed from 9000ms to 6500ms.
+- maayan_i is now directly after tzachi_i.
+- noam_e is now directly after dikla_a.
+- app.js now loads people.json?v=73.
+- index.html, if uploaded, now loads app.js?v=73.
+
+Updated files:
+- index.html
+- assets/js/app.js
+- assets/data/people.json
