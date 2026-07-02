@@ -271,7 +271,7 @@ function buildTopPersonalFacts(person, facts) {
   }
 
   if (person && person.role && !factListHas(out, /תפקיד|שירת|חיל|רבש|כיתת|לוחם|לוחמת|סרן|סמל|רס/)) {
-    out.push(`תפקיד וזיקה: ${person.role}`);
+    out.push(` ${person.role}`);
   }
 
   if (person && person.age && !factListHas(out, /^בן\s+\d|^בת\s+\d|גיל/)) {
