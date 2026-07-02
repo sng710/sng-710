@@ -1458,3 +1458,33 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
   transform: scale(1.08) !important;
   transform-origin: center center;
 }
+
+
+/* v71 — main page portraits in full color + softer non-white portrait background */
+.photo-holder,
+.fade-grid .photo-holder,
+.desktop-memory-all-grid .photo-holder{
+  background:#c7d2e1 !important;
+}
+
+.photo-holder img,
+.photo-holder .card-photo,
+.desktop-memory-all-grid .photo-holder img,
+.fade-grid .photo-holder img{
+  filter:none !important;
+  background:#c7d2e1 !important;
+}
+
+/* Keep popup portrait/galleries clean as well with a matching but slightly lighter tone */
+.lightbox-img,
+.lightbox-gallery,
+.lightbox-inline-gallery{
+  background:#d7dfeb !important;
+}
+
+.lightbox-img img,
+.lightbox-gallery img,
+.lightbox-inline-gallery img{
+  background:#d7dfeb !important;
+  filter:none !important;
+}

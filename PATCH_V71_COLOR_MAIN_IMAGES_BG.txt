@@ -1,0 +1,11 @@
+V71 — remove black-and-white from main portraits and use a more distinct portrait background
+
+What changed:
+- Main page portraits now show in color (grayscale removed).
+- Portrait circle background changed from the previous very light blue to a slightly deeper soft blue-gray, so white shirts stand out better.
+- Popup portrait/gallery background also updated to a matching lighter tone.
+- Cache version bumped to v71.
+
+Updated files:
+- index.html
+- assets/css/styles.css
