@@ -1,0 +1,16 @@
+V77 — full list only, no top rotation
+
+Changes:
+- Removed the top rotating portraits area.
+- Removed Previous/Next buttons because there is no rotation.
+- Kept the full list as the main view.
+- Kept all person texts/data unchanged from the latest v76 people.json.
+- Kept popup/lightbox content, galleries, links and personal details behavior.
+- Improved full-list layout with larger, clean portrait cards.
+- Cache updated to v77.
+
+Updated files:
+- index.html
+- assets/js/app.js
+- assets/css/styles.css
+- assets/data/people.json

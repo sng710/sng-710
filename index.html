@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>רקמה אנושית אחת — תמונות מתחלפות</title>
+<title>רקמה אנושית אחת — רשימת זיכרון מלאה</title>
 <meta name="description" content="רקמה אנושית אחת — אתר זיכרון לנופלות ולנופלים משער הנגב, כפר עזה, נחל עוז, יכיני והיישובים שנפגעו בשבעה באוקטובר.">
 <meta property="og:title" content="רקמה אנושית אחת — שער הנגב">
 <meta property="og:description" content="אתר זיכרון לנופלות ולנופלים, עם תמונות, סיפורי חיים וקישורי הנצחה.">
@@ -10,36 +10,30 @@
 <meta property="og:image" content="https://sng710.github.io/sng-710/assets/bg/leaf-landscape.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/bg/leaf-landscape.webp" type="image/webp">
-<link rel="stylesheet" href="assets/css/styles.css?v=74">
+<link rel="stylesheet" href="assets/css/styles.css?v=77">
 
 </head>
 <body>
 <div class="rekama-wrap">
   <div class="toolbar">
     <input id="searchInput" type="search" placeholder="חיפוש לפי שם או יישוב..." aria-label="חיפוש לפי שם או יישוב">
-    <button id="prevBtn" class="tool-btn" type="button">הקודם</button>
-    <button id="nextBtn" class="tool-btn" type="button">הבא</button>
     <span id="statusText" class="tool-meta"></span>
   </div>
-  <section class="pdf-bg fade-poster" aria-label="רקמה אנושית אחת">
-    <header class="fade-hero">
+  <section class="pdf-bg full-list-hero" aria-label="רקמה אנושית אחת">
+    <header class="fade-hero full-list-hero-inner">
       <span class="rule" aria-hidden="true"></span>
       <div class="title-lockup">
         <p class="poem">וְאִם אֶחָד מֵאִתָּנוּ<br>הוֹלֵךְ מֵעִמָּנוּ<br>מַשֶּׁהוּ מֵת בָּנוּ<br>וּמַשֶּׁהוּ נִשְׁאָר אִתּוֹ.</p>
         <h1 class="main-title">רקמה<br>אנושית<br>אחת</h1>
       </div>
       <span class="rule" aria-hidden="true"></span>
+      <p class="dedication full-list-dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
     </header>
-    <div class="fade-grid" id="posterGrid" aria-label="תמונות מתחלפות של הנופלות והנופלים"></div>
-    <p class="dedication fade-dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
     <div id="emptySearch" class="empty-search">לא נמצאו תוצאות לחיפוש הזה.</div>
   </section>
 
-  <section class="desktop-memory-panel" id="fullListPanel" aria-label="רשימת כל הנופלות והנופלים">
-    <div class="desktop-memory-panel-head">
-      <button class="full-list-toggle" id="fullListToggle" type="button" aria-expanded="true" aria-controls="fullListBody">הסתרת הרשימה המלאה</button>
-    </div>
-    <div class="desktop-memory-panel-body" id="fullListBody">
+<section class="desktop-memory-panel full-list-only-panel" id="fullListPanel" aria-label="רשימת כל הנופלות והנופלים">
+<div class="desktop-memory-panel-body" id="fullListBody">
       <div class="desktop-memory-all-grid" id="desktopAllGrid" aria-label="כל התמונות ברשימה מלאה"></div>
       <div class="desktop-memory-copy">
         <p class="dedication">נזכור בכבוד ובאהבה את כל הנופלות והנופלים,<br>שנפלו בשבעה באוקטובר ובימים שלאחריו,<br>ונישא את זכרם בליבנו כחלק בלתי נפרד מהסיפור שלנו<br>ומהתקווה לעתיד של שלום וביטחון לכולנו.</p>
@@ -69,7 +63,7 @@
 </div>
 
 
-<script src="assets/js/app.js?v=74" defer></script>
+<script src="assets/js/app.js?v=77" defer></script>
 
 </body>
 </html>

@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=74', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=77', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -722,13 +722,17 @@ const emptySearch = document.getElementById('emptySearch');
 const desktopAllGrid = document.getElementById('desktopAllGrid');
 const fullListPanel = document.getElementById('fullListPanel');
 const fullListToggle = document.getElementById('fullListToggle');
-let slotsCount = 12;
+let slotsCount = 8;
 let startIndex = 0;
 let active = filteredPeople();
 let cards = [];
 let timer = null;
 
 function buildCards() {
+  if (!posterGrid) {
+    cards = [];
+    return;
+  }
   posterGrid.innerHTML = '';
   cards = [];
   for (let i=0; i<slotsCount; i++) {
@@ -793,18 +797,10 @@ function setupFullListToggle() {
 
 function render() {
   active = filteredPeople();
+  desktopAllGridKey = '';
   renderDesktopAllPeople();
-  emptySearch.classList.toggle('show', !active.length);
-  if (!active.length) {
-    cards.forEach(card => setCard(card, null));
-    statusText.textContent = '0 תוצאות';
-    return;
-  }
-  if (startIndex >= active.length) startIndex = 0;
-  const visiblePeople = active.slice(startIndex, startIndex + slotsCount);
-  for (let i=0; i<slotsCount; i++) setCard(cards[i], visiblePeople[i] || null);
-  const end = Math.min(active.length, startIndex + visiblePeople.length);
-  statusText.textContent = `${startIndex + 1}-${end} מתוך ${active.length}`;
+  if (emptySearch) emptySearch.classList.toggle('show', !active.length);
+  if (statusText) statusText.textContent = active.length ? `${active.length} נופלות ונופלים` : '0 תוצאות';
 }
 function move(direction, withFade=true) {
   if (!active.length) return;
@@ -820,7 +816,6 @@ function move(direction, withFade=true) {
 }
 function startTimer() {
   clearInterval(timer);
-  if (active.length > slotsCount) timer = setInterval(() => move(1, true), ROTATION_INTERVAL_MS);
 }
 function refresh() { startIndex = 0; render(); startTimer(); }
 async function initApp() {
@@ -841,8 +836,8 @@ async function initApp() {
   startAutoTransparentBackgrounds();
   refresh();
   searchInput.addEventListener('input', refresh);
-  prevBtn.addEventListener('click', () => { move(-1, true); startTimer(); });
-  nextBtn.addEventListener('click', () => { move(1, true); startTimer(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { move(-1, true); startTimer(); });
+  if (nextBtn) nextBtn.addEventListener('click', () => { move(1, true); startTimer(); });
   window.addEventListener('hashchange', openPersonFromUrl);
   setTimeout(openPersonFromUrl, 120);
 }
