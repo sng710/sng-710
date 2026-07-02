@@ -562,6 +562,18 @@
     "firstNameHebrew": "דקלה"
   },
   {
+    "id": "noam_e",
+    "name": "אליקים נועם ז\"ל",
+    "place": "נחל עוז",
+    "image": "assets/people-original/noam_e.webp",
+    "age": 46,
+    "role": "מסגר, איש משפחה ונתינה",
+    "summary": "נועם אליקים ז״ל, בן 46 מנחל עוז, היה מסגר ואיש משפחה ונתינה. הוא ודקלה ערבה היו בני זוג ובנו בית משותף בנחל עוז; תומר, בנה של דקלה, גר עמם בבית. נועם נרצח במתקפת 7 באוקטובר.",
+    "photos": [],
+    "textFile": "assets/people/noam_e/text/אליקים נועם.txt",
+    "firstNameHebrew": "נועם"
+  },
+  {
     "id": "tomer_a",
     "name": "ערבה אליעז תומר ז\"ל",
     "place": "נחל עוז",
@@ -704,18 +716,6 @@
     "photos": [],
     "textFile": "assets/people/eitan_z/text/זיו איתן.txt",
     "firstNameHebrew": "איתן"
-  },
-  {
-    "id": "noam_e",
-    "name": "אליקים נועם ז\"ל",
-    "place": "נחל עוז",
-    "image": "assets/people-original/noam_e.webp",
-    "age": 46,
-    "role": "מסגר, איש משפחה ונתינה",
-    "summary": "נועם אליקים ז״ל, בן 46 מנחל עוז, היה מסגר ואיש משפחה ונתינה. הוא ודקלה ערבה היו בני זוג ובנו בית משותף בנחל עוז; תומר, בנה של דקלה, גר עמם בבית. נועם נרצח במתקפת 7 באוקטובר.",
-    "photos": [],
-    "textFile": "assets/people/noam_e/text/אליקים נועם.txt",
-    "firstNameHebrew": "נועם"
   },
   {
     "id": "tami_p",
