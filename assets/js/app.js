@@ -1,4 +1,4 @@
-const ROTATION_INTERVAL_MS = 9000;
+const ROTATION_INTERVAL_MS = 6500;
 const POPUP_CLOSE_GUARD_MS = 650;
 const GALLERY_SLIDE_MS = 3600;
 const CARD_FADE_MS = 520;
@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=72', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=74', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -108,11 +108,8 @@ function isRedundantMemorialLine(line) {
   if (!clean) return true;
   return /^חלל(?:ת)? פעול(?:ת|ות) איבה$/.test(clean)
     || /^מקום\s+(?:ה)?אירוע\s*[:：]/.test(clean)
-    || /^לחדר נרות$/.test(clean)
-    || /^כתיבת הקדשה$/.test(clean)
-    || /^הדפסת עמוד הנצחה$/.test(clean)
-    || /^תווית נר זיכרון/.test(clean)
-    || /^שיתוף בפייסבוק/.test(clean);
+    || /^ב[-\s]*0?7[\/.]10[\/.]2023$/.test(clean)
+    || /^בכ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד\b.*0?7[\/.]10[\/.]2023.*$/.test(clean);
 }
 function cleanRedundantMemorialText(text) {
   return String(text || '')
@@ -130,168 +127,17 @@ function formatFactLine(line) {
   }
   return `<li>${esc(clean)}</li>`;
 }
-
-function isPlainHebrewMemorialDate(line) {
-  return /^כ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד$/.test(String(line || '').trim())
-    || /^כ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד\b/.test(String(line || '').trim());
-}
-
-function isPlainNumericDate(line) {
-  return /^\d{1,2}[./]\d{1,2}[./]\d{2,4}$/.test(String(line || '').trim());
-}
-
-function combinePersonalFactLines(lines) {
-  const out = [];
-  const list = Array.isArray(lines) ? lines : [];
-  for (let i = 0; i < list.length; i++) {
-    const line = String(list[i] || '').trim();
-    const next = String(list[i + 1] || '').trim();
-    const next2 = String(list[i + 2] || '').trim();
-
-    if (/^נפל ביום$/.test(line) || /^נפלה ביום$/.test(line)) {
-      const verb = /^נפלה/.test(line) ? 'נפלה' : 'נפל';
-      if (next && isPlainHebrewMemorialDate(next) && next2 && isPlainNumericDate(next2)) {
-        out.push(`${verb} ב${next}, ${next2}`);
-        i += 2;
-        continue;
-      }
-      if (next && (isPlainHebrewMemorialDate(next) || isPlainNumericDate(next))) {
-        out.push(`${verb} ב${next}`);
-        i += 1;
-        continue;
-      }
-      out.push(line);
-      continue;
-    }
-
-    if (isPlainHebrewMemorialDate(line) && next && isPlainNumericDate(next)) {
-      out.push(`תאריך נפילה/רצח: ${line}, ${next}`);
-      i += 1;
-      continue;
-    }
-
-    if (/^ב[-\s]*0?7[/.]10[/.]2023$/.test(line)) {
-      out.push(`תאריך נפילה/רצח: ${line.replace(/^ב[-\s]*/, '')}`);
-      continue;
-    }
-
-    if (/^בכ?["'׳״]?ב\s+בתשרי\s+תשפ["'׳״]?ד\b/.test(line)) {
-      out.push(`תאריך נפילה/רצח: ${line.replace(/^ב/, '')}`);
-      continue;
-    }
-
-    out.push(line);
-  }
-  return out;
-}
-
-function isPersonalFactLine(line) {
-  const clean = String(line || '').replace(/\s+/g, ' ').trim();
-  if (!clean) return false;
-  return /^(בן|בת)\s+\d/.test(clean)
-    || /^(בן|בת)\s+/.test(clean)
-    || /^(אח|אחות)\s+/.test(clean)
-    || /^(אב|אם)\s+/.test(clean)
-    || /^(בעלה|אשתו)\s+/.test(clean)
-    || /^בן זוג/.test(clean)
-    || /^בת זוג/.test(clean)
-    || /^נולד/.test(clean)
-    || /^נולדה/.test(clean)
-    || /^גדל/.test(clean)
-    || /^גדלה/.test(clean)
-    || /^תאריך/.test(clean)
-    || /^\d{1,2}[./]\d{1,2}[./]\d{2,4}\s*[–-]/.test(clean)
-    || /^מקום מגורים/.test(clean)
-    || /^התגורר/.test(clean)
-    || /^התגוררה/.test(clean)
-    || /^מקום מנוחה/.test(clean)
-    || /^מקום קבורה/.test(clean)
-    || /^תפקיד/.test(clean)
-    || /^שירת/.test(clean)
-    || /^חיל\s+/.test(clean)
-    || /^רב[־\-\s]*סמל/.test(clean)
-    || /^רס[״"']?ם/.test(clean)
-    || /^רס[״"']?ר/.test(clean)
-    || /^רס[״"']?ן/.test(clean)
-    || /^סרן/.test(clean)
-    || /^סמ[״"']?ר/.test(clean)
-    || /^סמל/.test(clean)
-    || /^רב[־\-\s]*טוראי/.test(clean)
-    || /^חבר כיתת/.test(clean)
-    || /^חברת כיתת/.test(clean)
-    || /^סגן רבש/.test(clean)
-    || /^רבש/.test(clean)
-    || /^לוחם/.test(clean)
-    || /^לוחמת/.test(clean)
-    || /^משפחה:/.test(clean)
-    || /^קרבה משפחתית:/.test(clean)
-    || /^שאירים/.test(clean)
-    || /^הובא/.test(clean)
-    || /^הובאה/.test(clean)
-    || /^חלקה/.test(clean)
-    || /^שורה/.test(clean)
-    || /^קבר/.test(clean)
-    || /^גוש/.test(clean)
-    || /^אזור/.test(clean)
-    || /^הותיר/.test(clean)
-    || /^הותירה/.test(clean)
-    || /^נרצח/.test(clean)
-    || /^נרצחה/.test(clean)
-    || /^נפל/.test(clean)
-    || /^נפלה/.test(clean)
-    || /^נהרג/.test(clean)
-    || /^נהרגה/.test(clean)
-    || /^.+מונצח/.test(clean)
-    || /^.+מונצחת/.test(clean);
-}
-
-function uniqueFactLines(lines) {
-  const seen = new Set();
-  const out = [];
-  for (const line of (Array.isArray(lines) ? lines : [])) {
-    const clean = cleanFactLine(line);
-    if (!clean) continue;
-    const key = normalizeHebText(clean);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
-    out.push(clean);
-  }
-  return out;
-}
-
-function factListHas(facts, pattern) {
-  return (Array.isArray(facts) ? facts : []).some(line => pattern.test(String(line || '')));
-}
-
-function buildTopPersonalFacts(person, facts) {
-  const out = uniqueFactLines(facts);
-
-  if (person && person.place && !factListHas(out, /מקום מגורים|התגורר|התגוררה/)) {
-    out.push(`מקום מגורים: ${person.place}`);
-  }
-
-  if (person && person.role && !factListHas(out, /תפקיד|שירת|חיל|רבש|כיתת|לוחם|לוחמת|סרן|סמל|רס/)) {
-    out.push(` ${person.role}`);
-  }
-
-  if (person && person.age && !factListHas(out, /^בן\s+\d|^בת\s+\d|גיל/)) {
-    out.push(`גיל: ${person.age}`);
-  }
-
-  return uniqueFactLines(out);
-}
-
 function splitDescription(person) {
   const raw = cleanRedundantMemorialText(stripLeadingName(person.text || person.summary || '', person));
   if (!raw) return {facts: [], life: [], event: [], memory: []};
   const headingOnly = /^(פרטים אישיים|פרטים אישיים והנצחה|סיפור חיים|סיפור חייו|סיפור חייה|קורות חיים|קורות חיים ונפילה|דרך, עשייה ואהבות|נפילתו|נפילתה|חטיפתו ונפילתו|חטיפתה ונפילתה|שבעה באוקטובר והימים שאחריו|דמותו וזכרו|דמותה וזכרה|דמות וזיכרון|דברי זיכרון|זיכרון ומילים מהלב|על מצבתו נכתב|על מצבתה נכתב|מילים שנחקקו)$/;
-  const lines = combinePersonalFactLines(raw.split('\n').map(l => cleanFactLine(l)).filter(Boolean));
+  const lines = raw.split('\n').map(l => cleanFactLine(l)).filter(Boolean);
   const facts = [];
   const body = [];
   let inBody = false;
   for (const line of lines) {
     if (headingOnly.test(line)) { inBody = true; continue; }
-    const isFact = isPersonalFactLine(line);
+    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^אח\s+|^אחות\s+|^אב\s+|^אם\s+|^בעלה\s+|^אשתו\s+|^בן זוג|^בת זוג|^נולד|^נולדה|^תאריך|^\d{1,2}[./]\d{1,2}[./]\d{2,4}\s*[–-]|^מקום מגורים|^התגורר|^התגוררה|^גדל|^גדלה|^מקום מנוחה|^מקום קבורה|^תפקיד|^שירת|^סרן|^רס״ן|^רב-סמל|^חבר כיתת|^סגן רבש|^משפחה:|^קרבה משפחתית:|^שאירים|^הובא|^הובאה|^חלקה|^שורה|^קבר|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
     if (!inBody && isFact) facts.push(line);
     else { inBody = true; body.push(line); }
   }
@@ -402,9 +248,8 @@ function renderFullStoryDetails(parts) {
 function renderDescription(person) {
   const parts = splitDescription(person);
   const blocks = [];
-  const topPersonalFacts = buildTopPersonalFacts(person, parts.facts);
-  if (topPersonalFacts.length) {
-    blocks.push(`<section class="lightbox-section lightbox-personal-details"><h3 class="lightbox-section-title">פרטים אישיים</h3><ul class="lightbox-facts">${topPersonalFacts.map(formatFactLine).join('')}</ul></section>`);
+  if (parts.facts.length) {
+    blocks.push(`<section class="lightbox-section lightbox-personal-details"><h3 class="lightbox-section-title">פרטים אישיים</h3><ul class="lightbox-facts">${parts.facts.map(formatFactLine).join('')}</ul></section>`);
   }
 
   const aboutTitle = `על ${esc(getPersonFirstName(person) || cleanPersonDisplayName(person.name) || 'האדם')}`;
@@ -877,7 +722,7 @@ const emptySearch = document.getElementById('emptySearch');
 const desktopAllGrid = document.getElementById('desktopAllGrid');
 const fullListPanel = document.getElementById('fullListPanel');
 const fullListToggle = document.getElementById('fullListToggle');
-let slotsCount = 6;
+let slotsCount = 12;
 let startIndex = 0;
 let active = filteredPeople();
 let cards = [];

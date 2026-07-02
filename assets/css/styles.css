@@ -1518,3 +1518,95 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     grid-template-columns:1fr !important;
   }
 }
+
+
+/* v74 — 12 rotating portraits, larger frames, full list visible below */
+.fade-grid{
+  top:10.8% !important;
+  right:2.7% !important;
+  width:53.5% !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:clamp(22px,2.25vw,38px) clamp(20px,2.1vw,34px) !important;
+}
+
+.fade-grid .photo-holder{
+  width:clamp(132px,7.7vw,178px) !important;
+}
+
+.photo-holder{
+  box-shadow:
+    0 0 0 clamp(3px,.22vw,5px) var(--stroke),
+    0 16px 36px rgba(0,0,0,.16) !important;
+}
+
+.photo-holder img,
+.photo-holder .card-photo,
+.fade-grid .photo-holder img,
+.desktop-memory-all-grid .photo-holder img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center 31% !important;
+  transform:scale(1.14) !important;
+  transform-origin:center center !important;
+  filter:none !important;
+}
+
+/* Keep the full list below the hero, visible by default */
+.desktop-memory-panel{
+  display:flex;
+}
+
+.desktop-memory-panel-body{
+  display:flex;
+}
+
+.desktop-memory-panel.is-collapsed .desktop-memory-panel-body{
+  display:none !important;
+}
+
+@media (min-width:861px) and (orientation:landscape){
+  .desktop-memory-panel{
+    display:flex !important;
+    margin-top:clamp(34px,4.6vw,82px) !important;
+  }
+
+  .desktop-memory-all-grid{
+    grid-template-columns:repeat(auto-fill,minmax(148px,1fr)) !important;
+    gap:clamp(34px,3vw,52px) clamp(28px,2.4vw,44px) !important;
+  }
+
+  .desktop-memory-all-grid .photo-holder{
+    width:clamp(124px,7.1vw,164px) !important;
+  }
+
+  .desktop-memory-all-grid .slot-name{
+    font-size:clamp(13.5px,1vw,18px) !important;
+  }
+}
+
+@media(max-width:1100px){
+  .fade-grid{
+    width:56% !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:22px 18px !important;
+  }
+  .fade-grid .photo-holder{
+    width:clamp(105px,8.2vw,142px) !important;
+  }
+}
+
+@media(max-width:860px),(orientation:portrait){
+  .fade-grid{
+    width:86% !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:24px 14% !important;
+  }
+  .fade-grid .photo-holder{
+    width:clamp(132px,34vw,212px) !important;
+  }
+  .desktop-memory-panel,
+  .desktop-memory-panel-body{
+    display:block !important;
+  }
+}
