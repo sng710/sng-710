@@ -1793,3 +1793,203 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     font-size:clamp(14px,3.8vw,18px) !important;
   }
 }
+
+
+/* v78 — side-by-side full list view, no rotation */
+.rekama-wrap{
+  min-height:100svh;
+}
+
+.toolbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  width:min(1540px,94vw) !important;
+  margin:0 auto !important;
+  padding:clamp(12px,1vw,18px) 0 !important;
+  background:transparent !important;
+  backdrop-filter:none !important;
+}
+
+.toolbar input{
+  max-width:min(520px,92vw);
+}
+
+.full-list-side-layout{
+  width:min(1660px,95vw);
+  margin:0 auto;
+  padding:clamp(28px,3.5vw,58px) 0 clamp(100px,8vh,150px);
+  display:grid;
+  grid-template-columns:minmax(330px,34%) minmax(0,66%);
+  gap:clamp(34px,4.3vw,78px);
+  align-items:start;
+  direction:ltr;
+}
+
+.full-list-side-layout > *{
+  direction:rtl;
+}
+
+.full-list-hero{
+  min-height:auto !important;
+  height:auto !important;
+  padding:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+.full-list-hero::before,
+.full-list-hero::after{
+  display:none !important;
+}
+
+.full-list-hero .fade-hero,
+.full-list-hero-inner{
+  position:sticky !important;
+  top:clamp(86px,8vw,128px) !important;
+  inset:auto !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 !important;
+  text-align:right !important;
+}
+
+.full-list-hero .title-lockup{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.03fr) minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:clamp(16px,2vw,34px) !important;
+  direction:ltr !important;
+  padding-block:clamp(20px,2.6vw,42px) !important;
+}
+
+.full-list-hero .poem{
+  text-align:right !important;
+  font-size:clamp(24px,2.25vw,48px) !important;
+  line-height:1.18 !important;
+  white-space:normal !important;
+}
+
+.full-list-hero .main-title{
+  text-align:right !important;
+  font-size:clamp(54px,4.9vw,102px) !important;
+  line-height:.86 !important;
+}
+
+.full-list-dedication{
+  margin:clamp(24px,2.6vw,42px) 0 0 !important;
+  max-width:100% !important;
+  text-align:right !important;
+  font-size:clamp(17px,1.25vw,24px) !important;
+  line-height:1.55 !important;
+}
+
+/* The dedication is already in the left text column, so avoid duplicating it inside the list column */
+.full-list-only-panel .desktop-memory-copy{
+  display:none !important;
+}
+
+.full-list-only-panel,
+.desktop-memory-panel.full-list-only-panel{
+  margin:0 !important;
+  width:100% !important;
+  padding:clamp(16px,1.9vw,30px) !important;
+  border-radius:clamp(28px,2.8vw,42px) !important;
+  background:linear-gradient(145deg, rgba(12,28,60,.22), rgba(255,255,255,.045)) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10), 0 20px 70px rgba(0,0,0,.16) !important;
+  backdrop-filter:blur(4px);
+}
+
+.full-list-only-panel .desktop-memory-panel-body{
+  display:block !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid{
+  width:100% !important;
+  display:grid !important;
+  grid-template-columns:repeat(auto-fill,minmax(142px,1fr)) !important;
+  gap:clamp(30px,2.55vw,48px) clamp(22px,2vw,38px) !important;
+  align-items:start !important;
+  justify-items:center !important;
+  padding:clamp(8px,.8vw,14px) !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .memory-slot{
+  min-height:clamp(190px,12.2vw,238px) !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .photo-holder{
+  width:clamp(124px,7.2vw,170px) !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .slot-name{
+  margin-top:clamp(10px,.9vw,15px) !important;
+  font-size:clamp(13.5px,.92vw,18px) !important;
+  line-height:1.17 !important;
+  max-width:16ch !important;
+}
+
+.empty-search{
+  position:relative !important;
+  inset:auto !important;
+  margin:clamp(18px,2vw,28px) 0 0 !important;
+  width:100% !important;
+}
+
+@media(max-width:1120px){
+  .full-list-side-layout{
+    grid-template-columns:1fr !important;
+    gap:clamp(28px,4vw,46px);
+  }
+
+  .full-list-hero .fade-hero,
+  .full-list-hero-inner{
+    position:relative !important;
+    top:auto !important;
+    width:min(980px,92vw) !important;
+    margin:0 auto !important;
+  }
+
+  .full-list-hero .title-lockup{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  }
+
+  .full-list-dedication{
+    text-align:center !important;
+  }
+
+  .full-list-only-panel .desktop-memory-all-grid{
+    grid-template-columns:repeat(auto-fill,minmax(136px,1fr)) !important;
+  }
+}
+
+@media(max-width:680px){
+  .full-list-side-layout{
+    width:min(94vw,760px);
+    padding-top:24px;
+  }
+
+  .full-list-hero .title-lockup{
+    grid-template-columns:1fr !important;
+    gap:18px !important;
+  }
+
+  .full-list-hero .poem,
+  .full-list-hero .main-title{
+    text-align:center !important;
+  }
+
+  .full-list-only-panel,
+  .desktop-memory-panel.full-list-only-panel{
+    padding:clamp(14px,4.5vw,24px) !important;
+  }
+
+  .full-list-only-panel .desktop-memory-all-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:28px 18px !important;
+  }
+
+  .full-list-only-panel .desktop-memory-all-grid .photo-holder{
+    width:clamp(128px,35vw,190px) !important;
+  }
+}
