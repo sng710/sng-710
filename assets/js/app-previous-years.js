@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=82', { cache: 'no-cache' });
+  const response = await fetch('assets/data/previous-years.json?v=82', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -800,7 +800,7 @@ function render() {
   desktopAllGridKey = '';
   renderDesktopAllPeople();
   if (emptySearch) emptySearch.classList.toggle('show', !active.length);
-  if (statusText) statusText.textContent = active.length ? `${active.length} נופלות ונופלים` : '0 תוצאות';
+  if (statusText) statusText.textContent = active.length ? `${active.length} נפגעי פעולות איבה` : '0 תוצאות';
 }
 function move(direction, withFade=true) {
   if (!active.length) return;
