@@ -2057,3 +2057,97 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     gap:28px 16px !important;
   }
 }
+
+
+/* v80 — search placement + non-sticky left column */
+.full-list-side-layout{
+  grid-template-rows:auto auto !important;
+  align-items:start !important;
+}
+
+.full-list-hero{
+  grid-column:1 !important;
+  grid-row:1 !important;
+}
+
+.full-list-only-panel{
+  grid-column:2 !important;
+  grid-row:1 / span 2 !important;
+}
+
+/* Left text should scroll naturally with the page, not stay stuck */
+.full-list-hero .fade-hero,
+.full-list-hero-inner{
+  position:relative !important;
+  top:auto !important;
+}
+
+/* Desktop/web: search bar under the left text */
+.full-list-side-layout > .toolbar{
+  grid-column:1 !important;
+  grid-row:2 !important;
+  position:relative !important;
+  top:auto !important;
+  z-index:1 !important;
+  width:100% !important;
+  margin:clamp(22px,2.4vw,40px) 0 0 !important;
+  padding:0 !important;
+  display:flex !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:12px !important;
+  background:transparent !important;
+  backdrop-filter:none !important;
+}
+
+.full-list-side-layout > .toolbar input{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+.full-list-side-layout > .toolbar .tool-meta{
+  white-space:nowrap !important;
+}
+
+@media(max-width:1120px){
+  .full-list-side-layout{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .full-list-hero,
+  .full-list-only-panel,
+  .full-list-side-layout > .toolbar{
+    grid-column:auto !important;
+    grid-row:auto !important;
+    width:100% !important;
+  }
+
+  /* Mobile/tablet: search goes to the bottom of the page and does not stick while scrolling */
+  .full-list-side-layout > .toolbar{
+    order:3 !important;
+    position:relative !important;
+    margin:clamp(28px,6vw,48px) auto 0 !important;
+    padding-bottom:clamp(22px,6vw,44px) !important;
+    justify-content:center !important;
+  }
+
+  .full-list-side-layout > .toolbar input{
+    max-width:min(620px,100%) !important;
+  }
+
+  .full-list-hero{order:1 !important;}
+  .full-list-only-panel{order:2 !important;}
+}
+
+@media(max-width:680px){
+  .full-list-side-layout > .toolbar{
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:10px !important;
+  }
+
+  .full-list-side-layout > .toolbar .tool-meta{
+    text-align:center !important;
+  }
+}
