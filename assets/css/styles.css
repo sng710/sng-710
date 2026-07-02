@@ -1993,3 +1993,67 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     width:clamp(128px,35vw,190px) !important;
   }
 }
+
+
+/* v79 — remove right-side panel background and tighten full-list spacing */
+.full-list-only-panel,
+.desktop-memory-panel.full-list-only-panel{
+  padding:clamp(4px,.7vw,10px) !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+}
+
+.full-list-only-panel .desktop-memory-panel-body{
+  background:transparent !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid{
+  grid-template-columns:repeat(4,minmax(138px,1fr)) !important;
+  gap:clamp(26px,2.2vw,38px) clamp(18px,1.5vw,28px) !important;
+  align-items:start !important;
+  justify-items:center !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .memory-slot{
+  width:100% !important;
+  min-height:clamp(184px,11.6vw,226px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .photo-holder{
+  width:clamp(128px,7.4vw,168px) !important;
+}
+
+.full-list-only-panel .desktop-memory-all-grid .slot-name{
+  margin-top:clamp(10px,.82vw,14px) !important;
+  font-size:clamp(13.5px,.9vw,17px) !important;
+  line-height:1.22 !important;
+  max-width:15ch !important;
+}
+
+@media(max-width:1460px){
+  .full-list-only-panel .desktop-memory-all-grid{
+    grid-template-columns:repeat(4,minmax(126px,1fr)) !important;
+  }
+}
+
+@media(max-width:1120px){
+  .full-list-only-panel .desktop-memory-all-grid{
+    grid-template-columns:repeat(auto-fill,minmax(136px,1fr)) !important;
+    gap:28px 18px !important;
+  }
+}
+
+@media(max-width:680px){
+  .full-list-only-panel .desktop-memory-all-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:28px 16px !important;
+  }
+}
