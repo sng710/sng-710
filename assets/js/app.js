@@ -6,7 +6,7 @@ const CARD_FADE_MS = 520;
 let people = [];
 
 async function loadPeopleData() {
-  const response = await fetch('assets/data/people.json?v=82', { cache: 'no-cache' });
+  const response = await fetch('assets/data/people.json?v=84', { cache: 'no-cache' });
   if (!response.ok) throw new Error('people.json failed to load');
   return await response.json();
 }
@@ -92,6 +92,15 @@ function filteredPeople() {
 }
 function cleanFactLine(line) {
   let clean = String(line || '')
+    .replace(/[\u200e\u200f\u202a-\u202e]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Remove interface/copy artifacts from memorial source sites.
+  const siteNoise = /^(להדלקת נר לזכרו|כתיבת הקדשה|הדלקת נר לזכרו|סיפור חייו|סיפור חייה|תווית נר זיכרון להדפסה|הדפסת עמוד הנצחה|להדפסה|שתפו|שיתוף|חזרה|קישור לעמוד)$/;
+  if (siteNoise.test(clean)) return '';
+
+  clean = clean
     .replace(/^קורות חיים(?:\s+ונפילה)?\s*$/,'')
     .replace(/^סיפור חיים\s*$/,'')
     .replace(/^על אודות האתר\s*$/,'')
@@ -99,7 +108,10 @@ function cleanFactLine(line) {
     .replace(/^מקום קבורה\s*[:：]/,'מקום מנוחה:')
     .replace(/^הובא למנוחת עולמים\s+/,'מקום מנוחה: ')
     .replace(/^הובאה למנוחת עולמים\s+/,'מקום מנוחה: ')
+    .replace(/^רס["״]?ן\b/,'רס״ן')
+    .replace(/^רב[-־ ]סמל\b/,'רב־סמל')
     .trim();
+
   return isRedundantMemorialLine(clean) ? '' : clean;
 }
 
@@ -128,30 +140,123 @@ function formatFactLine(line) {
   return `<li>${esc(clean)}</li>`;
 }
 function splitDescription(person) {
-  const raw = cleanRedundantMemorialText(stripLeadingName(person.text || person.summary || '', person));
-  if (!raw) return {facts: [], life: [], event: [], memory: []};
-  const headingOnly = /^(פרטים אישיים|פרטים אישיים והנצחה|סיפור חיים|סיפור חייו|סיפור חייה|קורות חיים|קורות חיים ונפילה|דרך, עשייה ואהבות|נפילתו|נפילתה|חטיפתו ונפילתו|חטיפתה ונפילתה|שבעה באוקטובר והימים שאחריו|דמותו וזכרו|דמותה וזכרה|דמות וזיכרון|דברי זיכרון|זיכרון ומילים מהלב|על מצבתו נכתב|על מצבתה נכתב|מילים שנחקקו)$/;
-  const lines = raw.split('\n').map(l => cleanFactLine(l)).filter(Boolean);
+  const raw = stripLeadingName(person.text || person.summary || '', person);
+  if (!raw.trim()) return {facts: [], life: [], event: [], memory: [], allParagraphs: []};
+
+  const normalizeHeadingLine = value => String(value || '')
+    .replace(/[\u200e\u200f\u202a-\u202e]/g, '')
+    .replace(/[״“”]/g, '"')
+    .replace(/[׳‘’]/g, "'")
+    .replace(/[:：.]+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const personalHeading = /^(פרטים אישיים|פרטים אישיים והנצחה)$/;
+  const lifeHeading = /^(סיפור חיים|סיפור חייו|סיפור חייה|קורות חיים|קורות חיים ונפילה|דרך, עשייה ואהבות|דרך עשייה ואהבות|שירות צבאי וחיים אחרי השחרור|שירות צבאי|חיים אחרי השחרור|ילדות ונעורים|לימודים ושירות צבאי|עשייה ואהבות|תחומי עניין, משפחה וחברים|תחומי עניין משפחה וחברים|שליחות, צדק ועשייה חברתית|שליחות צדק ועשייה חברתית)$/;
+  const eventHeading = /^(נפילתו|נפילתה|חטיפתו ונפילתו|חטיפתה ונפילתה|שבעה באוקטובר והימים שאחריו|שבעה באוקטובר|7 באוקטובר|ה־7 באוקטובר|ה-7 באוקטובר)$/;
+  const memoryHeading = /^(דמותו וזכרו|דמותה וזכרה|דמות וזיכרון|דברי זיכרון|זיכרון ומילים מהלב|זכרון ומילים מהלב|על מצבתו נכתב|על מצבתה נכתב|מילים שנחקקו|הנצחה|זיכרון|זכרון)$/;
+
+  const isAnyHeading = line => {
+    const heading = normalizeHeadingLine(line);
+    return personalHeading.test(heading) || lifeHeading.test(heading) || eventHeading.test(heading) || memoryHeading.test(heading);
+  };
+
+  const isFactLine = line => /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^אח\s+|^אחות\s+|^אב\s+|^אביו\s+|^אמה\s+|^אמו\s+|^אם\s+|^בעלה\s+|^אשתו\s+|^בן זוג|^בת זוג|^נולד|^נולדה|^תאריך|^נרצח|^נרצחה|^נפל|^נפלה|^נהרג|^נהרגה|^נחטף|^נחטפה|^הושב|^הושבה|^מקום מגורים|^התגורר|^התגוררה|^גדל|^גדלה|^שהה|^שהתה|^מקום מנוחה|^מקום קבורה|^תפקיד|^שירת|^סרן|^רס״ן|^רס"ן|^רב[-־ ]?סמל|^חיל\s+|^לוחם|^לוחמת|^קצין|^קצינה|^מטפל|^מטפלת|^חבר כיתת|^חברת כיתת|^סגן רבש|^סגנית רבש|^משפחה:|^קרבה משפחתית:|^שאירים|^הותיר|^הותירה|^הובא|^הובאה|^חלקה|^שורה|^קבר|^גוש|^אזור|^.+מונצח|^.+מונצחת/.test(line);
+
   const facts = [];
-  const body = [];
-  let inBody = false;
-  for (const line of lines) {
-    if (headingOnly.test(line)) { inBody = true; continue; }
-    const isFact = /^(בן|בת)\s+\d|^בן\s+|^בת\s+|^אח\s+|^אחות\s+|^אב\s+|^אם\s+|^בעלה\s+|^אשתו\s+|^בן זוג|^בת זוג|^נולד|^נולדה|^תאריך|^\d{1,2}[./]\d{1,2}[./]\d{2,4}\s*[–-]|^מקום מגורים|^התגורר|^התגוררה|^גדל|^גדלה|^מקום מנוחה|^מקום קבורה|^תפקיד|^שירת|^סרן|^רס״ן|^רב-סמל|^חבר כיתת|^סגן רבש|^משפחה:|^קרבה משפחתית:|^שאירים|^הובא|^הובאה|^חלקה|^שורה|^קבר|^גוש|^אזור|^הותיר|^הותירה|^.+מונצח|^.+מונצחת/.test(line);
-    if (!inBody && isFact) facts.push(line);
-    else { inBody = true; body.push(line); }
+  const sections = { life: [], event: [], memory: [] };
+  let section = 'facts';
+  let explicitFactsBlock = false;
+  let bodyStarted = false;
+
+  const rawLines = raw.replace(/\r/g, '').split('\n');
+
+  for (const rawLine of rawLines) {
+    const rawTrim = String(rawLine || '').trim();
+    if (!rawTrim) continue;
+
+    const headingLine = normalizeHeadingLine(rawTrim);
+    if (personalHeading.test(headingLine)) {
+      section = 'facts';
+      explicitFactsBlock = true;
+      bodyStarted = false;
+      continue;
+    }
+    if (lifeHeading.test(headingLine)) {
+      section = 'life';
+      explicitFactsBlock = false;
+      bodyStarted = true;
+      continue;
+    }
+    if (eventHeading.test(headingLine)) {
+      section = 'event';
+      explicitFactsBlock = false;
+      bodyStarted = true;
+      continue;
+    }
+    if (memoryHeading.test(headingLine)) {
+      section = 'memory';
+      explicitFactsBlock = false;
+      bodyStarted = true;
+      continue;
+    }
+
+    const line = cleanFactLine(rawTrim);
+    if (!line) continue;
+
+    if (section === 'facts') {
+      // New approved structure:
+      // "פרטים אישיים" is a real block. Keep every line in it until the next
+      // approved heading, even lines like "נחטף..." / "נהרג..." / "מונצח...".
+      if (explicitFactsBlock || (!bodyStarted && isFactLine(line))) {
+        facts.push(line);
+        continue;
+      }
+
+      // If old source text has no "פרטים אישיים" heading, move to story as soon
+      // as the line no longer looks like a factual detail.
+      section = 'life';
+      explicitFactsBlock = false;
+      bodyStarted = true;
+    }
+
+    sections[section] = sections[section] || [];
+    sections[section].push(line);
   }
-  const paragraphs = body.join('\n').split(/\n{2,}|(?<=\.)\s*(?=[א-ת])/).map(p => p.trim()).filter(Boolean);
+
   const memory = [];
   const event = [];
   const life = [];
-  for (const p of paragraphs) {
-    if (/כתבו|ספדו|נזכור|יזכרו|חבריו|חברותיה|משפחת|אשתו|אמו|אביו|אחיו|אחותו|בתו|בנו|כתב:|כתבה:|אמר|סיפר|סיפרה|על מצבת/.test(p)) memory.push(p);
-    else if (/7\s*באוקטובר|שבעה באוקטובר|שמחת תורה|כ״ב בתשרי|כ"ב בתשרי|נרצח|נרצחה|נפל|נפלה|נהרג|נהרגה|נחטף|נחטפה|שבי|ממ״ד|ממ"ד|מחבלים|כיתת הכוננות|קרב|הגן|הגנה|פונה|הובא למנוחות|הובאה למנוחות/.test(p)) event.push(p);
-    else life.push(p);
+  const addUnique = (target, value) => {
+    const clean = String(value || '').replace(/\s+/g, ' ').trim();
+    if (!clean || isAnyHeading(clean)) return;
+    const key = normalizeForCompare(clean);
+    if (target.some(item => normalizeForCompare(item) === key)) return;
+    target.push(clean);
+  };
+
+  const knownSectionParagraphs = [];
+  for (const p of sections.life) { addUnique(life, p); knownSectionParagraphs.push(p); }
+  for (const p of sections.event) { addUnique(event, p); knownSectionParagraphs.push(p); }
+  for (const p of sections.memory) { addUnique(memory, p); knownSectionParagraphs.push(p); }
+
+  // Fallback for older texts that have no approved section headings:
+  // classify content, but keep the opening factual details first.
+  if (!knownSectionParagraphs.length) {
+    const bodyLines = rawLines
+      .map(l => cleanFactLine(l.trim()))
+      .filter(Boolean)
+      .filter(line => !facts.includes(line) && !personalHeading.test(normalizeHeadingLine(line)));
+
+    for (const p of bodyLines) {
+      if (isAnyHeading(p)) continue;
+      if (/כתבו|ספדו|ספדה|ספד|נזכור|יזכרו|חבריו|חברותיה|משפחת|אשתו|אמו|אביו|אחיו|אחותו|בתו|בנו|כתב:|כתבה:|אמר|אמרה|סיפר|סיפרה|על מצבת/.test(p)) addUnique(memory, p);
+      else if (/7\s*באוקטובר|שבעה באוקטובר|שמחת תורה|כ״ב בתשרי|כ"ב בתשרי|נרצח|נרצחה|נפל|נפלה|נהרג|נהרגה|נחטף|נחטפה|שבי|ממ״ד|ממ"ד|מחבלים|כיתת הכוננות|קרב|הגן|הגנה|פונה|הובא למנוחות|הובאה למנוחות/.test(p)) addUnique(event, p);
+      else addUnique(life, p);
+    }
   }
-  const finalLife = life.length ? life : paragraphs.filter(p => !memory.includes(p) && !event.includes(p));
-  return {facts, life: finalLife, event, memory, allParagraphs: paragraphs};
+
+  return {facts, life, event, memory, allParagraphs: life.concat(event, memory)};
 }
 
 function cleanPersonDisplayName(name) {
@@ -227,18 +332,18 @@ function renderFullStoryDetails(parts) {
     .join('');
 
   if (parts.life && parts.life.length) {
-    storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">סיפור חיים</h4>${renderParas(parts.life)}</section>`);
+    storyBlocks.push(`<section class="lightbox-subsection lightbox-subsection-life"><h4 class="lightbox-subtitle">סיפור חיים</h4>${renderParas(parts.life)}</section>`);
   }
   if (parts.event && parts.event.length) {
-    storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">שבעה באוקטובר והימים שאחריו</h4>${renderParas(parts.event)}</section>`);
+    storyBlocks.push(`<section class="lightbox-subsection lightbox-subsection-event"><h4 class="lightbox-subtitle">שבעה באוקטובר והימים שאחריו</h4>${renderParas(parts.event)}</section>`);
   }
   if (parts.memory && parts.memory.length) {
-    storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">זיכרון ומילים מהלב</h4>${renderParas(parts.memory)}</section>`);
+    storyBlocks.push(`<section class="lightbox-subsection lightbox-subsection-memory"><h4 class="lightbox-subtitle">זיכרון ומילים מהלב</h4>${renderParas(parts.memory)}</section>`);
   }
 
   // Fallback: if categorization missed the text, still show the full story instead of leaving only the short summary.
   if (!storyBlocks.length && parts.allParagraphs && parts.allParagraphs.length) {
-    storyBlocks.push(`<section class="lightbox-subsection"><h4 class="lightbox-subtitle">הסיפור המלא</h4>${renderParas(parts.allParagraphs)}</section>`);
+    storyBlocks.push(`<section class="lightbox-subsection lightbox-subsection-fallback"><h4 class="lightbox-subtitle">הסיפור המלא</h4>${renderParas(parts.allParagraphs)}</section>`);
   }
 
   if (!storyBlocks.length) return '';
