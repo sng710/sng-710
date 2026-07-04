@@ -2233,3 +2233,258 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     padding-bottom:clamp(22px,6vw,44px) !important;
   }
 }
+
+
+/* v84 — popup structure aligned with approved text format:
+   פרטים אישיים / סיפור חיים / שבעה באוקטובר והימים שאחריו / זיכרון ומילים מהלב */
+.lightbox-card{
+  direction:rtl !important;
+  text-align:right !important;
+  width:min(94vw,1120px) !important;
+  max-height:min(92svh,920px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  border-radius:32px !important;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(164,220,238,.16), transparent 28%),
+    linear-gradient(145deg, rgba(46,66,122,.98), rgba(18,33,67,.985)) !important;
+}
+
+.lightbox-text{
+  white-space:normal !important;
+  color:rgba(255,255,255,.92) !important;
+  font-size:clamp(15.5px,1.08vw,18px) !important;
+  line-height:1.82 !important;
+}
+
+.lightbox-section,
+.lightbox-full-story,
+.lightbox-links{
+  text-align:right !important;
+}
+
+.lightbox-section{
+  margin-top:18px !important;
+  padding:18px 20px !important;
+  border:1px solid rgba(255,255,255,.13) !important;
+  border-radius:22px !important;
+  background:linear-gradient(135deg, rgba(255,255,255,.092), rgba(255,255,255,.035)) !important;
+  box-shadow:0 16px 36px rgba(0,0,0,.16) !important;
+}
+
+.lightbox-section:first-child{
+  margin-top:14px !important;
+}
+
+.lightbox-section-title,
+.lightbox-subtitle{
+  margin:0 0 12px !important;
+  color:#fff !important;
+  font-weight:800 !important;
+  line-height:1.22 !important;
+  letter-spacing:-.025em !important;
+}
+
+.lightbox-section-title{
+  font-size:clamp(18px,1.35vw,23px) !important;
+}
+
+.lightbox-personal-details{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(189,226,238,.18), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.045)) !important;
+}
+
+.lightbox-facts{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:9px 10px !important;
+  margin:0 !important;
+  padding:0 !important;
+  list-style:none !important;
+}
+
+.lightbox-facts li{
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  padding:10px 12px !important;
+  border-radius:15px !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  background:rgba(255,255,255,.073) !important;
+  line-height:1.55 !important;
+}
+
+.lightbox-facts strong{
+  font-weight:850 !important;
+  color:#fff !important;
+}
+
+.lightbox-about-person{
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.030)) !important;
+}
+
+.lightbox-about-person .lightbox-section-title{
+  font-size:clamp(22px,1.8vw,32px) !important;
+}
+
+.lightbox-lead-paragraph{
+  max-width:72ch !important;
+  margin-inline:0 !important;
+  font-size:clamp(16px,1.12vw,19px) !important;
+  line-height:1.88 !important;
+  color:rgba(255,255,255,.94) !important;
+}
+
+.lightbox-paragraph{
+  margin:0 0 13px !important;
+  color:rgba(255,255,255,.89) !important;
+  line-height:1.86 !important;
+}
+
+.lightbox-paragraph:last-child{
+  margin-bottom:0 !important;
+}
+
+.lightbox-full-story{
+  margin-top:18px !important;
+  border:1px solid rgba(255,255,255,.15) !important;
+  border-radius:24px !important;
+  background:linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.028)) !important;
+  box-shadow:0 16px 38px rgba(0,0,0,.15) !important;
+  overflow:hidden !important;
+}
+
+.lightbox-full-story > summary{
+  min-height:56px !important;
+  padding:16px 20px !important;
+  cursor:pointer !important;
+  color:#fff !important;
+  font-size:clamp(17px,1.18vw,21px) !important;
+  font-weight:850 !important;
+  line-height:1.25 !important;
+  list-style:none !important;
+  border-bottom:1px solid rgba(255,255,255,.12) !important;
+  background:rgba(255,255,255,.045) !important;
+}
+
+.lightbox-full-story > summary::-webkit-details-marker{
+  display:none !important;
+}
+
+.lightbox-full-story > summary::after{
+  content:"−" !important;
+  float:left !important;
+  opacity:.72 !important;
+  font-weight:500 !important;
+}
+
+.lightbox-full-story:not([open]) > summary::after{
+  content:"＋" !important;
+}
+
+.lightbox-full-story-body{
+  padding:20px !important;
+}
+
+.lightbox-subsection{
+  margin:0 0 22px !important;
+  padding:0 0 22px !important;
+  border-bottom:1px solid rgba(255,255,255,.12) !important;
+}
+
+.lightbox-subsection:last-child{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+  border-bottom:0 !important;
+}
+
+.lightbox-subtitle{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:0 0 9px !important;
+  border-bottom:0 !important;
+  font-size:clamp(19px,1.32vw,24px) !important;
+}
+
+.lightbox-subtitle::before{
+  content:"" !important;
+  display:inline-block !important;
+  width:7px !important;
+  height:7px !important;
+  border-radius:50% !important;
+  background:rgba(164,220,238,.86) !important;
+  box-shadow:0 0 0 5px rgba(164,220,238,.12) !important;
+  flex:0 0 auto !important;
+}
+
+.lightbox-subsection-event .lightbox-subtitle::before{
+  background:rgba(225,230,238,.92) !important;
+  box-shadow:0 0 0 5px rgba(225,230,238,.12) !important;
+}
+
+.lightbox-subsection-memory .lightbox-subtitle::before{
+  background:rgba(202,230,236,.92) !important;
+  box-shadow:0 0 0 5px rgba(202,230,236,.12) !important;
+}
+
+.lightbox-photo-section,
+.lightbox-links{
+  margin-top:18px !important;
+  padding:18px 20px !important;
+  border:1px solid rgba(255,255,255,.13) !important;
+  border-radius:22px !important;
+  background:rgba(255,255,255,.045) !important;
+}
+
+.lightbox-links-list{
+  max-height:240px !important;
+}
+
+.no-text-note,
+.lightbox-loading{
+  border-radius:18px !important;
+}
+
+@media(max-width:720px){
+  .lightbox-card{
+    width:96vw !important;
+    max-height:92svh !important;
+    padding:18px !important;
+    border-radius:24px !important;
+  }
+
+  .lightbox-top{
+    grid-template-columns:1fr !important;
+  }
+
+  .lightbox-title,
+  .lightbox-place{
+    text-align:center !important;
+  }
+
+  .lightbox-text{
+    font-size:15.5px !important;
+    line-height:1.78 !important;
+  }
+
+  .lightbox-section,
+  .lightbox-full-story,
+  .lightbox-photo-section,
+  .lightbox-links{
+    border-radius:19px !important;
+  }
+
+  .lightbox-facts{
+    grid-template-columns:1fr !important;
+  }
+
+  .lightbox-full-story-body,
+  .lightbox-full-story > summary{
+    padding-inline:16px !important;
+  }
+}
+
