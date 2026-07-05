@@ -2488,3 +2488,64 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
   }
 }
 
+
+
+/* v83 — fixed intro/search column; only the people list scrolls on desktop */
+@media(min-width:1121px){
+  html,
+  body{
+    height:100%;
+  }
+
+  body{
+    overflow:hidden !important;
+  }
+
+  .rekama-wrap{
+    height:100svh !important;
+    min-height:100svh !important;
+    overflow:hidden !important;
+  }
+
+  .full-list-side-layout{
+    height:100svh !important;
+    max-height:100svh !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    grid-template-rows:minmax(0,1fr) auto !important;
+    padding-top:clamp(28px,3.5vw,58px) !important;
+    padding-bottom:clamp(28px,3.5vw,58px) !important;
+  }
+
+  .full-list-hero,
+  .full-list-side-layout > .toolbar{
+    min-height:0 !important;
+  }
+
+  .full-list-hero .fade-hero,
+  .full-list-hero-inner{
+    position:relative !important;
+    top:auto !important;
+  }
+
+  .full-list-side-layout > .toolbar{
+    position:relative !important;
+    z-index:3 !important;
+  }
+
+  .full-list-only-panel{
+    height:100% !important;
+    max-height:100% !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable;
+    padding-inline-end:clamp(4px,.6vw,10px) !important;
+  }
+
+  .full-list-only-panel .desktop-memory-panel-body{
+    min-height:0 !important;
+  }
+}
