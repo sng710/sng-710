@@ -2549,3 +2549,18 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     min-height:0 !important;
   }
 }
+
+/* v84 — keep the people list scrollable, but hide the visible scrollbar on desktop */
+@media(min-width:1121px){
+  .full-list-only-panel{
+    scrollbar-width:none !important;
+    -ms-overflow-style:none !important;
+    scrollbar-gutter:auto !important;
+  }
+
+  .full-list-only-panel::-webkit-scrollbar{
+    width:0 !important;
+    height:0 !important;
+    display:none !important;
+  }
+}
