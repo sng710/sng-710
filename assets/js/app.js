@@ -1,4 +1,4 @@
-const DATA_URL = 'assets/data/people.json?v=89';
+const DATA_URL = 'assets/data/people.json?v=91';
 
 const searchInput = document.getElementById('searchInput');
 const statusText = document.getElementById('statusText');
@@ -47,8 +47,36 @@ function personKey(person) {
 
 function personImageMarkup(person) {
   const src = person && person.image ? person.image : '';
-  const monochromeStyle = '-webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;';
-  return src ? `<img class="memorial-portrait" src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy" decoding="async" style="${monochromeStyle}">` : '';
+  if (!src) return '';
+
+  const portrait = person && person.portrait && typeof person.portrait === 'object'
+    ? person.portrait
+    : {};
+  const fit = portrait.fit === 'contain' ? 'contain' : 'cover';
+  const position = /^\d{1,3}%\s+\d{1,3}%$/.test(String(portrait.position || ''))
+    ? portrait.position
+    : '50% 38%';
+  const origin = /^\d{1,3}%\s+\d{1,3}%$/.test(String(portrait.origin || ''))
+    ? portrait.origin
+    : '50% 38%';
+  const rawScale = Number(portrait.scale);
+  const scale = Number.isFinite(rawScale) ? Math.min(1.85, Math.max(fit === 'contain' ? .88 : 1, rawScale)) : 1;
+  const padding = fit === 'contain' ? '7%' : '0%';
+  const shiftX = /^-?\d{1,2}%$/.test(String(portrait.shiftX || '')) ? portrait.shiftX : '0%';
+  const shiftY = /^-?\d{1,2}%$/.test(String(portrait.shiftY || '')) ? portrait.shiftY : '0%';
+  const monochromeStyle = [
+    `--portrait-fit:${fit}`,
+    `--portrait-position:${position}`,
+    `--portrait-origin:${origin}`,
+    `--portrait-scale:${scale}`,
+    `--portrait-padding:${padding}`,
+    `--portrait-shift-x:${shiftX}`,
+    `--portrait-shift-y:${shiftY}`,
+    '-webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important',
+    'filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important'
+  ].join(';');
+
+  return `<img class="memorial-portrait portrait-fit-${fit}" src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy" decoding="async" style="${monochromeStyle}">`;
 }
 
 function matches(person, query) {

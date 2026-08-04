@@ -2622,3 +2622,59 @@ html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.m
   color-rendering: optimizeQuality;
   mix-blend-mode: normal !important;
 }
+
+
+/* v90 — adaptive portrait framing based on each image's composition */
+html body .rekama-wrap .photo-holder,
+html body .rekama-wrap #desktopAllGrid .photo-holder,
+html body #lightbox .lightbox-img {
+  padding:0 !important;
+}
+
+html body .rekama-wrap #desktopAllGrid .memory-slot .photo-holder > img.memorial-portrait,
+html body .rekama-wrap .memory-slot .photo-holder > img.memorial-portrait,
+html body #lightbox .lightbox-img > img.memorial-portrait {
+  width:100% !important;
+  height:100% !important;
+  box-sizing:border-box !important;
+  object-fit:var(--portrait-fit, cover) !important;
+  object-position:var(--portrait-position, 50% 38%) !important;
+  transform:scale(var(--portrait-scale, 1)) !important;
+  transform-origin:var(--portrait-origin, 50% 38%) !important;
+  padding:var(--portrait-padding, 0%) !important;
+  background:#c7d2e1 !important;
+  -webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+  filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+}
+
+html body .rekama-wrap #desktopAllGrid .memory-slot:hover .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:focus-visible .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.memorial-portrait {
+  transform:scale(var(--portrait-scale, 1)) !important;
+  object-position:var(--portrait-position, 50% 38%) !important;
+}
+
+html body .rekama-wrap img.memorial-portrait.portrait-fit-contain,
+html body #lightbox img.memorial-portrait.portrait-fit-contain {
+  background:#d7e0ec !important;
+}
+
+
+/* v91 — final adaptive crop: per-image zoom, focal point and horizontal/vertical shift */
+html body .rekama-wrap #desktopAllGrid .memory-slot .photo-holder > img.memorial-portrait,
+html body .rekama-wrap .memory-slot .photo-holder > img.memorial-portrait,
+html body #lightbox .lightbox-img > img.memorial-portrait {
+  transform:
+    translate(var(--portrait-shift-x, 0%), var(--portrait-shift-y, 0%))
+    scale(var(--portrait-scale, 1)) !important;
+  transform-origin:var(--portrait-origin, 50% 38%) !important;
+  transition:filter .22s ease !important;
+}
+
+html body .rekama-wrap #desktopAllGrid .memory-slot:hover .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:focus-visible .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.memorial-portrait {
+  transform:
+    translate(var(--portrait-shift-x, 0%), var(--portrait-shift-y, 0%))
+    scale(var(--portrait-scale, 1)) !important;
+}
