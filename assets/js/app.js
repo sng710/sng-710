@@ -1,4 +1,4 @@
-const DATA_URL = 'assets/data/people.json?v=87';
+const DATA_URL = 'assets/data/people.json?v=89';
 
 const searchInput = document.getElementById('searchInput');
 const statusText = document.getElementById('statusText');
@@ -47,7 +47,8 @@ function personKey(person) {
 
 function personImageMarkup(person) {
   const src = person && person.image ? person.image : '';
-  return src ? `<img src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy">` : '';
+  const monochromeStyle = '-webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;';
+  return src ? `<img class="memorial-portrait" src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy" decoding="async" style="${monochromeStyle}">` : '';
 }
 
 function matches(person, query) {
@@ -89,14 +90,33 @@ function formatGeneralDetail(line) {
   return `<li>${esc(clean)}</li>`;
 }
 
+function isSafeGeneralDetail(line) {
+  const clean = String(line || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return false;
+
+  // Do not display uncertain placeholders, birthplace/upbringing, education,
+  // military service, occupations, roles, careers or descriptive summaries.
+  if (/[\/\\]/.test(clean)) return false;
+  if (/(נולד|נולדה|נולדו|גדל|גדלה|גדלו|התחנך|התחנכה|התחנכו|למד|למדה|למדו|עבד|עבדה|עבדו|עסק|עסקה|עסקו|שירת|שירתה|שירתו|תפקיד|מקצוע|עיסוק|קריירה|בוגר|בוגרת|מדריך|מדריכה|מנהל|מנהלת|מייסד|מייסדת|יזם|יזמית|עלה לישראל|עלתה לישראל)/.test(clean)) return false;
+  if (/^(משפחה:|הותיר|הותירה|חלקה:|גוש:|שורה:|אזור:|לאחר נפיל|מראשוני|ממקימי|שהה|שהתה|חבר כיתת|חברת כיתת)/.test(clean)) return false;
+  if (/מונצח|מונצחת/.test(clean)) return false;
+
+  const isPlace = /^(מקום אירוע:|מקום מנוחה:)/.test(clean);
+  const isDeath = /^(נפל|נפלה|נרצח|נרצחה|נהרג|נהרגה|נפטר|נפטרה|נחטף|נחטפה|נפגע|נפגעה|תאריך פטירה:)/.test(clean);
+  const isAge = /^(בן|בת)\s+.+?(בנופלו|בנופלה|במותו|במותה|בהירצחו|בהירצחה|בעת מותו|בעת מותה)$/.test(clean);
+  const isFamily = /^(בנם של|בתם של|בנה של|בתה של|בעלה של|אשתו של|רעייתו של|רעייתה של|בן זוגה של|בת זוגו של|בן זוגה|בת זוגו|אלמנתו של|אלמנתה של|נשוי ל|נשואה ל|אב ל|אם ל|אביהם של|אימם של|אמן של|אביו של|אימו של|אמה של|אח ל|אחות ל|אחיהם של|אחותם של|אח בכור ל|אחות בכורה ל|סב ל|סבתא ל|נכד ל|נכדה ל)/.test(clean);
+  const isParentLine = /^בן\s+(?!זוג|קיבוץ|מושב|היישוב|העיר|המשק|הזקונים|בכור|יחיד|\d)/.test(clean)
+    || /^בת\s+(?!זוג|קיבוץ|מושב|היישוב|העיר|המשק|הזקונים|בכורה|יחידה|\d)/.test(clean);
+
+  return isPlace || isDeath || isAge || isFamily || isParentLine;
+}
+
 function buildFactsMarkup(person) {
   const details = Array.isArray(person.generalDetails)
-    ? person.generalDetails.map(formatGeneralDetail).filter(Boolean)
+    ? person.generalDetails.filter(isSafeGeneralDetail).map(formatGeneralDetail).filter(Boolean)
     : [];
 
-  if (!details.length) {
-    return '<div class="no-text-note">טרם נוספו פרטים כלליים לתצוגה עבור אדם זה.</div>';
-  }
+  if (!details.length) return '';
 
   return `
     <section class="lightbox-section lightbox-personal-details">
@@ -169,11 +189,16 @@ function openLightbox(person, updateHash = true) {
     copyPersonLink.style.display = 'none';
   }
 
-  lightbox.classList.add('is-open');
+  // Remove inert before revealing/focusing the dialog.
+  lightbox.inert = false;
+  lightbox.removeAttribute('inert');
   lightbox.setAttribute('aria-hidden', 'false');
+  lightbox.classList.add('is-open');
   document.body.style.overflow = 'hidden';
   window.setTimeout(() => {
-    if (lightboxClose) lightboxClose.focus({preventScroll:true});
+    if (lightboxClose && lightbox.classList.contains('is-open')) {
+      lightboxClose.focus({preventScroll:true});
+    }
   }, 0);
 }
 
@@ -184,7 +209,21 @@ function closeLightbox(event, clearHash = true) {
   }
   if (!lightbox || !lightbox.classList.contains('is-open')) return;
   activeLightboxPersonKey = '';
+
+  // Focus must leave the dialog before aria-hidden/inert are applied.
+  // This prevents Chrome's “Blocked aria-hidden” accessibility warning.
+  const restoreTarget = lastFocusedBeforeLightbox && document.contains(lastFocusedBeforeLightbox)
+    ? lastFocusedBeforeLightbox
+    : searchInput;
+  if (restoreTarget && typeof restoreTarget.focus === 'function') {
+    restoreTarget.focus({preventScroll:true});
+  } else if (document.activeElement && lightbox.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+
   lightbox.classList.remove('is-open');
+  lightbox.inert = true;
+  lightbox.setAttribute('inert', '');
   lightbox.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   lightboxImg.innerHTML = '';
@@ -196,9 +235,6 @@ function closeLightbox(event, clearHash = true) {
     lightboxGallery.hidden = true;
   }
   if (clearHash) clearPersonHash();
-  if (lastFocusedBeforeLightbox && typeof lastFocusedBeforeLightbox.focus === 'function') {
-    window.setTimeout(() => lastFocusedBeforeLightbox.focus({preventScroll:true}), 0);
-  }
 }
 
 function openPersonFromUrl() {

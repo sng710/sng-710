@@ -2589,3 +2589,36 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
 .lightbox-facts{list-style:none !important;padding:0 !important;}
 .lightbox-facts li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.10);}
 .lightbox-facts li:last-child{border-bottom:0;}
+
+
+/* v88 — final, high-priority monochrome treatment for every memorial portrait */
+.rekama-wrap .memory-slot .photo-holder img,
+.rekama-wrap .desktop-memory-all-grid .memory-slot .photo-holder img,
+#lightbox .lightbox-img img,
+#lightbox .lightbox-gallery img {
+  -webkit-filter: grayscale(100%) saturate(0%) contrast(116%) brightness(94%) !important;
+  filter: grayscale(100%) saturate(0%) contrast(116%) brightness(94%) !important;
+  mix-blend-mode: normal !important;
+}
+
+.rekama-wrap .memory-slot:hover .photo-holder img,
+.rekama-wrap .memory-slot:focus-visible .photo-holder img,
+.rekama-wrap .memory-slot:active .photo-holder img {
+  -webkit-filter: grayscale(100%) saturate(0%) contrast(116%) brightness(94%) !important;
+  filter: grayscale(100%) saturate(0%) contrast(116%) brightness(94%) !important;
+}
+
+
+/* v89 — guaranteed monochrome portraits on the index grid and in the popup */
+html body .rekama-wrap #desktopAllGrid .memory-slot .photo-holder > img.memorial-portrait,
+html body .rekama-wrap .memory-slot .photo-holder > img.memorial-portrait,
+html body #lightbox .lightbox-img > img.memorial-portrait,
+html body #lightbox .lightbox-gallery img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:hover .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:focus-visible .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.memorial-portrait {
+  -webkit-filter: grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+  filter: grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+  color-rendering: optimizeQuality;
+  mix-blend-mode: normal !important;
+}
