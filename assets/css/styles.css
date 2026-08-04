@@ -2564,3 +2564,28 @@ img.js-auto-transparent-bg{background:#d7e0ec !important;}
     display:none !important;
   }
 }
+
+
+/* v84 — unified memorial list, grayscale portraits, facts-only popup */
+.page-switch-btn,
+.lightbox-actions,
+.lightbox-gallery,
+.lightbox-full-story,
+.lightbox-about-person,
+.lightbox-links{display:none !important;}
+
+.lightbox-img img,
+.lightbox-gallery img{filter:grayscale(1) contrast(1.06) brightness(.99) !important;}
+
+.lightbox-personal-details{margin-top:6px;}
+.lightbox-personal-details .lightbox-section-title{margin-bottom:12px;}
+.lightbox-facts{margin:0;padding-inline-start:1.1em;}
+.lightbox-facts li{margin:0 0 8px;line-height:1.7;}
+
+
+/* v86 — only the original first "פרטים אישיים" block is displayed */
+.lightbox-place:empty{display:none !important;}
+.lightbox-personal-details{margin-top:0 !important;}
+.lightbox-facts{list-style:none !important;padding:0 !important;}
+.lightbox-facts li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.10);}
+.lightbox-facts li:last-child{border-bottom:0;}
