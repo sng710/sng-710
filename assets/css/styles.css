@@ -2678,3 +2678,30 @@ html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.m
     translate(var(--portrait-shift-x, 0%), var(--portrait-shift-y, 0%))
     scale(var(--portrait-scale, 1)) !important;
 }
+
+
+/* v92 — stable portrait framing: no automatic zoom or translation */
+html body .rekama-wrap #desktopAllGrid .memory-slot .photo-holder > img.memorial-portrait,
+html body .rekama-wrap .memory-slot .photo-holder > img.memorial-portrait,
+html body #lightbox .lightbox-img > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:hover .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:focus-visible .photo-holder > img.memorial-portrait,
+html body .rekama-wrap #desktopAllGrid .memory-slot:active .photo-holder > img.memorial-portrait {
+  width:100% !important;
+  height:100% !important;
+  padding:0 !important;
+  object-fit:var(--portrait-fit, cover) !important;
+  object-position:var(--portrait-position, 50% 38%) !important;
+  transform:none !important;
+  transform-origin:center !important;
+  -webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+  filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important;
+}
+
+html body .rekama-wrap img.memorial-portrait.portrait-fit-contain,
+html body #lightbox img.memorial-portrait.portrait-fit-contain {
+  object-fit:contain !important;
+  object-position:center !important;
+  padding:7% !important;
+  background:#d7e0ec !important;
+}

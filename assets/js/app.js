@@ -1,4 +1,4 @@
-const DATA_URL = 'assets/data/people.json?v=91';
+const DATA_URL = 'assets/data/people.json?v=92';
 
 const searchInput = document.getElementById('searchInput');
 const statusText = document.getElementById('statusText');
@@ -56,27 +56,14 @@ function personImageMarkup(person) {
   const position = /^\d{1,3}%\s+\d{1,3}%$/.test(String(portrait.position || ''))
     ? portrait.position
     : '50% 38%';
-  const origin = /^\d{1,3}%\s+\d{1,3}%$/.test(String(portrait.origin || ''))
-    ? portrait.origin
-    : '50% 38%';
-  const rawScale = Number(portrait.scale);
-  const scale = Number.isFinite(rawScale) ? Math.min(1.85, Math.max(fit === 'contain' ? .88 : 1, rawScale)) : 1;
-  const padding = fit === 'contain' ? '7%' : '0%';
-  const shiftX = /^-?\d{1,2}%$/.test(String(portrait.shiftX || '')) ? portrait.shiftX : '0%';
-  const shiftY = /^-?\d{1,2}%$/.test(String(portrait.shiftY || '')) ? portrait.shiftY : '0%';
-  const monochromeStyle = [
+  const style = [
     `--portrait-fit:${fit}`,
     `--portrait-position:${position}`,
-    `--portrait-origin:${origin}`,
-    `--portrait-scale:${scale}`,
-    `--portrait-padding:${padding}`,
-    `--portrait-shift-x:${shiftX}`,
-    `--portrait-shift-y:${shiftY}`,
     '-webkit-filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important',
     'filter:grayscale(1) saturate(0) contrast(1.14) brightness(.94) !important'
   ].join(';');
 
-  return `<img class="memorial-portrait portrait-fit-${fit}" src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy" decoding="async" style="${monochromeStyle}">`;
+  return `<img class="memorial-portrait portrait-fit-${fit}" src="${esc(src)}" alt="${esc(person.name || '')}" loading="lazy" decoding="async" style="${style}">`;
 }
 
 function matches(person, query) {
