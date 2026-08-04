@@ -1,4 +1,4 @@
-const DATA_URL = 'assets/data/people.json?v=86';
+const DATA_URL = 'assets/data/people.json?v=87';
 
 const searchInput = document.getElementById('searchInput');
 const statusText = document.getElementById('statusText');
