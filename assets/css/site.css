@@ -2511,3 +2511,1434 @@ body {
     max-height:460px;
   }
 }
+
+/* =========================================================
+   PATCH 52 - EDITORIAL FINALIZATION / LARGER TYPE / MATCHED MEDIA ROWS
+   ========================================================= */
+
+/* Larger, easier-to-read type across the homepage. */
+.home-page .eyebrow{
+  font-size:1.04rem;
+}
+.home-page .poem{
+  font-size:clamp(1.42rem,2.45vw,1.95rem);
+  line-height:1.72;
+}
+.home-page .dedication{
+  max-width:800px;
+  font-size:clamp(1.1rem,1.03rem + .28vw,1.23rem);
+  line-height:1.9;
+}
+.home-page .hero-links a{
+  font-size:1.06rem;
+  padding:7px 4px;
+}
+.home-page .search-control{
+  min-height:54px;
+}
+.home-page .search-control input{
+  font-size:1.08rem;
+}
+.home-page .card-name{
+  font-size:1.23rem;
+  line-height:1.32;
+}
+.home-page .card-place{
+  font-size:.96rem;
+  line-height:1.45;
+}
+.home-page .memory-card{
+  grid-template-rows:var(--portrait-size) auto auto;
+  min-height:246px;
+}
+.home-page .period-divider{
+  font-size:1.66rem;
+}
+
+/* Larger preview-modal text without crowding the layout. */
+.lightbox-kicker{
+  font-size:1rem;
+}
+.lightbox-role{
+  font-size:1.06rem;
+  line-height:1.65;
+}
+.preview-facts{
+  font-size:1.02rem;
+  line-height:1.55;
+}
+.primary-button,
+.secondary-button{
+  font-size:1.02rem;
+}
+
+/* Person-page identity and facts. */
+.person-page .person-brand{
+  font-size:1.16rem;
+}
+.person-page .back-link{
+  font-size:1rem;
+}
+.person-page .person-head .place{
+  font-size:1.03rem;
+}
+.person-page .person-head .service-line{
+  font-size:1.07rem;
+  line-height:1.55;
+}
+.person-page .person-head .role{
+  max-width:68ch;
+  font-size:1.12rem;
+  line-height:1.72;
+}
+.person-page .fact{
+  font-size:1.06rem;
+  line-height:1.62;
+}
+.person-page .story-section > h2{
+  font-size:clamp(1.9rem,1.7rem + .65vw,2.25rem);
+}
+
+/* The story is now static HTML; no runtime section guessing is required. */
+.person-page .story-copy{
+  max-width:100ch;
+}
+.structured-story-copy{
+  gap:2rem;
+}
+.story-structured-section{
+  padding-top:1.5rem;
+}
+.story-structured-section > h3{
+  margin-bottom:1.25rem;
+  font-size:clamp(1.52rem,1.32rem + .62vw,1.95rem);
+  line-height:1.28;
+}
+.story-block-text p,
+.story-structured-section > .story-block-text p,
+.story-copy > .structured-story-copy p{
+  font-size:clamp(1.18rem,1.11rem + .25vw,1.28rem);
+  line-height:1.94;
+  margin-bottom:1.18em;
+}
+.story-structured-section > .story-block-text{
+  max-width:78ch;
+  margin-inline:auto;
+}
+
+/*
+ * Matched editorial rows:
+ * On desktop the photograph CARD stretches to exactly the height of the
+ * neighboring text block. The photo itself stays proportional with contain,
+ * so it is never cropped or distorted.
+ */
+@media (min-width:901px){
+  .story-media-block,
+  .story-media-block.media-left,
+  .story-media-block.media-right{
+    grid-template-columns:minmax(0,1fr) minmax(270px,340px);
+    align-items:stretch;
+    gap:clamp(28px,3.5vw,46px);
+    margin-bottom:2rem;
+  }
+  .story-media-block.media-left{
+    grid-template-columns:minmax(270px,340px) minmax(0,1fr);
+  }
+  .story-block-text{
+    align-self:start;
+  }
+  .story-block-media{
+    align-self:stretch;
+    display:flex;
+    min-height:100%;
+  }
+  .story-block-media .enhanced-inline-gallery,
+  .story-block-media .face-gallery{
+    display:flex;
+    width:100%;
+    height:100%;
+    min-height:100%;
+  }
+  .story-block-media figure{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+    min-height:100%;
+    padding:10px;
+    border-radius:16px;
+  }
+  .story-block-media img{
+    display:block;
+    width:100%;
+    height:100%;
+    max-height:none;
+    object-fit:contain;
+    object-position:center;
+    border-radius:11px;
+  }
+}
+
+.story-extra-gallery img{
+  max-height:500px;
+  object-fit:contain;
+}
+
+.family-contact-text{
+  font-size:1.06rem;
+  line-height:1.75;
+}
+.family-contact-btn{
+  font-size:1.02rem;
+}
+.page-footer{
+  font-size:1.08rem;
+}
+
+/* Tablet/mobile: keep images natural and full-width instead of forcing height. */
+@media (max-width:900px){
+  .story-media-block,
+  .story-media-block.media-left,
+  .story-media-block.media-right{
+    gap:18px;
+    margin-bottom:1.8rem;
+  }
+  .story-block-media,
+  .story-block-media .enhanced-inline-gallery,
+  .story-block-media .face-gallery,
+  .story-block-media figure{
+    height:auto;
+    min-height:0;
+  }
+  .story-block-media{
+    width:min(520px,100%);
+  }
+  .story-block-media img{
+    width:100%;
+    height:auto;
+    max-height:580px;
+    object-fit:contain;
+  }
+}
+
+@media (max-width:760px){
+  .home-page .dedication{
+    font-size:1.08rem;
+    line-height:1.85;
+  }
+  .home-page .card-name{
+    font-size:1.12rem;
+  }
+  .home-page .card-place{
+    font-size:.92rem;
+  }
+  .person-page .person-head .role{
+    font-size:1.07rem;
+  }
+  .person-page .fact{
+    font-size:1.02rem;
+  }
+  .story-structured-section > h3{
+    font-size:1.48rem;
+  }
+  .story-block-text p,
+  .story-structured-section > .story-block-text p,
+  .story-copy > .structured-story-copy p{
+    font-size:1.12rem;
+    line-height:1.9;
+  }
+}
+
+@media (max-width:420px){
+  .story-block-text p,
+  .story-structured-section > .story-block-text p,
+  .story-copy > .structured-story-copy p{
+    font-size:1.08rem;
+    line-height:1.88;
+  }
+}
+
+/* =========================================================
+   PATCH 53 - CLEAN STORY READING FLOW / STANDALONE MEDIA
+   ========================================================= */
+
+/* "סיפור חיים" is now the sole heading for the personal-life opening. */
+.story-structured-personal{
+  padding-top:.25rem;
+  border-top:0;
+}
+
+/* A calmer editorial container: one readable text column, not forced columns. */
+.person-page .story-section,
+.person-page .unified-story-section{
+  padding:clamp(32px,4vw,50px) clamp(22px,5vw,62px) clamp(38px,4.5vw,52px);
+}
+
+.person-page .story-section > h2{
+  position:relative;
+  margin-bottom:1.55rem;
+  padding-bottom:1rem;
+  border-bottom:0;
+  font-size:clamp(2rem,1.72rem + .8vw,2.42rem);
+  line-height:1.2;
+}
+.person-page .story-section > h2::after{
+  content:"";
+  display:block;
+  width:72px;
+  height:2px;
+  margin-top:.9rem;
+  background:rgba(85,184,212,.75);
+  border-radius:999px;
+}
+
+.person-page .story-copy{
+  max-width:88ch;
+}
+
+.structured-story-copy{
+  display:block;
+}
+
+.story-structured-section{
+  padding-top:0;
+  border-top:0;
+}
+
+.story-structured-section + .story-structured-section{
+  margin-top:clamp(2.7rem,5vw,4.25rem);
+  padding-top:clamp(1.55rem,3vw,2.15rem);
+  border-top:1px solid rgba(85,184,212,.30);
+}
+
+/* Clear chapter markers for 7 October and legacy, without another large card. */
+.story-structured-section > h3{
+  position:relative;
+  width:fit-content;
+  max-width:100%;
+  margin:0 0 1.55rem;
+  padding:.28rem .85rem .34rem 0;
+  border-inline-start:3px solid rgba(85,184,212,.82);
+  color:#fff;
+  font-size:clamp(1.56rem,1.35rem + .65vw,1.98rem);
+  line-height:1.28;
+}
+
+.story-structured-attack > h3{
+  border-inline-start-color:rgba(229,169,60,.88);
+}
+
+/* Larger body type while retaining comfortable line length. */
+.story-block-text,
+.story-structured-section > .story-block-text{
+  max-width:78ch;
+  margin-inline:auto;
+}
+.story-block-text p,
+.story-structured-section > .story-block-text p,
+.story-copy > .structured-story-copy p{
+  font-size:clamp(1.20rem,1.13rem + .25vw,1.32rem);
+  line-height:1.92;
+  margin-bottom:1.2em;
+}
+
+/*
+ * Images are no longer forced to match a neighboring text column.
+ * Each image becomes a deliberate editorial pause between paragraph groups.
+ * The frame hugs the actual image instead of creating empty vertical space.
+ */
+.story-media-block,
+.story-media-block.media-left,
+.story-media-block.media-right{
+  display:block;
+  margin:0 0 clamp(2.2rem,4vw,3.25rem);
+}
+.story-media-block:last-child{
+  margin-bottom:0;
+}
+
+.story-block-media{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:0;
+  margin-top:clamp(1.15rem,2.4vw,1.75rem);
+}
+
+.story-block-media .enhanced-inline-gallery,
+.story-block-media .face-gallery{
+  display:block;
+  width:fit-content;
+  max-width:min(680px,100%);
+  height:auto;
+  min-height:0;
+}
+
+.story-media-block.media-right .story-block-media .enhanced-inline-gallery,
+.story-media-block.media-right .story-block-media .face-gallery{
+  margin-left:auto;
+  margin-right:0;
+}
+.story-media-block.media-left .story-block-media .enhanced-inline-gallery,
+.story-media-block.media-left .story-block-media .face-gallery{
+  margin-right:auto;
+  margin-left:0;
+}
+
+.story-block-media figure{
+  display:inline-flex;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  min-height:0;
+  margin:0;
+  padding:8px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(85,184,212,.30);
+  border-radius:16px;
+  background:rgba(23,43,73,.36);
+  box-shadow:0 12px 26px rgba(10,27,48,.14);
+  overflow:hidden;
+}
+
+.story-block-media img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:620px;
+  object-fit:contain;
+  object-position:center;
+  border-radius:10px;
+}
+
+/* Give image-only galleries the same cleaner treatment. */
+.story-extra-gallery{
+  margin-top:1.2rem;
+  gap:16px;
+}
+.story-extra-gallery figure{
+  align-self:start;
+  padding:8px;
+}
+.story-extra-gallery img{
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:560px;
+  margin-inline:auto;
+  object-fit:contain;
+}
+
+/* Quotes read as part of the story but get breathing room automatically. */
+.story-block-text p:has(q),
+.story-block-text p:has(blockquote){
+  margin-block:1.35em;
+}
+
+@media (max-width:900px){
+  .person-page .story-copy{
+    max-width:100%;
+  }
+  .story-block-text,
+  .story-structured-section > .story-block-text{
+    max-width:100%;
+  }
+  .story-block-media .enhanced-inline-gallery,
+  .story-block-media .face-gallery,
+  .story-media-block.media-right .story-block-media .enhanced-inline-gallery,
+  .story-media-block.media-right .story-block-media .face-gallery,
+  .story-media-block.media-left .story-block-media .enhanced-inline-gallery,
+  .story-media-block.media-left .story-block-media .face-gallery{
+    margin-inline:auto;
+  }
+  .story-block-media img{
+    max-height:560px;
+  }
+}
+
+@media (max-width:760px){
+  .person-page .story-section,
+  .person-page .unified-story-section{
+    padding:28px 18px 34px;
+  }
+  .person-page .story-section > h2{
+    font-size:1.9rem;
+  }
+  .story-structured-section > h3{
+    font-size:1.5rem;
+    margin-bottom:1.25rem;
+  }
+  .story-block-text p,
+  .story-structured-section > .story-block-text p,
+  .story-copy > .structured-story-copy p{
+    font-size:1.14rem;
+    line-height:1.88;
+  }
+  .story-media-block,
+  .story-media-block.media-left,
+  .story-media-block.media-right{
+    margin-bottom:2.15rem;
+  }
+  .story-block-media{
+    margin-top:1rem;
+  }
+  .story-block-media img{
+    max-height:500px;
+  }
+}
+
+@media (max-width:420px){
+  .story-block-text p,
+  .story-structured-section > .story-block-text p,
+  .story-copy > .structured-story-copy p{
+    font-size:1.1rem;
+    line-height:1.86;
+  }
+}
+
+
+/* =========================================================
+   PATCH 62 - QUIET VISUAL POLISH + MOBILE-FIRST REFINEMENT
+   Keeps the established memorial identity while improving
+   hierarchy, spacing, cards, modal behavior and small screens.
+   ========================================================= */
+
+/* Homepage: calmer hierarchy and a little less vertical weight. */
+.home-page .hero{
+  min-height:610px;
+  padding-top:38px;
+  padding-bottom:52px;
+}
+.home-page .hero-inner{
+  width:min(1020px,100%);
+}
+.home-page .hero-composition{
+  gap:clamp(42px,7vw,88px);
+  padding-block:38px 36px;
+}
+.home-page .hero h1{
+  font-size:clamp(4.15rem,7.7vw,6.65rem);
+  line-height:.87;
+}
+.home-page .poem{
+  font-size:clamp(1.48rem,2.45vw,2.1rem);
+  line-height:1.62;
+}
+.home-page .dedication{
+  max-width:760px;
+  line-height:1.88;
+}
+.home-page .hero-links{
+  gap:14px;
+}
+.home-page .hero-links a{
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  padding:7px 10px;
+  border:1px solid rgba(85,184,212,.44);
+  border-radius:999px;
+  background:rgba(24,47,78,.16);
+  transition:background .18s ease,border-color .18s ease;
+}
+.home-page .hero-links a:hover,
+.home-page .hero-links a:focus-visible{
+  border-color:rgba(248,247,243,.82);
+  background:rgba(248,247,243,.07);
+}
+
+/* Search remains familiar, but reads as a proper control on every screen. */
+.home-page .toolbar{
+  padding:14px 0;
+  background:rgba(40,63,106,.94);
+  box-shadow:0 8px 24px rgba(15,31,54,.10);
+}
+.home-page .search-control{
+  width:min(650px,calc(100vw - 56px));
+  min-height:52px;
+  padding-inline:19px;
+  border-color:rgba(248,247,243,.30);
+  background:rgba(255,255,255,.045);
+}
+.home-page .search-control:focus-within{
+  background:rgba(255,255,255,.075);
+  box-shadow:0 0 0 3px rgba(85,184,212,.13);
+}
+
+/* Portrait index: slightly more breathing room without turning cards into boxes. */
+.home-page .memorial-grid{
+  max-width:1340px;
+  gap:40px 28px;
+}
+.home-page .memory-card{
+  padding:8px 5px 5px;
+  border-radius:16px;
+  transition:transform .18s ease,background .18s ease;
+}
+.home-page .memory-card:hover,
+.home-page .memory-card:focus-visible{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.025);
+}
+.home-page .card-name{
+  font-size:1.2rem;
+}
+.home-page .card-place{
+  color:#d1dee3;
+}
+.home-page .period-divider{
+  margin-top:34px;
+  margin-bottom:8px;
+}
+
+/* Preview: retain the existing look, improve proportion and spacing. */
+.lightbox-card{
+  width:min(1020px,calc(100vw - 36px));
+  border-radius:16px;
+  padding:clamp(32px,4vw,44px);
+}
+.lightbox-layout{
+  grid-template-columns:240px minmax(0,1fr);
+  gap:clamp(30px,4vw,44px);
+}
+.lightbox-img{
+  inline-size:220px;
+  block-size:220px;
+}
+.lightbox-details h2{
+  margin-top:6px;
+  margin-bottom:12px;
+}
+.preview-facts{
+  gap:8px 20px;
+  font-size:1.04rem;
+}
+.lightbox-actions{
+  margin-top:20px;
+}
+
+/* True phone layout: two portraits per row and a phone-native modal. */
+@media (max-width:760px){
+  :root{--portrait-size:128px;}
+
+  .home-page .hero{
+    min-height:535px;
+    padding:30px 18px 38px;
+  }
+  .home-page .eyebrow{
+    margin-bottom:16px;
+    font-size:.86rem;
+  }
+  .home-page .hero-composition{
+    gap:20px;
+    padding:26px 0 24px;
+  }
+  .home-page .hero h1{
+    font-size:clamp(3.35rem,17vw,4.75rem);
+    line-height:.9;
+  }
+  .home-page .poem{
+    font-size:clamp(1.24rem,5.7vw,1.55rem);
+    line-height:1.62;
+  }
+  .home-page .hero-rule{
+    width:min(330px,88vw);
+  }
+  .home-page .hero-rule-bottom{
+    margin-bottom:22px;
+  }
+  .home-page .dedication{
+    max-width:34ch;
+    font-size:1.04rem;
+    line-height:1.78;
+  }
+  .home-page .hero-links{
+    margin-top:20px;
+    gap:8px;
+  }
+  .home-page .hero-links a{
+    min-height:42px;
+    padding:7px 12px;
+    font-size:.98rem;
+  }
+
+  .home-page .index-section{
+    padding:0 14px 58px;
+  }
+  .home-page .toolbar{
+    padding:10px 0;
+  }
+  .home-page .search-control{
+    width:100%;
+    min-height:50px;
+    padding-inline:15px;
+  }
+  .home-page .search-control input{
+    font-size:1rem;
+  }
+  .home-page .memorial-grid{
+    margin-top:24px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:28px 14px;
+  }
+  .home-page .memory-card{
+    grid-template-rows:var(--portrait-size) auto auto;
+    min-height:205px;
+    row-gap:9px;
+    padding-inline:2px;
+  }
+  .home-page .card-name{
+    min-height:2.65em;
+    font-size:1.08rem;
+    line-height:1.3;
+  }
+  .home-page .card-place{
+    font-size:.9rem;
+  }
+  .home-page .period-divider{
+    gap:10px;
+    margin:28px 0 4px;
+    font-size:1.34rem;
+    text-align:center;
+  }
+
+  .lightbox{
+    padding:10px;
+    align-items:center;
+  }
+  .lightbox-card{
+    width:100%;
+    max-height:92dvh;
+    padding:58px 20px 24px;
+    border-radius:16px;
+  }
+  .lightbox-close{
+    top:10px;
+    left:10px;
+    width:44px;
+    height:44px;
+  }
+  .lightbox-layout{
+    grid-template-columns:1fr;
+    gap:20px;
+    text-align:center;
+  }
+  .lightbox-img{
+    inline-size:156px;
+    block-size:156px;
+  }
+  .lightbox-details h2{
+    font-size:clamp(2rem,10vw,2.8rem);
+  }
+  .lightbox-details .service-line{
+    justify-content:center;
+  }
+  .lightbox-role{
+    max-width:32ch;
+    margin-inline:auto;
+  }
+  .preview-facts{
+    grid-template-columns:1fr;
+    gap:0;
+    text-align:right;
+    font-size:1rem;
+  }
+  .preview-facts li{
+    padding:9px 0;
+  }
+  .lightbox-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .primary-button,
+  .secondary-button{
+    width:100%;
+    min-height:48px;
+  }
+
+  .home-page::before{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+  }
+  .home-page::after{
+    width:34px;
+    height:34px;
+    top:17px;
+    left:17px;
+  }
+}
+
+@media (max-width:380px){
+  :root{--portrait-size:116px;}
+  .home-page .index-section{padding-inline:11px;}
+  .home-page .memorial-grid{gap:26px 10px;}
+  .home-page .card-name{font-size:1.02rem;}
+  .home-page .hero h1{font-size:3.35rem;}
+}
+
+/* =========================================================
+   PATCH 63 - VISIBLE REFINEMENT, SAME MEMORIAL IDENTITY
+   ========================================================= */
+
+/* Hero: establish clearer hierarchy without changing the visual language. */
+.home-page .hero{
+  min-height:620px;
+  padding:38px 28px 46px;
+  background:
+    linear-gradient(90deg,rgba(24,53,91,.86),rgba(38,68,116,.91)),
+    url('../img/bg-wide.webp') center / cover no-repeat;
+}
+.home-page .hero::after{
+  inset:18px;
+  border-color:rgba(213,235,242,.16);
+}
+.home-page .hero-inner{
+  width:min(1120px,100%);
+}
+.home-page .eyebrow{
+  width:fit-content;
+  margin:0 0 20px auto;
+  padding:0 0 9px;
+  border-bottom:1px solid rgba(85,184,212,.62);
+  color:#eef5f6;
+  font-size:.98rem;
+  letter-spacing:.13em;
+}
+.home-page .hero-inner > .hero-rule:not(.hero-rule-bottom){
+  display:none;
+}
+.home-page .hero-composition{
+  position:relative;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(48px,7vw,82px);
+  padding:38px 28px 36px;
+}
+.home-page .hero h1{
+  font-size:clamp(4rem,7vw,6rem);
+  line-height:.9;
+  padding-inline-end:clamp(18px,2.5vw,32px);
+  border-inline-end:1px solid rgba(151,205,221,.28);
+  text-shadow:0 10px 32px rgba(7,25,46,.16);
+}
+.home-page .poem{
+  font-size:clamp(1.48rem,2.25vw,2rem);
+  line-height:1.68;
+  color:#fbfcfb;
+}
+.home-page .hero-rule-bottom{
+  width:min(850px,82%);
+  margin:0 auto 24px;
+  background:linear-gradient(90deg,transparent,rgba(85,184,212,.62),transparent);
+}
+.home-page .dedication{
+  max-width:800px;
+  padding:16px 24px 17px;
+  border:1px solid rgba(213,235,242,.13);
+  border-radius:14px;
+  background:rgba(13,39,67,.18);
+  color:#edf3f3;
+  font-size:1.08rem;
+  line-height:1.86;
+}
+.home-page .hero-links{
+  margin-top:18px;
+  gap:10px;
+}
+.home-page .hero-links a{
+  min-height:44px;
+  padding:8px 17px;
+  border:1px solid rgba(151,205,221,.48);
+  border-radius:999px;
+  background:rgba(14,39,67,.24);
+  font-weight:650;
+  text-decoration:none;
+}
+.home-page .hero-links a:hover,
+.home-page .hero-links a:focus-visible{
+  background:rgba(255,255,255,.09);
+  border-color:rgba(248,247,243,.78);
+}
+
+/* Index: a slightly clearer transition from hero to memorial list. */
+.home-page .index-section{
+  padding-bottom:82px;
+  background:
+    radial-gradient(circle at 50% 0,rgba(85,184,212,.055),transparent 34rem),
+    linear-gradient(#102f49,#0d263c);
+}
+.home-page .toolbar{
+  padding:12px 0;
+  border-bottom-color:rgba(151,205,221,.15);
+}
+.home-page .search-control{
+  min-height:54px;
+  border-color:rgba(213,235,242,.33);
+  background:rgba(255,255,255,.055);
+}
+.home-page .memorial-grid{
+  margin-top:36px;
+  gap:42px 28px;
+}
+.home-page .memory-card{
+  padding:9px 7px 10px;
+}
+.home-page .portrait-ring{
+  border-width:2px;
+  border-color:rgba(213,235,242,.42);
+  box-shadow:0 12px 30px rgba(2,18,33,.19);
+}
+.home-page .card-name{
+  font-size:1.22rem;
+  line-height:1.28;
+}
+.home-page .card-place{
+  margin-top:1px;
+  font-size:.9rem;
+  color:#c9d9df;
+}
+.home-page .period-divider{
+  margin-top:42px;
+  font-size:1.62rem;
+}
+
+/* Phone hero: intentionally redesigned for the small screen, not compressed desktop. */
+@media(max-width:760px){
+  :root{--portrait-size:118px;}
+  .home-page .hero{
+    min-height:auto;
+    padding:28px 16px 34px;
+  }
+  .home-page .hero::after{inset:9px;}
+  .home-page .hero-inner{width:100%;}
+  .home-page .eyebrow{
+    margin:0 auto 14px;
+    padding-bottom:7px;
+    font-size:.82rem;
+    letter-spacing:.1em;
+  }
+  .home-page .hero-composition{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    padding:20px 8px 24px;
+  }
+  .home-page .hero h1{
+    order:0;
+    padding:0;
+    border:0;
+    text-align:center;
+    font-size:clamp(3.45rem,16.5vw,4.65rem);
+    line-height:.9;
+  }
+  .home-page .poem{
+    order:1;
+    width:min(100%,360px);
+    margin-inline:auto;
+    padding-top:19px;
+    border-top:1px solid rgba(151,205,221,.28);
+    text-align:center;
+    font-size:clamp(1.22rem,5.5vw,1.5rem);
+    line-height:1.7;
+  }
+  .home-page .hero-rule-bottom{
+    width:min(320px,82vw);
+    margin-bottom:18px;
+  }
+  .home-page .dedication{
+    max-width:36ch;
+    padding:14px 15px;
+    font-size:1rem;
+    line-height:1.75;
+  }
+  .home-page .hero-links{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:min(360px,100%);
+    margin:14px auto 0;
+  }
+  .home-page .hero-links a{
+    justify-content:center;
+    min-height:46px;
+    padding:8px 10px;
+    font-size:.94rem;
+  }
+  .home-page .index-section{padding-inline:12px;padding-bottom:64px;}
+  .home-page .toolbar{
+    position:sticky;
+    top:0;
+    padding:9px 0;
+  }
+  .home-page .memorial-grid{
+    margin-top:22px;
+    gap:27px 12px;
+  }
+  .home-page .memory-card{
+    min-height:190px;
+    padding:6px 2px 8px;
+  }
+  .home-page .card-name{
+    min-height:2.55em;
+    font-size:1.04rem;
+    line-height:1.28;
+  }
+  .home-page .card-place{font-size:.85rem;}
+  .home-page .period-divider{
+    margin-top:30px;
+    font-size:1.3rem;
+  }
+}
+
+@media(max-width:380px){
+  :root{--portrait-size:108px;}
+  .home-page .memorial-grid{gap-inline:8px;}
+  .home-page .card-name{font-size:.98rem;}
+}
+
+/* =========================================================
+   PATCH 64 - SPLIT HOMEPAGE + USEFUL FILTERS
+   Keeps memorial identity; changes information architecture.
+   ========================================================= */
+@media (min-width: 1081px){
+  .home-page{
+    background:#0d263c;
+  }
+  .home-page .home-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) clamp(330px,28vw,410px);
+    min-height:100vh;
+    align-items:start;
+  }
+  .home-page .hero{
+    grid-column:2;
+    grid-row:1;
+    position:sticky;
+    top:0;
+    min-height:100vh;
+    height:100vh;
+    padding:34px 30px;
+    overflow:auto;
+    text-align:right;
+    background:
+      linear-gradient(rgba(28,55,94,.83),rgba(25,49,84,.92)),
+      url('../img/bg-tall.webp') center / cover no-repeat;
+    border-inline-start:1px solid rgba(213,235,242,.16);
+  }
+  .home-page .hero::after{inset:16px;}
+  .home-page .hero-inner{
+    width:100%;
+    min-height:calc(100vh - 68px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+  }
+  .home-page .eyebrow{
+    margin:0 0 24px auto;
+    font-size:.9rem;
+  }
+  .home-page .hero-composition{
+    display:block;
+    padding:0;
+  }
+  .home-page .hero h1{
+    padding:0;
+    border:0;
+    font-size:clamp(3.65rem,5.2vw,5.15rem);
+    line-height:.88;
+    text-align:right;
+  }
+  .home-page .poem{
+    width:100%;
+    margin:28px 0 0;
+    padding:24px 0 0;
+    border-top:1px solid rgba(151,205,221,.32);
+    font-size:clamp(1.28rem,1.55vw,1.58rem);
+    line-height:1.72;
+    text-align:right;
+  }
+  .home-page .hero-rule-bottom{
+    width:100%;
+    margin:25px 0 20px;
+    background:linear-gradient(90deg,transparent,rgba(85,184,212,.52));
+  }
+  .home-page .dedication{
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    font-size:1.01rem;
+    line-height:1.82;
+    text-align:right;
+  }
+  .home-page .hero-links{
+    justify-content:flex-start;
+    margin-top:22px;
+  }
+  .home-page .hero-links a{
+    padding:7px 13px;
+    min-height:42px;
+    display:inline-flex;
+    align-items:center;
+  }
+  .home-page main{
+    grid-column:1;
+    grid-row:1;
+    min-width:0;
+  }
+  .home-page .index-section{
+    min-height:100vh;
+    padding:0 clamp(20px,2.6vw,40px) 76px;
+  }
+  .home-page .toolbar{
+    top:0;
+    display:block;
+    padding:18px 0 14px;
+    background:linear-gradient(180deg,rgba(16,47,73,.99),rgba(16,47,73,.95));
+  }
+  .home-page .search-filter-row{
+    display:grid;
+    grid-template-columns:minmax(240px,1fr) minmax(170px,220px);
+    gap:12px;
+    align-items:center;
+  }
+  .home-page .search-control{
+    width:100%;
+    max-width:none;
+  }
+  .home-page .filter-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+  }
+  .home-page .memorial-grid{
+    max-width:none;
+    margin-top:30px;
+    grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+    gap:36px 18px;
+  }
+  .home-page .memory-card{min-height:220px;}
+}
+
+.home-page .search-filter-row{
+  width:min(920px,100%);
+  margin-inline:auto;
+}
+.home-page .place-filter{
+  min-height:54px;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  padding:0 14px;
+  border:1px solid rgba(213,235,242,.30);
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  color:#dce8eb;
+  font-size:.88rem;
+  white-space:nowrap;
+}
+.home-page .place-filter select{
+  min-width:0;
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font:inherit;
+  font-weight:650;
+  cursor:pointer;
+}
+.home-page .place-filter select option{
+  color:#17324a;
+  background:#fff;
+}
+.home-page .filter-chips{
+  width:min(920px,100%);
+  margin:10px auto 0;
+  display:flex;
+  justify-content:flex-start;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  padding-bottom:1px;
+}
+.home-page .filter-chip{
+  appearance:none;
+  min-height:40px;
+  flex:0 0 auto;
+  padding:7px 14px;
+  border:1px solid rgba(213,235,242,.24);
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  color:#d7e4e8;
+  font:inherit;
+  font-size:.9rem;
+  cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.home-page .filter-chip:hover,
+.home-page .filter-chip:focus-visible{
+  border-color:rgba(213,235,242,.55);
+  background:rgba(255,255,255,.075);
+}
+.home-page .filter-chip.is-active{
+  border-color:rgba(151,205,221,.72);
+  background:rgba(85,184,212,.17);
+  color:#fff;
+}
+
+@media (max-width:1080px){
+  .home-page .home-layout{display:block;}
+  .home-page .search-filter-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(155px,210px);
+    gap:10px;
+  }
+  .home-page .search-control{width:100%;}
+}
+
+@media (max-width:760px){
+  .home-page .toolbar{
+    padding:9px 0 10px;
+  }
+  .home-page .search-filter-row{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .home-page .place-filter{
+    min-height:46px;
+    border-radius:14px;
+  }
+  .home-page .search-control{
+    min-height:48px;
+    height:48px;
+  }
+  .home-page .filter-chips{
+    margin-top:8px;
+    padding-inline:1px;
+  }
+  .home-page .filter-chip{
+    min-height:38px;
+    padding:6px 12px;
+    font-size:.86rem;
+  }
+}
+
+/* PATCH 66 - custom settlement combobox */
+.home-page .place-filter{
+  position:relative;
+  min-height:auto;
+  display:block;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:none;
+  color:inherit;
+  white-space:normal;
+}
+.home-page .place-filter[hidden],
+.home-page .place-filter select[hidden]{display:none !important;}
+.home-page .place-filter-label{
+  display:block;
+  margin:0 0 6px;
+  padding-inline:14px;
+  color:#c6dbe3;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.home-page .place-filter-trigger{
+  width:100%;
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 12px 0 16px;
+  border:1px solid rgba(213,235,242,.28);
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+  color:#fff;
+  box-shadow:0 12px 30px rgba(8,19,35,.20), inset 0 1px 0 rgba(255,255,255,.07);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  cursor:pointer;
+  transition:border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.home-page .place-filter-trigger:hover,
+.home-page .place-filter-trigger:focus-visible,
+.home-page .place-filter.is-open .place-filter-trigger{
+  border-color:rgba(151,205,221,.72);
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.06));
+  box-shadow:0 16px 36px rgba(8,19,35,.26), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.home-page .place-filter-current{
+  min-width:0;
+  flex:1 1 auto;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-align:right;
+  font-size:.98rem;
+  font-weight:700;
+}
+.home-page .place-filter-caret{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(213,235,242,.18);
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  color:#dce8eb;
+  transition:transform .18s ease, background .18s ease;
+}
+.home-page .place-filter-caret svg{display:block;width:18px;height:18px;}
+.home-page .place-filter.is-open .place-filter-caret{transform:rotate(180deg);background:rgba(85,184,212,.18);}
+.home-page .place-filter-panel{
+  position:absolute;
+  inset-inline:0;
+  top:calc(100% + 8px);
+  z-index:50;
+  padding:8px;
+  border:1px solid rgba(151,205,221,.28);
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(16,37,63,.98),rgba(20,45,76,.97));
+  box-shadow:0 22px 48px rgba(6,16,31,.34);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.home-page .place-filter-list{
+  max-height:min(360px,52vh);
+  overflow:auto;
+  padding:2px;
+  scrollbar-width:thin;
+}
+.home-page .place-filter-option{
+  width:100%;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  color:#eef5f7;
+  font:inherit;
+  font-size:.95rem;
+  text-align:right;
+  cursor:pointer;
+  transition:background .16s ease,color .16s ease;
+}
+.home-page .place-filter-option::after{
+  content:'';
+  width:8px;
+  height:8px;
+  flex:0 0 8px;
+  border-radius:50%;
+  background:transparent;
+  box-shadow:0 0 0 1px rgba(213,235,242,.22) inset;
+}
+.home-page .place-filter-option:hover,
+.home-page .place-filter-option:focus-visible{
+  background:rgba(255,255,255,.08);
+}
+.home-page .place-filter-option[aria-selected="true"]{
+  background:linear-gradient(90deg,rgba(85,184,212,.26),rgba(85,184,212,.12));
+  color:#fff;
+}
+.home-page .place-filter-option[aria-selected="true"]::after{
+  background:#8ed7ec;
+  box-shadow:0 0 0 4px rgba(142,215,236,.16);
+}
+.home-page .place-filter-option.is-highlighted{
+  background:rgba(255,255,255,.10);
+}
+@media (max-width:760px){
+  .home-page .place-filter-label{
+    padding-inline:4px;
+    margin-bottom:5px;
+  }
+  .home-page .place-filter-trigger{
+    min-height:48px;
+    border-radius:14px;
+    padding-inline:14px 10px;
+  }
+  .home-page .place-filter-current{font-size:.94rem;}
+  .home-page .place-filter-caret{width:30px;height:30px;flex-basis:30px;}
+  .home-page .place-filter-panel{
+    top:calc(100% + 6px);
+    border-radius:16px;
+    padding:6px;
+  }
+  .home-page .place-filter-list{max-height:min(280px,46vh);}
+}
+
+/* PATCH 67 - compact filter toolbar */
+.home-page .search-filter-row{
+  width:min(920px,100%);
+  margin-inline:auto;
+  display:grid;
+  grid-template-columns:minmax(230px,390px) auto minmax(180px,220px);
+  gap:10px;
+  align-items:end;
+  justify-content:start;
+}
+.home-page .search-control{
+  width:100%;
+  max-width:390px;
+}
+.home-page .security-filter{
+  min-height:54px;
+  margin:0;
+  align-self:end;
+  padding:9px 18px;
+  border-radius:18px;
+  white-space:nowrap;
+  font-size:.94rem;
+  font-weight:700;
+  box-shadow:0 10px 24px rgba(8,19,35,.12);
+}
+.home-page .security-filter.is-active{
+  border-color:rgba(151,205,221,.75);
+  background:linear-gradient(180deg,rgba(85,184,212,.25),rgba(85,184,212,.15));
+  color:#fff;
+  box-shadow:0 12px 28px rgba(8,19,35,.18), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.home-page .filter-chips{display:none !important;}
+
+@media (max-width:1080px){
+  .home-page .search-filter-row{
+    grid-template-columns:minmax(220px,1fr) auto minmax(165px,210px);
+  }
+  .home-page .search-control{max-width:none;}
+}
+
+@media (max-width:760px){
+  .home-page .search-filter-row{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .home-page .search-control{
+    max-width:none;
+    width:100%;
+  }
+  .home-page .security-filter{
+    width:100%;
+    min-height:46px;
+    border-radius:14px;
+    justify-self:stretch;
+  }
+}
