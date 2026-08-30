@@ -1871,208 +1871,103 @@ body{
 }
 
 
-/* PATCH 109 - safe Instagram embeds: larger outer frame, no forced iframe scaling. */
-.media-v2-instagram-embedded{
-  display:grid;
-  justify-items:center;
-  align-content:start;
-  gap:9px;
-  width:100%;
-  min-width:0;
-}
-.media-v2-instagram-embed-shell{
-  position:relative;
-  width:min(100%,420px);
-  height:620px;
-  overflow:hidden;
-  border:1px solid rgba(248,247,243,.18);
-  border-radius:14px;
-  background:#fff;
-  box-shadow:0 10px 24px rgba(7,18,34,.18);
-  margin-inline:auto;
-}
-.media-v2-instagram-embed-shell iframe{
-  position:absolute;
-  inset:0;
-  display:block;
-  width:100%;
-  height:100%;
-  border:0;
-  background:#fff;
-}
-.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{width:min(100%,440px);}
-.media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{width:min(100%,400px);}
-.media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{width:min(100%,310px);height:540px;}
-@media(max-width:820px){
-  .unified-media-v2-section .media-v2-instagram-embedded{
-    width:100% !important;
-    max-width:100% !important;
-  }
-  .unified-media-v2-section .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
-    width:min(92vw,430px) !important;
-    max-width:430px !important;
-    min-width:0 !important;
-    height:clamp(520px,145vw,640px) !important;
-    margin-inline:auto !important;
-  }
-}
-@media(max-width:390px){
-  .unified-media-v2-section .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
-    width:90vw !important;
-    height:clamp(500px,150vw,590px) !important;
-  }
-}
-
-/* PATCH 110 - Instagram groups stack vertically so embeds never get squeezed into a half-width column. */
-@media(min-width:821px){
-  .unified-media-v2-section .media-v2-grid-has-instagram{
-    display:grid !important;
-    grid-template-columns:minmax(0,440px) !important;
-    justify-content:center !important;
-    align-items:start !important;
-    gap:20px !important;
-    width:100% !important;
-    max-width:470px !important;
-    margin-inline:auto !important;
-  }
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-item{
-    width:100% !important;
-    max-width:440px !important;
-    min-width:0 !important;
-    margin-inline:auto !important;
-  }
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell{
-    width:min(100%,420px) !important;
-    max-width:420px !important;
-    height:620px !important;
-    margin-inline:auto !important;
-  }
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-square .media-v2-facebook-shell{
-    width:min(100%,390px) !important;
-    max-width:390px !important;
-  }
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-portrait .media-v2-facebook-shell{
-    width:min(100%,320px) !important;
-    max-width:320px !important;
-  }
-}
-@media(max-width:820px){
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell{
-    width:min(100%,390px) !important;
-    max-width:390px !important;
-    height:clamp(560px,168vw,650px) !important;
-    margin-inline:auto !important;
-  }
-}
-
-
-/* PATCH 111 - restore the original Instagram presentation from the first Aviv Baram version (Patch 75 era). */
-/* Keep the current media engine, but undo later Instagram-only stretching/stacking. */
+/* PATCH 112 - restore the original equal-height social media row (Patch 75 era). */
+/* Desktop only: Instagram / Facebook / YouTube remain next to one another and share one visual row height. */
 @media(min-width:821px){
   .unified-media-v2-section .media-v2-grid-has-instagram,
-  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="1"],
   .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="2"],
   .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="3"]{
     width:100% !important;
-    margin-inline:auto !important;
     display:grid !important;
-    gap:14px !important;
-    align-items:start !important;
+    align-items:stretch !important;
     justify-content:center !important;
-  }
-  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="1"]{
-    grid-template-columns:minmax(0,620px) !important;
-    max-width:660px !important;
+    gap:16px !important;
+    margin-inline:auto !important;
   }
   .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="2"]{
     grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    max-width:860px !important;
+    max-width:980px !important;
+    height:300px !important;
   }
   .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="3"]{
     grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-    max-width:980px !important;
+    max-width:1040px !important;
+    height:270px !important;
   }
   .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-item{
     width:100% !important;
-    max-width:none !important;
     min-width:0 !important;
-    margin-inline:0 !important;
+    max-width:none !important;
+    height:100% !important;
+    display:grid !important;
+    grid-template-rows:minmax(0,1fr) auto !important;
+    align-items:stretch !important;
+    justify-items:center !important;
+    gap:5px !important;
+    margin:0 !important;
   }
-}
 
-.media-v2-instagram-embedded{
-  display:grid !important;
-  grid-template-rows:minmax(0,1fr) auto !important;
-  justify-items:center !important;
-  align-content:start !important;
-  gap:5px !important;
-  width:100% !important;
-  min-width:0 !important;
-}
-.media-v2-instagram-embed-shell,
-.media-v2-grid-has-instagram .media-v2-instagram-embed-shell,
-.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
-.media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
-.media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
-  position:relative !important;
-  width:min(100%,340px) !important;
-  max-width:340px !important;
-  height:290px !important;
-  min-height:0 !important;
-  overflow:hidden !important;
-  border:1px solid rgba(248,247,243,.18) !important;
-  border-radius:10px !important;
-  background:#fff !important;
-  box-shadow:0 10px 24px rgba(7,18,34,.18) !important;
-  margin-inline:auto !important;
-}
-.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{
-  width:min(100%,460px) !important;
-  max-width:460px !important;
-}
-.media-v2-instagram-embed-shell iframe{
-  position:absolute !important;
-  inset:0 !important;
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  min-width:0 !important;
-  border:0 !important;
-  background:#fff !important;
-  transform:none !important;
-  zoom:1 !important;
-}
-
-@media(max-width:820px){
-  .unified-media-v2-section .media-v2-instagram-embedded{
-    width:100% !important;
-    max-width:100% !important;
-  }
-  .unified-media-v2-section .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
-  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
-    width:min(100%,260px) !important;
-    max-width:260px !important;
-    height:188px !important;
+  /* Instagram: the same fixed row height used in the original first version. */
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell{
+    position:relative !important;
+    width:min(100%,340px) !important;
+    max-width:340px !important;
+    height:100% !important;
     min-height:0 !important;
+    overflow:hidden !important;
+    margin-inline:auto !important;
+    border:1px solid rgba(248,247,243,.18) !important;
+    border-radius:10px !important;
+    background:#fff !important;
+    box-shadow:0 10px 24px rgba(7,18,34,.18) !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell iframe{
+    position:absolute !important;
+    inset:0 !important;
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    border:0 !important;
+    background:#fff !important;
+    transform:none !important;
+  }
+
+  /* Facebook shares the same available row height, exactly as in the original layout. */
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook-shell{
+    height:100% !important;
+    min-height:0 !important;
+    max-height:100% !important;
     margin-inline:auto !important;
   }
-  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{
-    width:min(100%,300px) !important;
-    max-width:300px !important;
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-square .media-v2-facebook-shell{
+    width:auto !important;
+    max-width:100% !important;
+    aspect-ratio:1/1 !important;
   }
-  .unified-media-v2-section .media-v2-social-link{
-    font-size:.72rem !important;
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-portrait .media-v2-facebook-shell{
+    width:auto !important;
+    max-width:100% !important;
+    aspect-ratio:var(--media-v2-ratio,267/476) !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-landscape .media-v2-facebook-shell{
+    width:100% !important;
+    max-width:100% !important;
+    aspect-ratio:var(--media-v2-ratio,560/314) !important;
+    align-self:center !important;
+  }
+
+  /* YouTube remains centered in its equal-height cell rather than changing the row height. */
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-youtube-shell{
+    width:100% !important;
+    max-width:100% !important;
+    align-self:center !important;
   }
 }
+
+/* Keep the current mobile carousel behavior untouched. */
+
 
 `;
 
