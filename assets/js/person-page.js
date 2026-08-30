@@ -1910,6 +1910,58 @@ body{
   }
 }
 
+/* PATCH 107 - make working Instagram embeds large and readable. */
+.unified-media-v2-section .media-v2-instagram-embedded{
+  width:100% !important;
+  max-width:100% !important;
+  display:grid !important;
+  justify-items:center !important;
+}
+.unified-media-v2-section .media-v2-instagram-embed-shell{
+  width:min(100%,460px) !important;
+  max-width:460px !important;
+  min-width:min(100%,300px) !important;
+  margin-inline:auto !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{
+  width:min(100%,500px) !important;
+  max-width:500px !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{
+  width:min(100%,410px) !important;
+  max-width:410px !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
+  width:min(100%,340px) !important;
+  max-width:340px !important;
+}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-item.media-v2-instagram-embedded.is-carousel-active{
+    display:grid !important;
+    width:100% !important;
+    max-width:100% !important;
+    justify-items:center !important;
+  }
+  .unified-media-v2-section .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
+    width:min(88vw,430px) !important;
+    max-width:430px !important;
+    min-width:280px !important;
+    margin-inline:auto !important;
+  }
+}
+@media(max-width:360px){
+  .unified-media-v2-section .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
+    width:92vw !important;
+    min-width:0 !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
