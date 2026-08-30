@@ -1870,6 +1870,46 @@ body{
   }
 }
 
+
+/* PATCH 105 - Instagram Reels: embed when supported, keep a small fallback link. */
+.media-v2-instagram-embedded{
+  display:grid;
+  justify-items:center;
+  align-content:start;
+  gap:8px;
+  width:100%;
+  min-width:0;
+}
+.media-v2-instagram-embed-shell{
+  position:relative;
+  width:min(100%,360px);
+  aspect-ratio:9/16;
+  overflow:hidden;
+  border:1px solid rgba(248,247,243,.18);
+  border-radius:12px;
+  background:#101c31;
+  box-shadow:0 10px 24px rgba(7,18,34,.18);
+}
+.media-v2-instagram-embed-shell iframe{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  background:#101c31;
+}
+.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{width:min(100%,390px);}
+.media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{width:min(100%,310px);}
+.media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{width:min(100%,250px);}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-instagram-embedded{width:100% !important;}
+  .unified-media-v2-section .media-v2-instagram-embed-shell{
+    width:min(100%,340px) !important;
+    margin-inline:auto;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1916,7 +1956,7 @@ body{
     try {
       const url = new URL(String(permalink || ''));
       const cleanPath = url.pathname.replace(/\/+$/, '');
-      return `https://www.instagram.com${cleanPath}/embed/captioned/`;
+      return `https://www.instagram.com${cleanPath}/embed/`;
     } catch {
       return String(permalink || '');
     }
@@ -1943,7 +1983,12 @@ body{
       const permalink = String(item.permalink || item.href || '').trim();
       if (!permalink) return '';
       const titleText = String(item.title || `Instagram Reel — ${person.name || ''}${(group.instagram || []).length > 1 ? ` ${i + 1}` : ''}`);
-      return `<div class="media-v2-item media-v2-instagram"><a class="media-v2-instagram-card" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank" aria-label="${esc(`צפייה באינסטגרם: ${titleText}`)}"><span class="media-v2-instagram-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M17 5h14c6.6 0 12 5.4 12 12v14c0 6.6-5.4 12-12 12H17C10.4 43 5 37.6 5 31V17C5 10.4 10.4 5 17 5Z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="34" cy="14" r="2.3" fill="currentColor"/><path d="M21 19.2 30 24l-9 4.8Z" fill="currentColor"/></svg></span><span class="media-v2-instagram-title">${esc(titleText)}</span><span class="media-v2-instagram-cta">צפייה באינסטגרם</span></a></div>`;
+      const useEmbed = item.embed !== false;
+      if (!useEmbed) {
+        return `<div class="media-v2-item media-v2-instagram"><a class="media-v2-instagram-card" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank" aria-label="${esc(`צפייה באינסטגרם: ${titleText}`)}"><span class="media-v2-instagram-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M17 5h14c6.6 0 12 5.4 12 12v14c0 6.6-5.4 12-12 12H17C10.4 43 5 37.6 5 31V17C5 10.4 10.4 5 17 5Z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="34" cy="14" r="2.3" fill="currentColor"/><path d="M21 19.2 30 24l-9 4.8Z" fill="currentColor"/></svg></span><span class="media-v2-instagram-title">${esc(titleText)}</span><span class="media-v2-instagram-cta">צפייה באינסטגרם</span></a></div>`;
+      }
+      const embedSrc = esc(instagramEmbedUrl(permalink));
+      return `<div class="media-v2-item media-v2-instagram media-v2-instagram-embedded"><div class="media-v2-instagram-embed-shell"><iframe allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" scrolling="no" src="${embedSrc}" title="${esc(titleText)}"></iframe></div><a class="media-v2-social-link" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">פתיחה באינסטגרם</a></div>`;
     }).filter(Boolean);
 
     const facebookItems = (group.facebook || []).map((item, i) => {
