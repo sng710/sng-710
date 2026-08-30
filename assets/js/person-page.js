@@ -1929,6 +1929,48 @@ body{
   }
 }
 
+/* PATCH 110 - Instagram groups stack vertically so embeds never get squeezed into a half-width column. */
+@media(min-width:821px){
+  .unified-media-v2-section .media-v2-grid-has-instagram{
+    display:grid !important;
+    grid-template-columns:minmax(0,440px) !important;
+    justify-content:center !important;
+    align-items:start !important;
+    gap:20px !important;
+    width:100% !important;
+    max-width:470px !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-item{
+    width:100% !important;
+    max-width:440px !important;
+    min-width:0 !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell{
+    width:min(100%,420px) !important;
+    max-width:420px !important;
+    height:620px !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-square .media-v2-facebook-shell{
+    width:min(100%,390px) !important;
+    max-width:390px !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-facebook.is-portrait .media-v2-facebook-shell{
+    width:min(100%,320px) !important;
+    max-width:320px !important;
+  }
+}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell{
+    width:min(100%,390px) !important;
+    max-width:390px !important;
+    height:clamp(560px,168vw,650px) !important;
+    margin-inline:auto !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1975,7 +2017,7 @@ body{
     try {
       const url = new URL(String(permalink || ''));
       const cleanPath = url.pathname.replace(/\/+$/, '');
-      return `https://www.instagram.com${cleanPath}/embed/captioned/`;
+      return `https://www.instagram.com${cleanPath}/embed/`;
     } catch {
       return String(permalink || '');
     }
@@ -2032,7 +2074,8 @@ body{
     const links = (group.links || []).map((link) => `<a href="${esc(link.href)}" rel="noopener noreferrer" target="_blank">${esc(link.label)}</a>`).join('');
     const mobileNote = '';
     const mobileCarouselControls = mediaItems.length > 1 ? `<div class="media-v2-carousel-controls" aria-label="ניווט בין פריטי המדיה"><button class="media-v2-carousel-btn media-v2-carousel-prev" type="button" aria-label="הפריט הקודם">‹</button><div class="media-v2-carousel-dots" aria-hidden="false"></div><span class="media-v2-carousel-status" aria-live="polite"></span><button class="media-v2-carousel-btn media-v2-carousel-next" type="button" aria-label="הפריט הבא">›</button></div>` : '';
-    return `<section class="media-section unified-media-v2-section" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="media-v2-grid" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
+    const mediaGridClass = instagramItems.length ? 'media-v2-grid media-v2-grid-has-instagram' : 'media-v2-grid';
+    return `<section class="media-section unified-media-v2-section" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="${mediaGridClass}" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
   }).join('');
 
   const mediaBySection = new Map();
