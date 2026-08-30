@@ -1962,6 +1962,105 @@ body{
   }
 }
 
+
+/* PATCH 108 - Aviv Baram Instagram size fix + robust Instagram sizing for 2-item groups. */
+.unified-media-v2-section[data-person-id="aviv_b"]{
+  max-width:1080px !important;
+}
+.unified-media-v2-section[data-person-id="aviv_b"] .media-v2-grid[data-media-count="2"]{
+  max-width:1000px !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:22px !important;
+}
+.unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embedded,
+.unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell{
+  width:100% !important;
+  max-width:470px !important;
+}
+.unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell{
+  min-width:360px !important;
+  margin-inline:auto !important;
+}
+.unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell iframe{
+  width:100% !important;
+  min-width:100% !important;
+  height:100% !important;
+}
+
+/* Also make Instagram embeds in any two-item group less constrained. */
+.unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{
+  width:min(100%,450px) !important;
+  max-width:450px !important;
+}
+
+/* Legacy selector fallback, in case a cached page still uses the older media wrapper. */
+.unified-media-section .media-stage[data-media-count="2"] .media-instagram-item,
+.unified-media-section .media-stage[data-media-count="2"] .media-instagram-item .instagram-embed{
+  width:100% !important;
+  max-width:450px !important;
+}
+.unified-media-section .media-stage[data-media-count="2"] .media-instagram-item .instagram-embed iframe{
+  width:100% !important;
+  min-width:100% !important;
+}
+
+@media(max-width:820px){
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-grid,
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-grid[data-media-count="2"]{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+  }
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-item{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-item.media-v2-instagram-embedded.is-carousel-active{
+    display:grid !important;
+    width:100% !important;
+    max-width:100% !important;
+    justify-items:center !important;
+  }
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{
+    width:min(92vw,470px) !important;
+    max-width:470px !important;
+    min-width:min(78vw,360px) !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell iframe{
+    width:100% !important;
+    min-width:100% !important;
+    height:100% !important;
+  }
+
+  /* Generic 2-item mobile fallback. */
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell{
+    width:min(90vw,450px) !important;
+    max-width:450px !important;
+    min-width:min(76vw,340px) !important;
+  }
+  .unified-media-section .media-stage[data-media-count="2"] .media-instagram-item,
+  .unified-media-section .media-stage[data-media-count="2"] .media-instagram-item .instagram-embed{
+    width:min(90vw,450px) !important;
+    max-width:450px !important;
+    min-width:min(76vw,340px) !important;
+    margin-inline:auto !important;
+  }
+}
+
+@media(max-width:390px){
+  .unified-media-v2-section[data-person-id="aviv_b"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
+  .unified-media-section .media-stage[data-media-count="2"] .media-instagram-item .instagram-embed{
+    width:92vw !important;
+    max-width:92vw !important;
+    min-width:0 !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2065,7 +2164,7 @@ body{
     const links = (group.links || []).map((link) => `<a href="${esc(link.href)}" rel="noopener noreferrer" target="_blank">${esc(link.label)}</a>`).join('');
     const mobileNote = '';
     const mobileCarouselControls = mediaItems.length > 1 ? `<div class="media-v2-carousel-controls" aria-label="ניווט בין פריטי המדיה"><button class="media-v2-carousel-btn media-v2-carousel-prev" type="button" aria-label="הפריט הקודם">‹</button><div class="media-v2-carousel-dots" aria-hidden="false"></div><span class="media-v2-carousel-status" aria-live="polite"></span><button class="media-v2-carousel-btn media-v2-carousel-next" type="button" aria-label="הפריט הבא">›</button></div>` : '';
-    return `<section class="media-section unified-media-v2-section" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="media-v2-grid" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
+    return `<section class="media-section unified-media-v2-section" data-person-id="${esc(person.id || '')}" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="media-v2-grid" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
   }).join('');
 
   const mediaBySection = new Map();
