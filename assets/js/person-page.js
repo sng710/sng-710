@@ -1971,6 +1971,109 @@ body{
   }
 }
 
+
+/* PATCH 111 - restore the original Instagram presentation from the first Aviv Baram version (Patch 75 era). */
+/* Keep the current media engine, but undo later Instagram-only stretching/stacking. */
+@media(min-width:821px){
+  .unified-media-v2-section .media-v2-grid-has-instagram,
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="1"],
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="2"],
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="3"]{
+    width:100% !important;
+    margin-inline:auto !important;
+    display:grid !important;
+    gap:14px !important;
+    align-items:start !important;
+    justify-content:center !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="1"]{
+    grid-template-columns:minmax(0,620px) !important;
+    max-width:660px !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="2"]{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    max-width:860px !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram[data-media-count="3"]{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    max-width:980px !important;
+  }
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-item{
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    margin-inline:0 !important;
+  }
+}
+
+.media-v2-instagram-embedded{
+  display:grid !important;
+  grid-template-rows:minmax(0,1fr) auto !important;
+  justify-items:center !important;
+  align-content:start !important;
+  gap:5px !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+.media-v2-instagram-embed-shell,
+.media-v2-grid-has-instagram .media-v2-instagram-embed-shell,
+.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
+.media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
+.media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
+  position:relative !important;
+  width:min(100%,340px) !important;
+  max-width:340px !important;
+  height:290px !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  border:1px solid rgba(248,247,243,.18) !important;
+  border-radius:10px !important;
+  background:#fff !important;
+  box-shadow:0 10px 24px rgba(7,18,34,.18) !important;
+  margin-inline:auto !important;
+}
+.media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{
+  width:min(100%,460px) !important;
+  max-width:460px !important;
+}
+.media-v2-instagram-embed-shell iframe{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:0 !important;
+  border:0 !important;
+  background:#fff !important;
+  transform:none !important;
+  zoom:1 !important;
+}
+
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-instagram-embedded{
+    width:100% !important;
+    max-width:100% !important;
+  }
+  .unified-media-v2-section .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid-has-instagram .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] .media-v2-instagram-embed-shell,
+  .unified-media-v2-section .media-v2-grid[data-media-count="3"] .media-v2-instagram-embed-shell{
+    width:min(100%,260px) !important;
+    max-width:260px !important;
+    height:188px !important;
+    min-height:0 !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell{
+    width:min(100%,300px) !important;
+    max-width:300px !important;
+  }
+  .unified-media-v2-section .media-v2-social-link{
+    font-size:.72rem !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2017,7 +2120,7 @@ body{
     try {
       const url = new URL(String(permalink || ''));
       const cleanPath = url.pathname.replace(/\/+$/, '');
-      return `https://www.instagram.com${cleanPath}/embed/`;
+      return `https://www.instagram.com${cleanPath}/embed/captioned/`;
     } catch {
       return String(permalink || '');
     }
