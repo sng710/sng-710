@@ -2106,6 +2106,39 @@
 }
 </style>
 
+
+<style id="patch130-mobile-title-safe-area">
+/* PATCH 130 — keep the mobile title clear of the council logo and menu. No text changes. */
+@media (max-width:899px){
+  .home-page .main-title-band{
+    box-sizing:border-box !important;
+    padding-left:88px !important;
+    padding-right:58px !important;
+  }
+  .home-page .main-title-copy{
+    min-width:0 !important;
+  }
+  .home-page .main-primary-title{
+    width:100% !important;
+    max-width:100% !important;
+    margin-inline:auto !important;
+    font-size:clamp(1.78rem,7.7vw,2.55rem) !important;
+    line-height:1.04 !important;
+    white-space:nowrap !important;
+    text-align:center !important;
+  }
+}
+@media (max-width:380px){
+  .home-page .main-title-band{
+    padding-left:82px !important;
+    padding-right:54px !important;
+  }
+  .home-page .main-primary-title{
+    font-size:clamp(1.62rem,7.2vw,2.15rem) !important;
+  }
+}
+</style>
+
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>

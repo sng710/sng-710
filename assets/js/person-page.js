@@ -2406,6 +2406,23 @@ body{
 }
 
 
+/* PATCH 130 — restore the requested chronological story flow across all memorial pages.
+   Media remains above the story exactly where it is. No memorial text is changed. */
+.story-main-grid{
+  display:block !important;
+  grid-template-columns:none !important;
+}
+.story-main-grid .story-chapter.event{
+  padding-inline-start:0 !important;
+  border-inline-start:0 !important;
+}
+.story-main-grid:not(.single-column) .story-chapter.event{
+  margin-top:clamp(2.5rem,4.5vw,3.8rem) !important;
+  padding-top:clamp(1.6rem,3vw,2.2rem) !important;
+  border-top:1px solid rgba(85,184,212,.30) !important;
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

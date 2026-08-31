@@ -1,0 +1,10 @@
+QA PATCH 130
+- Based on the cumulative state through Patch 129.
+- people.js is not included or modified.
+- app.js is not included or modified.
+- Person page HTML render order still has renderTopMedia() before storyHtml.
+- Story change is CSS-only: personal and event chapters are stacked vertically in their existing data order; legacy remains after them.
+- Homepage visible text is byte-for-byte equivalent after stripping style/script content.
+- Mobile title fix is CSS-only.
+- person-page.js passes node --check.
+- site-version bumped to 329.
