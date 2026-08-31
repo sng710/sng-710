@@ -1,11 +1,20 @@
-SNG-710 PATCH 18 - Omer YouTube title visibility
+SNG-710 PATCH 114 — homepage layout repair
 
-Apply after Patch 17.
+Apply this patch to the CURRENT site from sng-710-main (2).zip.
 
-Fix:
-- Keeps Omer Tzadikovich's memorial video in the full-width block added in Patch 17.
-- Explicitly makes the section title “סרטון לזכרו” visible in white with the memorial serif font.
-- Adds display/visibility/opacity/z-index safeguards so the heading cannot disappear behind the video or inherited styles.
-- Bumps the stylesheet cache version to v=218 so browsers fetch the corrected CSS.
+Replace ONLY:
+  index.html
 
-No biography text or other people's pages are changed.
+Do NOT replace assets/css/site.css.
+Do NOT remove the current Omer Tzadikovich page/video changes.
+
+Fixes:
+- restores the homepage search/filter geometry
+- restores the "לפי יישוב" control to normal height
+- restores the dropdown caret to 20x20 instead of the giant SVG
+- prevents the search controls from overlapping the memorial dedication
+- fixes the legacy decorative-rule selector that was shifting the desktop grid
+- adds complete styling for the newer custom settlement dropdown
+- preserves the existing mobile collapsible filter behavior
+
+No memorial text, people data, biography content, images, CNAME or person pages are changed.
