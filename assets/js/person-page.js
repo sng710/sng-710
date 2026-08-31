@@ -2244,31 +2244,41 @@ body{
   }
 }
 
-/* PATCH 121 — official Instagram blockquote support, enabled only for records that request it. */
+/* PATCH 122 — let Instagram's official embed keep its native height.
+   The previous fixed-height shell clipped the Reel and exposed a large white wrapper. */
+.media-v2-instagram-official{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+}
 .media-v2-instagram-official-shell{
   position:relative;
   width:100%;
   max-width:100%;
-  height:100%;
-  min-height:0;
-  overflow:hidden;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  border:1px solid rgba(248,247,243,.18);
-  border-radius:12px;
-  background:#fff;
-  box-shadow:0 10px 24px rgba(7,18,34,.18);
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
 }
 .media-v2-instagram-official-shell .instagram-media{
   flex:0 0 auto;
+  display:block !important;
   width:min(100%,540px) !important;
-  min-width:0 !important;
+  min-width:326px !important;
   max-width:540px !important;
+  height:auto;
+  max-height:none !important;
   margin:0 auto !important;
 }
 .media-v2-instagram-official-fallback{
-  min-height:100%;
+  min-height:540px;
   display:grid;
   place-items:center;
   padding:24px;
@@ -2276,27 +2286,17 @@ body{
   font-family:Arial,sans-serif;
 }
 .media-v2-instagram-official-fallback a{color:#3897f0 !important;text-decoration:none;font-weight:700;}
-@media(min-width:821px){
-  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-official-shell{
-    height:472px !important;
-    min-height:472px !important;
-    max-height:472px !important;
-    flex:0 0 472px !important;
-  }
-  .unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) .media-v2-instagram-official-shell{
-    height:360px !important;
-    min-height:360px !important;
-    max-height:360px !important;
-    flex:0 0 360px !important;
-  }
-}
 @media(max-width:820px){
-  .unified-media-v2-section .media-v2-instagram-official-shell{
+  .media-v2-instagram-official-shell{
     width:100% !important;
-    height:min(158vw,650px) !important;
-    min-height:540px !important;
-    max-height:650px !important;
+    overflow:hidden !important;
   }
+  .media-v2-instagram-official-shell .instagram-media{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:540px !important;
+  }
+  .media-v2-instagram-official-fallback{min-height:480px;}
 }
 
 @media(max-width:820px){

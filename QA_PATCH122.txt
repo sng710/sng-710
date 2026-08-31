@@ -1,0 +1,14 @@
+SNG-710 PATCH 122 QA
+====================
+
+Scope: Nitzan Libstein official Instagram presentation only.
+
+Checks:
+- Reel permalink/data unchanged from Patch 121.
+- assets/js/people.js unchanged.
+- Official Instagram blockquote remains enabled for Nitzan.
+- Removed fixed 472/360px clipping from official Instagram shell.
+- Removed full-width white shell background/border/shadow.
+- Official embed is centered and allowed to use Instagram's native rendered height.
+- Mobile width is constrained to the viewport without horizontal overflow.
+- No memorial text or other media data changed.
