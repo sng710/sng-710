@@ -2244,6 +2244,61 @@ body{
   }
 }
 
+/* PATCH 121 — official Instagram blockquote support, enabled only for records that request it. */
+.media-v2-instagram-official-shell{
+  position:relative;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  border:1px solid rgba(248,247,243,.18);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(7,18,34,.18);
+}
+.media-v2-instagram-official-shell .instagram-media{
+  flex:0 0 auto;
+  width:min(100%,540px) !important;
+  min-width:0 !important;
+  max-width:540px !important;
+  margin:0 auto !important;
+}
+.media-v2-instagram-official-fallback{
+  min-height:100%;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  text-align:center;
+  font-family:Arial,sans-serif;
+}
+.media-v2-instagram-official-fallback a{color:#3897f0 !important;text-decoration:none;font-weight:700;}
+@media(min-width:821px){
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-official-shell{
+    height:472px !important;
+    min-height:472px !important;
+    max-height:472px !important;
+    flex:0 0 472px !important;
+  }
+  .unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) .media-v2-instagram-official-shell{
+    height:360px !important;
+    min-height:360px !important;
+    max-height:360px !important;
+    flex:0 0 360px !important;
+  }
+}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-instagram-official-shell{
+    width:100% !important;
+    height:min(158vw,650px) !important;
+    min-height:540px !important;
+    max-height:650px !important;
+  }
+}
+
 @media(max-width:820px){
   /* Keep the existing one-item-at-a-time carousel. All Instagram Reels remain real on-site embeds. */
   .unified-media-v2-section .media-v2-instagram-embed-shell{
@@ -2355,6 +2410,10 @@ body{
       if (!useEmbed) {
         return `<div class="media-v2-item media-v2-instagram"><a class="media-v2-instagram-card" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank" aria-label="${esc(`צפייה באינסטגרם: ${titleText}`)}"><span class="media-v2-instagram-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M17 5h14c6.6 0 12 5.4 12 12v14c0 6.6-5.4 12-12 12H17C10.4 43 5 37.6 5 31V17C5 10.4 10.4 5 17 5Z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="34" cy="14" r="2.3" fill="currentColor"/><path d="M21 19.2 30 24l-9 4.8Z" fill="currentColor"/></svg></span><span class="media-v2-instagram-title">${esc(titleText)}</span><span class="media-v2-instagram-cta">צפייה באינסטגרם</span></a></div>`;
       }
+      if (item.officialEmbed === true) {
+        const embedVersion = esc(item.embedVersion || '14');
+        return `<div class="media-v2-item media-v2-instagram media-v2-instagram-embedded media-v2-instagram-official" data-media-provider="instagram"><div class="media-v2-instagram-official-shell"><blockquote class="instagram-media" data-instgrm-permalink="${esc(permalink)}" data-instgrm-version="${embedVersion}" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);"><div class="media-v2-instagram-official-fallback"><a href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">הצגת פוסט זה באינסטגרם</a></div></blockquote></div></div>`;
+      }
       const embedSrc = esc(instagramEmbedUrl(permalink));
       return `<div class="media-v2-item media-v2-instagram media-v2-instagram-embedded" data-media-provider="instagram"><div class="media-v2-instagram-embed-shell"><iframe allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="${embedSrc}" title="${esc(titleText)}"></iframe></div><a class="media-v2-social-link" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">פתיחה באינסטגרם</a></div>`;
     }).filter(Boolean);
@@ -2450,6 +2509,25 @@ body{
   ${family}
   <p class="page-footer">${esc(person.footerText || (person.gender === 'female' ? 'יהי זכרה ברוך' : 'יהי זכרו ברוך'))}</p>
 </main>`;
+
+  const initOfficialInstagramEmbeds = () => {
+    const blocks = [...document.querySelectorAll('blockquote.instagram-media[data-instgrm-permalink]')];
+    if (!blocks.length) return;
+    const process = () => {
+      try { window.instgrm?.Embeds?.process?.(); } catch {}
+    };
+    if (window.instgrm?.Embeds?.process) { process(); return; }
+    let script = document.querySelector('script[data-sng-instagram-embed]');
+    if (!script) {
+      script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.instagram.com/embed.js';
+      script.dataset.sngInstagramEmbed = '1';
+      document.head.appendChild(script);
+    }
+    script.addEventListener('load', process, {once:true});
+  };
+  initOfficialInstagramEmbeds();
 
   const initMobileMediaCarousels = () => {
     document.querySelectorAll('.unified-media-v2-section').forEach((section) => {

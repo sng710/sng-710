@@ -329,8 +329,10 @@ window.MEMORIAL_PEOPLE = [
         "heading": "סרטון לזכרו",
         "instagram": [
           {
-            "permalink": "https://www.instagram.com/reel/DBtNGGEKrmS/",
-            "title": "Reel לזכר ניצן ליבשטיין — הניצנים של אופיר"
+            "permalink": "https://www.instagram.com/reel/DBtNGGEKrmS/?utm_source=ig_embed&utm_campaign=loading",
+            "title": "Reel לזכר ניצן ליבשטיין — הניצנים של אופיר",
+            "officialEmbed": true,
+            "embedVersion": "14"
           }
         ]
       }

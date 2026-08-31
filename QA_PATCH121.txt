@@ -1,0 +1,21 @@
+PATCH 121 QA
+============
+
+Data checks
+- MEMORIAL_PEOPLE before: 154
+- MEMORIAL_PEOPLE after: 154
+- Unique IDs after: 154
+- All person data excluding Nitzan's topMedia: byte-for-data equivalent after parsing
+- Nitzan fields excluding topMedia: identical
+- Nitzan Instagram permalink: https://www.instagram.com/reel/DBtNGGEKrmS/?utm_source=ig_embed&utm_campaign=loading
+- officialEmbed: true
+- embedVersion: 14
+
+Renderer checks
+- person-page.js passes node --check
+- people.js passes node --check
+- Official Instagram embed loader is conditional and only runs when blockquote.instagram-media exists
+- Other provider render paths remain unchanged
+
+Text safety
+- No biography/story/generalDetails/service/family-contact text was changed.
