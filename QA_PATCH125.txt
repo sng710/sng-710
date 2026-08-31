@@ -1,0 +1,7 @@
+QA PATCH 125
+- 154 people records retained.
+- 154 unique IDs retained.
+- Only records changed: nitzan_l, omer_z.
+- Only Instagram embedding mode changed for those two records.
+- Their existing Instagram permalinks remain unchanged.
+- Omer's existing YouTube remains unchanged.

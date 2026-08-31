@@ -227,8 +227,7 @@ window.MEMORIAL_PEOPLE = [
           {
             "permalink": "https://www.instagram.com/reel/DXYgV45DWwx/?utm_source=ig_embed&utm_campaign=loading",
             "title": "Reel לזכר עומר צדיקביץ׳ — Kfar Azza Foundation",
-            "officialEmbed": true,
-            "embedVersion": "14"
+            "officialEmbed": false
           }
         ],
         "links": []
@@ -333,8 +332,7 @@ window.MEMORIAL_PEOPLE = [
           {
             "permalink": "https://www.instagram.com/reel/DBtNGGEKrmS/?utm_source=ig_embed&utm_campaign=loading",
             "title": "Reel לזכר ניצן ליבשטיין — הניצנים של אופיר",
-            "officialEmbed": true,
-            "embedVersion": "14"
+            "officialEmbed": false
           }
         ]
       }
