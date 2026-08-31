@@ -4,6 +4,55 @@ const placeFilterWrap=document.getElementById('placeFilterWrap'),placeFilterButt
 const box=document.getElementById('lightbox'),closeBtn=document.getElementById('lightboxClose'),boxImg=document.getElementById('lightboxImg'),boxTitle=document.getElementById('lightboxTitle'),boxPlace=document.getElementById('lightboxPlace'),boxRole=document.getElementById('lightboxRole'),boxFacts=document.getElementById('lightboxFacts'),boxService=document.getElementById('lightboxService'),pageLink=document.getElementById('personPageLink'),copyBtn=document.getElementById('copyPersonLink');
 let lastFocus=null,active=null,activeGroupFilter='all',activePlaceOptionIndex=0;
 
+/* PATCH 126 — restore the memorial-candle visual for records without a portrait.
+   The markup has remained in place; only its drawing styles were lost. */
+const candleStyle=document.createElement('style');
+candleStyle.id='sng-memorial-candle-style';
+candleStyle.textContent=`
+.portrait-placeholder.memorial-candle{
+  position:relative !important;
+  display:block !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  color:transparent !important;
+  filter:none !important;
+  transform:none !important;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,218,140,.28) 0,rgba(255,218,140,.11) 18%,transparent 42%),
+    linear-gradient(180deg,#d6dde0 0%,#c4ced2 100%) !important;
+}
+.portrait-placeholder.memorial-candle::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:18%;
+  width:31%;
+  height:43%;
+  transform:translateX(-50%);
+  border-radius:7px 7px 12px 12px;
+  background:
+    linear-gradient(90deg,rgba(181,177,167,.98) 0%,rgba(247,244,235,.98) 28%,#fffdf5 51%,rgba(233,228,217,.98) 74%,rgba(174,169,159,.98) 100%);
+  box-shadow:
+    0 7px 11px rgba(24,43,54,.18),
+    inset 0 1px 0 rgba(255,255,255,.86);
+}
+.portrait-placeholder.memorial-candle::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:18%;
+  width:17%;
+  height:24%;
+  transform:translateX(-50%) rotate(45deg);
+  transform-origin:50% 70%;
+  border-radius:72% 20% 72% 72%;
+  background:
+    radial-gradient(circle at 64% 64%,#fff8dc 0 10%,#ffd884 24%,#e6a450 53%,#b87539 73%,#91542e 100%);
+  box-shadow:0 0 13px rgba(238,178,83,.38),0 0 26px rgba(238,178,83,.18);
+}
+`;
+document.head.appendChild(candleStyle);
+
 function isSecurityTeam(p){const r=String(p.role||'');return /כיתת הכוננות|רבש["״]?ץ|סגן רבש["״]?ץ/.test(r)}
 function passesFilters(p){const place=placeFilter?.value||'';if(place&&String(p.place||'')!==place)return false;if(activeGroupFilter==='security'&&!isSecurityTeam(p))return false;return true}
 function e(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}

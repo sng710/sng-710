@@ -2366,6 +2366,46 @@ body{
 }
 
 
+/* PATCH 126 — restore the memorial-candle visual on individual pages too. */
+.person-portrait .portrait-placeholder.memorial-candle{
+  position:relative !important;
+  display:block !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  color:transparent !important;
+  filter:none !important;
+  transform:none !important;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,218,140,.28) 0,rgba(255,218,140,.11) 18%,transparent 42%),
+    linear-gradient(180deg,#d6dde0 0%,#c4ced2 100%) !important;
+}
+.person-portrait .portrait-placeholder.memorial-candle::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:18%;
+  width:31%;
+  height:43%;
+  transform:translateX(-50%);
+  border-radius:7px 7px 12px 12px;
+  background:linear-gradient(90deg,rgba(181,177,167,.98) 0%,rgba(247,244,235,.98) 28%,#fffdf5 51%,rgba(233,228,217,.98) 74%,rgba(174,169,159,.98) 100%);
+  box-shadow:0 7px 11px rgba(24,43,54,.18),inset 0 1px 0 rgba(255,255,255,.86);
+}
+.person-portrait .portrait-placeholder.memorial-candle::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:18%;
+  width:17%;
+  height:24%;
+  transform:translateX(-50%) rotate(45deg);
+  transform-origin:50% 70%;
+  border-radius:72% 20% 72% 72%;
+  background:radial-gradient(circle at 64% 64%,#fff8dc 0 10%,#ffd884 24%,#e6a450 53%,#b87539 73%,#91542e 100%);
+  box-shadow:0 0 13px rgba(238,178,83,.38),0 0 26px rgba(238,178,83,.18);
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2401,7 +2441,7 @@ body{
 
   const portrait = person.image
     ? `<img data-viewer-image alt="${esc(person.portraitAlt || person.name || '')}" decoding="async" fetchpriority="high" loading="eager" src="${esc(assetUrl(person.image))}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(person.portrait?.scale || 1)}">`
-    : `<span class="portrait-placeholder" role="img" aria-label="נר זיכרון לזכר ${esc(person.name || '')}">נר זיכרון</span>`;
+    : `<span class="portrait-placeholder memorial-candle" role="img" aria-label="נר זיכרון לזכר ${esc(person.name || '')}"></span>`;
 
   const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);

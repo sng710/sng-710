@@ -1,0 +1,14 @@
+SNG-710 PATCH 126 QA
+====================
+
+Scope: restore memorial candle placeholder only.
+
+Checks:
+- Current memorial records: 154
+- Unique IDs: 154
+- Records with no portrait image: 50
+- people.js is NOT included or modified by this patch.
+- Homepage index.html diff is only app.js cache version 315 -> 325.
+- Homepage app.js logic is byte-identical to the current Patch 115 app.js after removing the new candle-style block.
+- Individual-page change only restores the visual candle for the existing no-image placeholder.
+- No names, stories, media URLs, portrait image paths, ordering, filters, menu behavior, or memorial facts are changed.
