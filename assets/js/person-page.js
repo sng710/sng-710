@@ -2319,6 +2319,53 @@ body{
 }
 
 
+/* PATCH 124 — cross-site fix for official Instagram embeds.
+   Do not force fixed card heights on Instagram's own rendered blockquote/iframe.
+   This keeps Nitzan and Omer visible without clipping while leaving all other media untouched. */
+@media(min-width:821px){
+  .unified-media-v2-section .media-v2-grid > .media-v2-instagram-official{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    align-self:start !important;
+    justify-self:center !important;
+    justify-content:flex-start !important;
+  }
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] > .media-v2-instagram-official{
+    width:min(100%,560px) !important;
+    margin-inline:auto !important;
+  }
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"] > .media-v2-instagram-official,
+  .unified-media-v2-section .media-v2-grid[data-media-count="3"] > .media-v2-instagram-official,
+  .unified-media-v2-section .media-v2-grid[data-media-count="4"] > .media-v2-instagram-official,
+  .unified-media-v2-section .media-v2-grid[data-media-count="5"] > .media-v2-instagram-official,
+  .unified-media-v2-section .media-v2-grid[data-media-count="6"] > .media-v2-instagram-official{
+    width:100% !important;
+  }
+  .unified-media-v2-section .media-v2-grid > .media-v2-instagram-official .media-v2-instagram-official-shell{
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-grid > .media-v2-instagram-official{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  .unified-media-v2-section .media-v2-grid > .media-v2-instagram-official .media-v2-instagram-official-shell{
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+  }
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2510,11 +2557,42 @@ body{
   <p class="page-footer">${esc(person.footerText || (person.gender === 'female' ? 'יהי זכרה ברוך' : 'יהי זכרו ברוך'))}</p>
 </main>`;
 
+
+  const normalizeOfficialInstagramEmbeds = () => {
+    document.querySelectorAll('.media-v2-instagram-official').forEach((item) => {
+      item.style.height = 'auto';
+      item.style.minHeight = '0';
+      item.style.maxHeight = 'none';
+      item.style.alignSelf = 'start';
+      item.style.justifySelf = 'center';
+      item.style.justifyContent = 'flex-start';
+      const shell = item.querySelector('.media-v2-instagram-official-shell');
+      if (shell) {
+        shell.style.height = 'auto';
+        shell.style.minHeight = '0';
+        shell.style.maxHeight = 'none';
+        shell.style.overflow = window.innerWidth <= 820 ? 'hidden' : 'visible';
+      }
+      const block = item.querySelector('.instagram-media');
+      if (block) {
+        block.style.margin = '0 auto';
+        block.style.maxWidth = '540px';
+        block.style.width = window.innerWidth <= 820 ? '100%' : 'min(100%, 540px)';
+        block.style.minWidth = window.innerWidth <= 820 ? '0' : '326px';
+        block.style.height = 'auto';
+      }
+    });
+  };
+
   const initOfficialInstagramEmbeds = () => {
     const blocks = [...document.querySelectorAll('blockquote.instagram-media[data-instgrm-permalink]')];
     if (!blocks.length) return;
     const process = () => {
       try { window.instgrm?.Embeds?.process?.(); } catch {}
+      normalizeOfficialInstagramEmbeds();
+      requestAnimationFrame(() => normalizeOfficialInstagramEmbeds());
+      setTimeout(normalizeOfficialInstagramEmbeds, 250);
+      setTimeout(normalizeOfficialInstagramEmbeds, 1000);
     };
     if (window.instgrm?.Embeds?.process) { process(); return; }
     let script = document.querySelector('script[data-sng-instagram-embed]');
@@ -2528,6 +2606,9 @@ body{
     script.addEventListener('load', process, {once:true});
   };
   initOfficialInstagramEmbeds();
+  normalizeOfficialInstagramEmbeds();
+  window.addEventListener('load', normalizeOfficialInstagramEmbeds, {once:true});
+  window.addEventListener('resize', normalizeOfficialInstagramEmbeds, {passive:true});
 
   const initMobileMediaCarousels = () => {
     document.querySelectorAll('.unified-media-v2-section').forEach((section) => {

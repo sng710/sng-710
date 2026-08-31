@@ -1,0 +1,5 @@
+QA PATCH 124
+- Based on Patch 123 state.
+- people.js unchanged.
+- Fix is limited to person-page.js rendering/styling for official Instagram embeds.
+- site-version updated to 323 to bust cache.
