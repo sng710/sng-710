@@ -1,24 +1,11 @@
-SNG-710 PATCH 44 - Nadav editorial photo layout + homepage council logo
+SNG-710 PATCH 18 - Omer YouTube title visibility
 
-Apply after Patch 43 / the current site that already contains Nadav's 5 added family photos.
+Apply after Patch 17.
 
-NADAV AMIKAM ONLY
-- No biography text changed.
-- No top facts changed.
-- No image file changed or removed.
-- All 7 existing gallery images are retained.
-- The separate gallery/sidebar is removed from Nadav's page only.
-- The 7 images are distributed through the life story, alternating right/left on desktop.
-- Story text flows alongside the images.
-- On mobile, images become full-width blocks between the same paragraphs.
-- Images remain clickable in the existing full-screen image viewer.
+Fix:
+- Keeps Omer Tzadikovich's memorial video in the full-width block added in Patch 17.
+- Explicitly makes the section title “סרטון לזכרו” visible in white with the memorial serif font.
+- Adds display/visibility/opacity/z-index safeguards so the heading cannot disappear behind the video or inherited styles.
+- Bumps the stylesheet cache version to v=218 so browsers fetch the corrected CSS.
 
-HOMEPAGE
-- Adds a Sha'ar HaNegev Regional Council logo/identity lockup above "שער הנגב זוכרת".
-- Uses the existing council emblem and the Hebrew council name.
-- No memorial ordering, text, portraits, popup behavior or search behavior changed.
-
-FILES CHANGED
-- index.html
-- assets/css/site.css
-- people/nadav_a/index.html
+No biography text or other people's pages are changed.
