@@ -1,0 +1,7 @@
+QA PATCH 127
+- Base data file: Patch 125 people.js
+- Changed records only: eitan_z, neta_e
+- Eitan Ziv: new primary portrait image, added one Vimeo video under topMedia.
+- Neta Epstein: removed the two Facebook videos and kept only the single existing YouTube memorial video.
+- No other people text was changed.
+- site-version updated to 326.
