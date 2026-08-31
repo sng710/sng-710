@@ -225,8 +225,10 @@ window.MEMORIAL_PEOPLE = [
         ],
         "instagram": [
           {
-            "permalink": "https://www.instagram.com/reel/DXYgV45DWwx/",
-            "title": "Reel לזכר עומר צדיקביץ׳ — Kfar Azza Foundation"
+            "permalink": "https://www.instagram.com/reel/DXYgV45DWwx/?utm_source=ig_embed&utm_campaign=loading",
+            "title": "Reel לזכר עומר צדיקביץ׳ — Kfar Azza Foundation",
+            "officialEmbed": true,
+            "embedVersion": "14"
           }
         ],
         "links": []

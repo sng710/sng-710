@@ -1,0 +1,10 @@
+PATCH 123 QA
+============
+PASS: 154 memorial records remain.
+PASS: 154 unique IDs remain.
+PASS: Data diff against Patch 121/122 data baseline changes only omer_z.
+PASS: Omer retains exactly one YouTube video (DOzJfE6xz8I).
+PASS: Omer retains exactly one Instagram Reel (DXYgV45DWwx), now officialEmbed=true, embedVersion=14.
+PASS: Nitzan's official Instagram embed DBtNGGEKrmS remains unchanged.
+PASS: No biography/story/generalDetails/family/contact text was changed.
+PASS: No CSS or person-page renderer is included in this patch; Patch 122 official-Instagram display fix remains in force.
