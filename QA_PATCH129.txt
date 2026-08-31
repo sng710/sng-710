@@ -1,0 +1,7 @@
+QA PATCH 129
+- Base: Patch 128 people.js.
+- Only changed record: neta_e.
+- Only changed field in neta_e: topMedia.facebook.
+- YouTube unchanged. Photos/story/storyMedia/familyContact and all text unchanged.
+- 154 records and 154 unique IDs verified.
+- site-version: 328.
