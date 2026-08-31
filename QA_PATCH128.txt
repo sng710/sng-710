@@ -1,0 +1,9 @@
+QA PATCH 128
+- 154 records / 154 unique IDs.
+- Diff vs Patch 127: only neta_e changed.
+- Neta text fields unchanged: name, place, age, role, summary, generalDetails, story, fullStory, familyContact, footerText, portrait, image.
+- Neta media after fix: existing YouTube + middle Facebook video only.
+- Eitan Ziv record is byte-equivalent at parsed-data level to Patch 127: new primary image and Vimeo remain intact.
+- Two unique uploaded photos added; duplicate third upload omitted.
+- JS syntax check passed.
+- site-version updated to 327.
