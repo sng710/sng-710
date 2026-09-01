@@ -2684,6 +2684,146 @@ body{
 }
 
 
+/* PATCH 136 — uniform memorial video row + compact social-video links.
+   The primary row contains only media that can live cleanly in the agreed 16:9 frame.
+   Instagram and non-landscape social videos are shown immediately below as compact links. */
+.unified-media-v2-section .media-v2-grid{
+  align-items:start !important;
+  justify-items:stretch !important;
+}
+.unified-media-v2-section .media-v2-grid > .media-v2-item{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell,
+.unified-media-v2-section .media-v2-facebook-shell{
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  aspect-ratio:16/9 !important;
+  border-radius:13px !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell iframe,
+.unified-media-v2-section .media-v2-youtube-shell video,
+.unified-media-v2-section .media-v2-facebook-shell iframe{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  border:0 !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="1"]{
+  grid-template-columns:minmax(0,680px) !important;
+  max-width:680px !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="2"]{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  max-width:980px !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="3"]{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  max-width:1040px !important;
+}
+.unified-media-v2-section .media-v2-grid[data-media-count="4"],
+.unified-media-v2-section .media-v2-grid[data-media-count="5"],
+.unified-media-v2-section .media-v2-grid[data-media-count="6"]{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  max-width:1040px !important;
+}
+.media-related-links{
+  width:min(100%,880px);
+  margin:20px auto 0;
+  padding-top:17px;
+  border-top:1px solid rgba(85,184,212,.26);
+}
+.media-related-links h3{
+  margin:0 0 10px;
+  font-size:1rem;
+  font-weight:700;
+  color:#e8f1f3;
+}
+.media-related-list{
+  display:grid;
+  gap:8px;
+}
+.media-related-link{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:11px;
+  min-height:52px;
+  padding:9px 12px;
+  border:1px solid rgba(248,247,243,.18);
+  border-radius:11px;
+  background:rgba(17,34,58,.26);
+  color:#fff;
+  text-decoration:none;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease;
+}
+.media-related-link:hover,
+.media-related-link:focus-visible{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(151,205,221,.48);
+  transform:translateY(-1px);
+}
+.media-related-provider{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:76px;
+  min-height:29px;
+  padding:4px 9px;
+  border:1px solid rgba(151,205,221,.34);
+  border-radius:999px;
+  color:#dcecf1;
+  font-size:.75rem;
+  font-weight:700;
+  line-height:1;
+  direction:ltr;
+}
+.media-related-title{
+  min-width:0;
+  font-size:.94rem;
+  font-weight:600;
+  line-height:1.4;
+  text-align:right;
+}
+.media-related-cta{
+  color:#dcebf0;
+  font-size:.78rem;
+  white-space:nowrap;
+}
+@media(max-width:820px){
+  .unified-media-v2-section .media-v2-grid,
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"],
+  .unified-media-v2-section .media-v2-grid[data-media-count="2"],
+  .unified-media-v2-section .media-v2-grid[data-media-count="3"],
+  .unified-media-v2-section .media-v2-grid[data-media-count="4"],
+  .unified-media-v2-section .media-v2-grid[data-media-count="5"],
+  .unified-media-v2-section .media-v2-grid[data-media-count="6"]{
+    max-width:none !important;
+  }
+  .media-related-links{margin-top:15px;padding-top:14px;}
+  .media-related-link{
+    grid-template-columns:auto minmax(0,1fr);
+    gap:8px 10px;
+    padding:10px;
+  }
+  .media-related-cta{
+    grid-column:1 / -1;
+    justify-self:start;
+    padding-inline-start:2px;
+  }
+}
+@media(max-width:520px){
+  .media-related-provider{min-width:68px;font-size:.7rem;}
+  .media-related-title{font-size:.9rem;}
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2758,6 +2898,19 @@ body{
   };
 
   const renderTopMedia = () => (person.topMedia || []).map((group, groupIndex) => {
+    const relatedItems = [];
+
+    const addRelatedItem = (provider, href, title, cta) => {
+      const cleanHref = String(href || '').trim();
+      if (!cleanHref) return;
+      relatedItems.push({
+        provider: String(provider || '').trim(),
+        href: cleanHref,
+        title: String(title || '').trim(),
+        cta: String(cta || 'לצפייה').trim()
+      });
+    };
+
     const videoItems = (group.videos || []).map((video, i) => {
       const title = esc(video.title && video.title !== 'YouTube video player' ? video.title : `${group.heading || 'סרטון הנצחה'} — ${person.name || ''}${(group.videos || []).length > 1 ? ` ${i + 1}` : ''}`);
       const videoSource = String(video.src || '');
@@ -2769,21 +2922,15 @@ body{
       return `<div class="media-v2-item media-v2-youtube" data-media-provider="${isLocalVideo ? 'local' : (isVimeo ? 'vimeo' : 'youtube')}"><div class="media-v2-youtube-shell">${player}</div></div>`;
     });
 
-    const instagramItems = (group.instagram || []).map((item, i) => {
+    /* Instagram reels are intentionally not embedded in the main video row.
+       Their portrait players make otherwise uniform memorial video rows look uneven.
+       They are presented immediately below the standard 16:9 video row as compact links. */
+    (group.instagram || []).forEach((item, i) => {
       const permalink = String(item.permalink || item.href || '').trim();
-      if (!permalink) return '';
-      const titleText = String(item.title || `Instagram Reel — ${person.name || ''}${(group.instagram || []).length > 1 ? ` ${i + 1}` : ''}`);
-      const useEmbed = item.embed !== false;
-      if (!useEmbed) {
-        return `<div class="media-v2-item media-v2-instagram"><a class="media-v2-instagram-card" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank" aria-label="${esc(`צפייה באינסטגרם: ${titleText}`)}"><span class="media-v2-instagram-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M17 5h14c6.6 0 12 5.4 12 12v14c0 6.6-5.4 12-12 12H17C10.4 43 5 37.6 5 31V17C5 10.4 10.4 5 17 5Z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="34" cy="14" r="2.3" fill="currentColor"/><path d="M21 19.2 30 24l-9 4.8Z" fill="currentColor"/></svg></span><span class="media-v2-instagram-title">${esc(titleText)}</span><span class="media-v2-instagram-cta">צפייה באינסטגרם</span></a></div>`;
-      }
-      if (item.officialEmbed === true) {
-        const embedVersion = esc(item.embedVersion || '14');
-        return `<div class="media-v2-item media-v2-instagram media-v2-instagram-embedded media-v2-instagram-official" data-media-provider="instagram"><div class="media-v2-instagram-official-shell"><blockquote class="instagram-media" data-instgrm-permalink="${esc(permalink)}" data-instgrm-version="${embedVersion}" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);"><div class="media-v2-instagram-official-fallback"><a href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">הצגת פוסט זה באינסטגרם</a></div></blockquote></div></div>`;
-      }
-      const embedSrc = esc(instagramEmbedUrl(permalink));
-      return `<div class="media-v2-item media-v2-instagram media-v2-instagram-embedded" data-media-provider="instagram"><div class="media-v2-instagram-embed-shell"><iframe allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="${embedSrc}" title="${esc(titleText)}"></iframe></div><a class="media-v2-social-link" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">פתיחה באינסטגרם</a></div>`;
-    }).filter(Boolean);
+      if (!permalink) return;
+      const titleText = String(item.title || `סרטון באינסטגרם — ${person.name || ''}${(group.instagram || []).length > 1 ? ` ${i + 1}` : ''}`);
+      addRelatedItem('Instagram', permalink, titleText, 'לצפייה באינסטגרם');
+    });
 
     const facebookItems = (group.facebook || []).map((item, i) => {
       const permalink = String(item.permalink || item.href || '').trim();
@@ -2791,24 +2938,39 @@ body{
       const width = Number(item.width) > 0 ? Number(item.width) : 560;
       const height = Number(item.height) > 0 ? Number(item.height) : 314;
       const ratioValue = width / height;
-      const shape = ratioValue < .86 ? 'is-portrait' : ratioValue <= 1.14 ? 'is-square' : 'is-landscape';
-      const title = esc(item.title || `Facebook video — ${person.name || ''}${(group.facebook || []).length > 1 ? ` ${i + 1}` : ''}`);
-      const embedSrc = esc(facebookEmbedUrl(permalink, width, height));
-      return `<div class="media-v2-item media-v2-facebook ${shape}" data-media-provider="facebook"><div class="media-v2-facebook-shell" style="--media-v2-ratio:${Math.round(width)}/${Math.round(height)}"><iframe allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" scrolling="no" src="${embedSrc}" title="${title}"></iframe></div><a class="media-v2-social-link" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">פתיחה בפייסבוק</a></div>`;
+      const titleText = String(item.title || `סרטון בפייסבוק — ${person.name || ''}${(group.facebook || []).length > 1 ? ` ${i + 1}` : ''}`);
+
+      /* Only landscape Facebook videos join the main row. Square/portrait social
+         videos move to the compact related-links area so every visible frame above
+         uses the same 16:9 geometry. */
+      if (ratioValue < 1.45 || ratioValue > 2.15) {
+        addRelatedItem('Facebook', permalink, titleText, 'לצפייה בפייסבוק');
+        return '';
+      }
+
+      const embedSrc = esc(facebookEmbedUrl(permalink, 560, 315));
+      return `<div class="media-v2-item media-v2-facebook is-landscape" data-media-provider="facebook"><div class="media-v2-facebook-shell"><iframe allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" scrolling="no" src="${embedSrc}" title="${esc(titleText)}"></iframe></div><a class="media-v2-social-link" href="${esc(permalink)}" rel="noopener noreferrer" target="_blank">פתיחה בפייסבוק</a></div>`;
     }).filter(Boolean);
 
     const imageItems = (group.images || []).map((image) => {
-      const tag = image.href ? 'a' : 'div';
-      const attrs = image.href ? ` href="${esc(image.href)}" rel="noopener noreferrer" target="_blank"` : '';
+      const href = String(image.href || '').trim();
+      if (href && /instagram\.com/i.test(href)) {
+        addRelatedItem('Instagram', href, image.label || image.alt || 'עמוד אינסטגרם לזכרו', 'פתיחה באינסטגרם');
+        return '';
+      }
+      const tag = href ? 'a' : 'div';
+      const attrs = href ? ` href="${esc(href)}" rel="noopener noreferrer" target="_blank"` : '';
       return `<div class="media-v2-item media-v2-image"><${tag} class="media-v2-image-card"${attrs}><img alt="${esc(image.alt || '')}" decoding="async" loading="lazy" src="${esc(assetUrl(image.src))}">${image.label ? `<span class="media-v2-image-label">${esc(image.label)}</span>` : ''}</${tag}></div>`;
-    });
+    }).filter(Boolean);
 
-    const mediaItems = [...videoItems, ...instagramItems, ...facebookItems, ...imageItems];
+    const mediaItems = [...videoItems, ...facebookItems, ...imageItems];
     const links = (group.links || []).map((link) => `<a href="${esc(link.href)}" rel="noopener noreferrer" target="_blank">${esc(link.label)}</a>`).join('');
     const mobileNote = '';
     const mobileCarouselControls = mediaItems.length > 1 ? `<div class="media-v2-carousel-controls" aria-label="ניווט בין פריטי המדיה"><button class="media-v2-carousel-btn media-v2-carousel-prev" type="button" aria-label="הפריט הקודם">‹</button><div class="media-v2-carousel-dots" aria-hidden="false"></div><span class="media-v2-carousel-status" aria-live="polite"></span><button class="media-v2-carousel-btn media-v2-carousel-next" type="button" aria-label="הפריט הבא">›</button></div>` : '';
     const mediaGridClass = 'media-v2-grid';
-    return `<section class="media-section unified-media-v2-section" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="${mediaGridClass}" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
+    const relatedHeading = mediaItems.length ? 'סרטונים נוספים' : 'קישורים לסרטונים';
+    const relatedHtml = relatedItems.length ? `<div class="media-related-links" aria-label="קישורים לסרטונים נוספים"><h3>${esc(relatedHeading)}</h3><div class="media-related-list">${relatedItems.map((item) => `<a class="media-related-link" href="${esc(item.href)}" rel="noopener noreferrer" target="_blank"><span class="media-related-provider">${esc(item.provider)}</span><span class="media-related-title">${esc(item.title)}</span><span class="media-related-cta">${esc(item.cta)} <span aria-hidden="true">↗</span></span></a>`).join('')}</div></div>` : '';
+    return `<section class="media-section unified-media-v2-section" aria-labelledby="mediaHeading${groupIndex}"><h2 id="mediaHeading${groupIndex}">${esc(group.heading || 'סרטון לזכרו')}</h2>${mobileNote}${mediaItems.length ? `<div class="${mediaGridClass}" data-media-count="${mediaItems.length}">${mediaItems.join('')}</div>${mobileCarouselControls}` : ''}${relatedHtml}${links ? `<div class="media-actions">${links}</div>` : ''}</section>`;
   }).join('');
 
   const mediaBySection = new Map();

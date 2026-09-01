@@ -1,0 +1,17 @@
+QA PATCH 136
+
+- JavaScript syntax: PASS (node --check)
+- Main-row frame rule: 16:9 for YouTube/Vimeo/local and landscape Facebook
+- Instagram in main embedded row: 0 by design
+- Instagram reels become compact descriptive links below the embedded row
+- Non-landscape Facebook becomes compact descriptive links below the embedded row
+- Existing media plan checked across all people with topMedia
+- No people.js/content data changed
+- Site version: 334
+
+Representative expected results:
+- ליבנת קוץ: 1 aligned Facebook embed + 2 compact Instagram links
+- עומר צדיקביץ׳: 1 aligned YouTube embed + 1 compact Instagram link
+- ניצן ליבשטיין: compact Instagram link only
+- נטע אפשטיין: 2 equal 16:9 embedded frames
+- אביב ברעם: compact Instagram + Facebook links (square Facebook not forced into the main row)
