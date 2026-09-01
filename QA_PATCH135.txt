@@ -1,0 +1,12 @@
+QA summary for PATCH 135
+
+Checked:
+- All 5 Kutz main portrait files exist.
+- All Kutz gallery photo references used by aviv_k, livnat_k, rotem_k, yonatan_k and yiftach_k exist.
+- No broken/missing Kutz photo references remain in people.js for those five pages.
+- Patch 134 person-page.js remains included, so the aligned single-column left photo rail behavior is preserved.
+
+Result:
+- Missing Kutz refs: 0
+- Kutz main portraits replaced: 5
+- Site version updated to 333
