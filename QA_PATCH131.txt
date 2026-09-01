@@ -1,0 +1,11 @@
+QA PATCH 131
+
+Checked
+- people.js parses as valid JSON payload in the window.MEMORIAL_PEOPLE assignment.
+- Only Kutz family records were updated in people.js.
+- No text/story content changed.
+- site-version bumped to 330.
+- 20 new WebP image files created.
+- Full-family photos were added across all five Kutz family pages.
+- Shared sibling photos were added to the relevant children pages.
+- Aviv/Livnat/Rotem shared photos were added to the relevant pages.
