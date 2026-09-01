@@ -2503,6 +2503,187 @@ body{
 }
 
 
+/* PATCH 134 — final gallery alignment + media frame fit.
+   Gallery is a single, smaller, equal-size photo rail on the physical left of story text.
+   Full images remain uncropped via object-fit: contain. */
+@media(min-width:821px){
+  .story-layout.has-photos{
+    display:grid !important;
+    grid-template-columns:240px minmax(0,1fr) !important;
+    grid-template-areas:"photos text" !important;
+    column-gap:34px !important;
+    row-gap:0 !important;
+    align-items:start !important;
+    direction:ltr !important;
+  }
+  .story-layout.has-photos .story-photo-rail{
+    grid-area:photos !important;
+    width:240px !important;
+    max-width:240px !important;
+    min-width:240px !important;
+    justify-self:start !important;
+    align-self:start !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  .story-layout.has-photos .story-copy{
+    grid-area:text !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    direction:rtl !important;
+  }
+  .story-photo-stack{
+    display:flex !important;
+    flex-direction:column !important;
+    flex-wrap:nowrap !important;
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    gap:14px !important;
+    width:240px !important;
+    margin:0 !important;
+  }
+  .story-photo-stack figure{
+    display:block !important;
+    flex:0 0 auto !important;
+    width:240px !important;
+    height:180px !important;
+    min-width:240px !important;
+    max-width:240px !important;
+    min-height:180px !important;
+    max-height:180px !important;
+    margin:0 !important;
+    padding:6px !important;
+    overflow:hidden !important;
+  }
+  .story-photo-stack img{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    max-width:100% !important;
+    max-height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    transform:none !important;
+    margin:0 !important;
+  }
+}
+@media(max-width:820px){
+  .story-layout.has-photos{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-areas:"text" "photos" !important;
+    gap:26px !important;
+    direction:ltr !important;
+  }
+  .story-layout.has-photos .story-photo-rail{
+    grid-area:photos !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    justify-self:stretch !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  .story-layout.has-photos .story-copy{grid-area:text !important;direction:rtl !important;}
+  .story-photo-stack{
+    display:flex !important;
+    flex-direction:column !important;
+    flex-wrap:nowrap !important;
+    align-items:center !important;
+    gap:13px !important;
+    width:100% !important;
+  }
+  .story-photo-stack figure{
+    width:min(280px,100%) !important;
+    height:210px !important;
+    min-width:0 !important;
+    max-width:280px !important;
+    min-height:210px !important;
+    max-height:210px !important;
+    margin:0 auto !important;
+    padding:6px !important;
+  }
+  .story-photo-stack img{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:100% !important;
+    max-height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    transform:none !important;
+  }
+}
+
+/* Every embedded video frame follows the media itself — no fixed-height blue card space. */
+.unified-media-v2-section .media-v2-grid{
+  align-items:start !important;
+}
+.unified-media-v2-section .media-v2-grid > .media-v2-item{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  align-self:start !important;
+  justify-content:flex-start !important;
+  overflow:visible !important;
+  background:transparent !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell{
+  position:relative !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:16/9 !important;
+  flex:none !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+.unified-media-v2-section .media-v2-facebook-shell{
+  position:relative !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:var(--media-v2-ratio,16/9) !important;
+  flex:none !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+.unified-media-v2-section .media-v2-instagram-embed-shell{
+  position:relative !important;
+  width:min(100%,430px) !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:9/16 !important;
+  flex:none !important;
+  overflow:hidden !important;
+  background:#000 !important;
+  margin-inline:auto !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell iframe,
+.unified-media-v2-section .media-v2-youtube-shell video,
+.unified-media-v2-section .media-v2-facebook-shell iframe,
+.unified-media-v2-section .media-v2-instagram-embed-shell iframe{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  border:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

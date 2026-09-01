@@ -1,0 +1,14 @@
+QA PATCH 134
+- People records: 154; unique IDs: 154.
+- people.js changes are limited to the photos field of exactly five Kutz family records.
+- Kutz gallery photo references: 46; unique references: 46; duplicates across Kutz pages: 0.
+- No memorial text/story/name/date/media URL field changed.
+- Latest 8 supplied photos converted to lossless WebP without resize/crop/retouch.
+- Two previously sideways yard photos corrected to upright orientation.
+- person-page.js changes are CSS-only layout/media-frame overrides.
+- site-version: 332.
+- Full-site validator comparison: Patch 132 baseline = 16 existing issues; Patch 134 = the same 16 issues, with 0 new validator issues.
+- Layout harness at 1440px: gallery rail 240px, every photo frame exactly 240x180, story text starts on the same top line.
+- Mobile harness at 390px: story text first, then one centered photo column; no multi-column gallery.
+- All 46 Kutz WebP gallery files are referenced exactly once across the five Kutz pages; unassigned = 0, duplicate references = 0.
+- Pixel verification for the latest eight conversions: decoded WebP pixels equal the supplied source pixels exactly.
