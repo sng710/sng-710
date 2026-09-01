@@ -1,0 +1,14 @@
+QA PATCH141
+
+Image files included: 0
+Image paths changed: 0
+Yiftach grandmother removal preserved: YES
+Only new portrait.scale values:
+- itay_b | ברדיצ'סקי איתי ז"ל | scale=0.92
+- aran_g | גורן ארן ז"ל | scale=0.92
+- tami_p | פלג זיו תמי ז"ל | scale=0.9
+- yuval_b | בויום יובל ז"ל | scale=0.93
+- naor_h | חסידים נאור ניסים ז"ל | scale=0.94
+- orly_s | שוורצמן פינקו אורלי ז"ל | scale=0.94
+- yotam_h | חיים יותם ז"ל | scale=0.95
+- yahav_w | וינר יהב ז"ל | scale=0.95
