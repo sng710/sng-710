@@ -1,0 +1,13 @@
+QA PATCH142
+
+Image files included: 0
+Image paths changed: 0
+Text/story/video/gallery/link changes: 0
+Changed people: 2
+
+Portrait display changes only:
+- eitan_z | זיו איתן ז"ל | position: 50% 22% -> 50% 16% | scale: none -> 1.12
+- aviad_a | אדרי אביעד ז"ל | position: 50% 36% -> 50% 36% | scale: 0.90 -> 0.85
+
+Yiftach grandmother removal preserved: YES
+PATCH141 CSS dependency preserved: YES
