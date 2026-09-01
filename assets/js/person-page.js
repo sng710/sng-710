@@ -2423,6 +2423,86 @@ body{
 }
 
 
+/* PATCH 132 — unified personal-page gallery, contact fallback and media-frame correction. */
+.story-layout{
+  display:grid;
+  grid-template-columns:minmax(220px,300px) minmax(0,1fr);
+  grid-template-areas:"photos text";
+  gap:clamp(24px,4vw,48px);
+  align-items:start;
+  direction:ltr;
+}
+.story-layout.no-photos{display:block;}
+.story-layout .story-copy{grid-area:text;direction:rtl;max-width:none;margin:0;min-width:0;}
+.story-photo-rail{grid-area:photos;direction:rtl;min-width:0;}
+.story-photo-stack{display:flex;flex-direction:column;gap:18px;}
+.story-photo-stack figure{
+  width:100%;margin:0;padding:7px;
+  border:1px solid rgba(85,184,212,.30);border-radius:15px;
+  background:rgba(23,43,73,.36);box-shadow:0 10px 24px rgba(10,27,48,.14);
+  overflow:hidden;cursor:zoom-in;
+}
+.story-photo-stack img{
+  display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:10px;
+}
+.story-media-break{display:none !important;}
+.family-contact{display:block !important;visibility:visible !important;opacity:1 !important;}
+.unified-media-v2-section .media-v2-grid{align-items:start !important;}
+.unified-media-v2-section .media-v2-grid > .media-v2-item,
+.unified-media-v2-section .media-v2-grid[data-media-count="1"] > .media-v2-item,
+.unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) > .media-v2-item{
+  height:auto !important;min-height:0 !important;max-height:none !important;
+  align-self:start !important;justify-content:flex-start !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell,
+.unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-youtube-shell,
+.unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) .media-v2-youtube-shell{
+  position:relative !important;width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;
+  flex:none !important;aspect-ratio:16/9 !important;margin:0 !important;overflow:hidden !important;
+}
+.unified-media-v2-section .media-v2-facebook-shell,
+.unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-facebook-shell,
+.unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) .media-v2-facebook-shell{
+  position:relative !important;width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;
+  flex:none !important;aspect-ratio:var(--media-v2-ratio,16/9) !important;margin:0 !important;overflow:hidden !important;
+}
+.unified-media-v2-section .media-v2-instagram-embed-shell,
+.unified-media-v2-section .media-v2-grid[data-media-count="1"] .media-v2-instagram-embed-shell,
+.unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) .media-v2-instagram-embed-shell{
+  position:relative !important;width:min(100%,430px) !important;height:auto !important;min-height:0 !important;max-height:none !important;
+  flex:none !important;aspect-ratio:9/16 !important;margin-inline:auto !important;overflow:hidden !important;
+}
+.unified-media-v2-section .media-v2-youtube-shell iframe,
+.unified-media-v2-section .media-v2-youtube-shell video,
+.unified-media-v2-section .media-v2-facebook-shell iframe,
+.unified-media-v2-section .media-v2-instagram-embed-shell iframe{
+  position:absolute !important;inset:0 !important;display:block !important;
+  width:100% !important;height:100% !important;min-width:100% !important;min-height:100% !important;
+  max-width:100% !important;max-height:100% !important;border:0 !important;
+}
+@media(max-width:820px){
+  .story-layout,.story-layout.has-photos{
+    display:grid;grid-template-columns:1fr;grid-template-areas:"text" "photos";gap:28px;direction:ltr;
+  }
+  .story-layout .story-copy,.story-photo-rail{direction:rtl;}
+  .story-section.story-mobile-condensed:not(.is-expanded) .story-photo-rail{display:none !important;}
+  .story-photo-stack{gap:14px;}
+  .story-photo-stack figure{max-width:520px;margin-inline:auto;}
+  .unified-media-v2-section .media-v2-grid > .media-v2-item,
+  .unified-media-v2-section .media-v2-grid[data-media-count="1"] > .media-v2-item,
+  .unified-media-v2-section .media-v2-grid:not([data-media-count="1"]) > .media-v2-item{
+    height:auto !important;min-height:0 !important;max-height:none !important;
+  }
+  .unified-media-v2-section .media-v2-youtube-shell,
+  .unified-media-v2-section .media-v2-facebook-shell{
+    width:100% !important;height:auto !important;min-height:0 !important;max-height:none !important;
+  }
+  .unified-media-v2-section .media-v2-instagram-embed-shell{
+    width:min(100%,390px) !important;height:auto !important;min-height:0 !important;max-height:none !important;aspect-ratio:9/16 !important;
+  }
+}
+
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2499,11 +2579,13 @@ body{
   const renderTopMedia = () => (person.topMedia || []).map((group, groupIndex) => {
     const videoItems = (group.videos || []).map((video, i) => {
       const title = esc(video.title && video.title !== 'YouTube video player' ? video.title : `${group.heading || 'סרטון הנצחה'} — ${person.name || ''}${(group.videos || []).length > 1 ? ` ${i + 1}` : ''}`);
-      const isLocalVideo = video.type === 'file' || /\.(?:mp4|webm|ogg)(?:[?#].*)?$/i.test(String(video.src || ''));
+      const videoSource = String(video.src || '');
+      const isLocalVideo = video.type === 'file' || /\.(?:mp4|webm|ogg)(?:[?#].*)?$/i.test(videoSource);
+      const isVimeo = /player\.vimeo\.com\/video\//i.test(videoSource);
       const player = isLocalVideo
         ? `<video controls playsinline preload="metadata" src="${esc(assetUrl(video.src))}" aria-label="${title}"></video>`
         : `<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="${esc(youtubeEmbedUrl(video.src))}" title="${title}"></iframe>`;
-      return `<div class="media-v2-item media-v2-youtube" data-media-provider="${isLocalVideo ? 'local' : 'youtube'}"><div class="media-v2-youtube-shell">${player}</div></div>`;
+      return `<div class="media-v2-item media-v2-youtube" data-media-provider="${isLocalVideo ? 'local' : (isVimeo ? 'vimeo' : 'youtube')}"><div class="media-v2-youtube-shell">${player}</div></div>`;
     });
 
     const instagramItems = (group.instagram || []).map((item, i) => {
@@ -2557,19 +2639,31 @@ body{
     sectionMap.get(key).push(item);
   });
 
-  const renderParagraphs = (paragraphs, sectionKey) => {
-    const sectionMedia = mediaBySection.get(sectionKey) || new Map();
+  const renderParagraphs = (paragraphs) => {
     let html = '<div class="story-text">';
-    (paragraphs || []).forEach((paragraph, index) => {
+    (paragraphs || []).forEach((paragraph) => {
       html += `<p>${esc(paragraph)}</p>`;
-      const mediaItems = sectionMedia.get(index + 1) || [];
-      mediaItems.forEach((item) => {
-        html += `</div><div class="story-media-break side-${item.side === 'left' ? 'left' : 'right'}"><figure data-viewer-figure tabindex="0" role="button" aria-label="${esc((item.alt || 'תמונה') + ' - פתיחה בגודל מלא')}"><img data-viewer-image alt="${esc(item.alt || '')}" decoding="async" loading="lazy" src="${esc(assetUrl(item.src))}"></figure></div><div class="story-text">`;
-      });
     });
     html += '</div>';
     return html;
   };
+
+  const storyPhotoItems = (() => {
+    const result = [];
+    const seen = new Set();
+    const fallbackAlt = `תמונה לזכר ${String(person.name || '').replace(/\s+(?:ז״ל|ז"ל|הי״ד|הי"ד)\s*$/u, '').trim()}`;
+    const addPhoto = (src, alt) => {
+      const cleanSrc = String(src || '').trim();
+      if (!cleanSrc || seen.has(cleanSrc)) return;
+      seen.add(cleanSrc);
+      result.push({src: cleanSrc, alt: String(alt || fallbackAlt)});
+    };
+    (person.photos || []).forEach((src) => addPhoto(src, fallbackAlt));
+    (person.storyMedia || []).forEach((item) => addPhoto(item?.src, item?.alt || fallbackAlt));
+    return result;
+  })();
+
+  const renderStoryPhotoRail = () => storyPhotoItems.length ? `<aside class="story-photo-rail" aria-label="תמונות"><div class="story-photo-stack">${storyPhotoItems.map((item) => `<figure data-viewer-figure tabindex="0" role="button" aria-label="${esc((item.alt || 'תמונה') + ' - פתיחה בגודל מלא')}"><img data-viewer-image alt="${esc(item.alt || '')}" decoding="async" loading="lazy" src="${esc(assetUrl(item.src))}"></figure>`).join('')}</div></aside>` : '';
 
   const story = person.story || ((person.isPreviousYears && Array.isArray(person.fullStory) && person.fullStory.length)
     ? { personal: person.fullStory, event: [], legacy: [] }
@@ -2578,21 +2672,21 @@ body{
   if (story && ((story.personal || []).length || (story.event || []).length || (story.legacy || []).length)) {
     let personalChapter = '';
     let eventChapter = '';
-    if ((story.personal || []).length) personalChapter = `<div class="story-chapter personal">${renderParagraphs(story.personal, 'personal')}</div>`;
+    if ((story.personal || []).length) personalChapter = `<div class="story-chapter personal">${renderParagraphs(story.personal)}</div>`;
     if ((story.event || []).length) {
       const eventHeading = person.isPreviousYears ? 'יום הנפילה והנסיבות' : (story.eventHeading || 'שבת ה7.10.2023');
-      eventChapter = `<section class="story-chapter event" aria-labelledby="eventHeading"><h3 id="eventHeading">${esc(eventHeading)}</h3>${renderParagraphs(story.event, 'event')}</section>`;
+      eventChapter = `<section class="story-chapter event" aria-labelledby="eventHeading"><h3 id="eventHeading">${esc(eventHeading)}</h3>${renderParagraphs(story.event)}</section>`;
     }
     const mainChapters = personalChapter || eventChapter ? `<div class="story-main-grid${personalChapter && eventChapter ? '' : ' single-column'}">${personalChapter}${eventChapter}</div>` : '';
-    const legacyChapter = (story.legacy || []).length ? `<section class="story-chapter legacy" aria-labelledby="legacyHeading"><h3 id="legacyHeading">${esc(story.legacyHeading || 'זיכרון, מורשת והנצחה')}</h3>${renderParagraphs(story.legacy, 'legacy')}</section>` : '';
-    storyHtml = `<article class="story-section" aria-labelledby="lifeStoryHeading"><h2 id="lifeStoryHeading">סיפור חיים</h2><div class="story-copy">${mainChapters}${legacyChapter}</div></article>`;
+    const legacyChapter = (story.legacy || []).length ? `<section class="story-chapter legacy" aria-labelledby="legacyHeading"><h3 id="legacyHeading">${esc(story.legacyHeading || 'זיכרון, מורשת והנצחה')}</h3>${renderParagraphs(story.legacy)}</section>` : '';
+    storyHtml = `<article class="story-section${storyPhotoItems.length ? ' has-story-photos' : ''}" aria-labelledby="lifeStoryHeading"><h2 id="lifeStoryHeading">סיפור חיים</h2><div class="story-layout${storyPhotoItems.length ? ' has-photos' : ' no-photos'}">${renderStoryPhotoRail()}<div class="story-copy">${mainChapters}${legacyChapter}</div></div></article>`;
   }
 
   const pageLinks = (person.pageLinks || []).length ? `<section class="links-section" aria-labelledby="pageLinksHeading"><h2 id="pageLinksHeading">קישורים</h2><div class="memorial-links">${person.pageLinks.map((link) => `<a href="${esc(link.href)}" rel="noopener noreferrer" target="_blank">${esc(link.label)}</a>`).join('')}</div></section>` : '';
 
   const cleanMemorialName = (value) => String(value || '').replace(/\s+(?:ז״ל|ז"ל|הי״ד|הי"ד)\s*$/u, '').trim();
   const familyContactName = cleanMemorialName(service.displayName || person.name || '');
-  const defaultFamilyContact = person.isPreviousYears && familyContactName ? {
+  const defaultFamilyContact = familyContactName ? {
     text: `אם אתם בני משפחה של ${familyContactName} וברצונכם להוסיף, לתקן או לעדכן מידע בעמוד, נשמח שתיצרו איתנו קשר.`,
     href: `https://wa.me/972547100090?text=${encodeURIComponent(`שלום, אני בן/בת משפחה של ${familyContactName} וברצוני להוסיף או לעדכן מידע בעמוד ההנצחה.`)}`,
     label: 'ליצירת קשר ב-WhatsApp',
@@ -2693,6 +2787,10 @@ body{
             try {
               frame.contentWindow?.postMessage(JSON.stringify({event:'command',func:'pauseVideo',args:[]}), '*');
             } catch {}
+            return;
+          }
+          if (/player\.vimeo\.com\/video\//i.test(src)) {
+            try { frame.contentWindow?.postMessage({method:'pause'}, '*'); } catch {}
             return;
           }
           /* Instagram/Facebook do not expose a shared pause API: reloading only the outgoing embed reliably stops playback. */

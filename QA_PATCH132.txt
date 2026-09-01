@@ -1,0 +1,30 @@
+QA PATCH 132
+
+DATA INTEGRITY
+- 154 records.
+- 154 unique IDs.
+- Compared people.js with Patch 131: only the photos field changed, and only for aviv_k, livnat_k, rotem_k, yonatan_k, yiftach_k.
+- No memorial/story/name/date/role/media text field changed.
+
+KUTZ IMAGES
+- 38 referenced/self-contained Kutz WebP files are included in this patch.
+- All Kutz photo references in people.js resolve to files included in the patch.
+- New conversions are lossless WebP; decoded pixel dimensions/content were verified unchanged after conversion.
+- No crop, resize or rotation was applied.
+- The second-batch mountain-siblings image and family-tractor image were pixel-identical to already-added files, so the existing WebP is reused rather than showing a duplicate.
+- The supplied Nikon NEF is exposed by the available decoder as its embedded 160x120 visual preview; that exact decoded preview was converted losslessly without crop/rotation.
+
+PERSON PAGE TEMPLATE
+- Family contact fallback now applies to every memorial page, while explicit existing familyContact objects take precedence unchanged.
+- photos[] and storyMedia images are deduplicated and rendered in one photo rail left of story text on desktop.
+- Inline storyMedia insertion is disabled so images no longer interrupt paragraphs.
+- On mobile, text is above photos; for long collapsed stories the photo rail remains hidden until “המשך קריאה” is expanded.
+- Media cards no longer have forced fixed outer heights.
+- YouTube/Vimeo frame ratio: 16:9.
+- Facebook frame ratio: original supplied width/height ratio.
+- Instagram clean embed: vertical 9:16 frame.
+- Vimeo pause support added to the existing mobile media carousel stop logic.
+
+SYNTAX
+- assets/js/people.js: node --check PASS.
+- assets/js/person-page.js: node --check PASS.
