@@ -1,0 +1,7 @@
+PATCH151 QA
+[x] No AI-generated image files included.
+[x] Exactly three portrait image files included.
+[x] All three portrait scale values are 1 (no shrink/padding ring).
+[x] PATCH150 global normalization is rolled back by restoring pre-PATCH150 JS/data baseline.
+[x] Homepage CSS from PATCH149 is not modified.
+[x] Cache version bumped to 339.

@@ -2867,12 +2867,7 @@ body{
 
   const portraitSrc = person.image ? assetUrl(person.image) : assetUrl('img/memorial-candle.webp');
   const portraitAlt = person.image ? (person.portraitAlt || displayName(person.name) || person.name || '') : `נר זיכרון לזכר ${displayName(person.name) || person.name || ''}`;
-  const portraitPad = Number.isFinite(Number(person.portrait?.pad)) ? Math.max(0, Math.min(22, Number(person.portrait.pad))) : 0;
-  const portraitBg = /^#[0-9a-f]{6}$/i.test(String(person.portrait?.bg || '')) ? person.portrait.bg : '#d7dde0';
-  const portraitScale = Number.isFinite(Number(person.portrait?.scale)) ? Math.max(1, Math.min(3.75, Number(person.portrait.scale))) : 1;
-  const portraitTx = Number.isFinite(Number(person.portrait?.tx)) ? Math.max(-140, Math.min(140, Number(person.portrait.tx))) : 0;
-  const portraitTy = Number.isFinite(Number(person.portrait?.ty)) ? Math.max(-140, Math.min(140, Number(person.portrait.ty))) : 0;
-  const portrait = `<img data-viewer-image alt="${esc(portraitAlt)}" decoding="async" fetchpriority="high" loading="eager" src="${esc(portraitSrc)}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(portraitScale)};padding:${esc(portraitPad)}%;background:${esc(portraitBg)};transform:translate(${esc(portraitTx)}%,${esc(portraitTy)}%) scale(${esc(portraitScale)})">`;
+  const portrait = `<img data-viewer-image alt="${esc(portraitAlt)}" decoding="async" fetchpriority="high" loading="eager" src="${esc(portraitSrc)}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(person.portrait?.scale || 1)}">`;
 
   const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);
