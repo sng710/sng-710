@@ -1,0 +1,20 @@
+V82 — previous-years slugs + verified search placement
+
+Changes:
+- Renamed previous-years placeholder IDs/folders from laad_<ID> to real slugs:
+  daniel_t
+  zeev_s
+  jimmy_k
+  oded_s
+  eliyahu_m
+  dana_g
+- Updated assets/data/previous-years.json to use those slugs.
+- Created slug-based folders under assets/people/.
+- Created slug-based placeholder images under assets/people-original/.
+- Verified and strengthened:
+  desktop/web search is under the left-side text.
+  left side is not sticky and scrolls naturally.
+  mobile search is at the bottom of the page and is not fixed/sticky.
+- Cache updated to v82.
+
+Updated/new files included in this ZIP.

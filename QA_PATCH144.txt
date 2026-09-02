@@ -1,0 +1,119 @@
+QA PATCH144
+
+- Historical root documentation files archived: 93
+- Archived copies verified byte-for-byte by SHA-256: PASS
+- Existing non-documentation/runtime files modified: 0
+- Live-site HTML/JS/CSS/images/videos/content included in patch: 0
+- Root after cleanup is intended to contain only:
+  CHANGELOG.md
+  CNAME
+  README.md
+  favicon-sng.png
+  favicon-sng.svg
+  favicon.ico
+  index.html
+  person-page.js
+  site-version.json
+  plus the existing directories assets/, people/, tools/, docs/
+
+Git diff summary:
+ CHANGELOG.md                                       | 118 +++++++++++++++++++++
+ README.md                                          |  43 ++++++++
+ docs/CORRECTIONS_AND_REMOVALS.md                   |  13 +++
+ docs/PATCH144_MOVE_MANIFEST.md                     |  99 +++++++++++++++++
+ docs/README.md                                     |  14 +++
+ AUDIT.txt => docs/archive/audits/AUDIT.txt         |   0
+ .../archive/audits/AUDIT_CHANGES_PATCH101.txt      |   0
+ .../archive/audits/AUDIT_CHANGES_PATCH103.txt      |   0
+ .../archive/audits/AUDIT_PATCH50.txt               |   0
+ .../archive/audits/AUDIT_UPDATE_PATCH102.txt       |   0
+ REVIEW.txt => docs/archive/audits/REVIEW.txt       |   0
+ .../archive/audits/V63_QUALITY_TEST_REPORT.txt     |   0
+ .../archive/patch-notes/PATCH_V41_NOTES.txt        |   0
+ .../archive/patch-notes/PATCH_V51_NOTES.txt        |   0
+ .../archive/patch-notes/PATCH_V52_NOTES.txt        |   0
+ .../archive/patch-notes/PATCH_V53_NOTES.txt        |   0
+ .../archive/patch-notes/PATCH_V54_NOTES.txt        |   0
+ .../PATCH_V56_EDITORIAL_UNIFORM_TEXTS_NOTES.txt    |   0
+ .../PATCH_V57_BETTER_POPUP_SUMMARIES_NOTES.txt     |   0
+ .../PATCH_V58_FIRST_NAME_ABOUT_NOTES.txt           |   0
+ .../PATCH_V60_FIX_FULL_LIST_TOGGLE_NOTES.txt       |   0
+ ...ATCH_V61_RECHECK_FULL_STORY_ZOOM_ARIA_NOTES.txt |   0
+ .../patch-notes/PATCH_V62_SAFE_RECHECK_NOTES.txt   |   0
+ .../patch-notes/PATCH_V63_TESTED_FIXES_NOTES.txt   |   0
+ .../PATCH_V64_POPUP_SCROLL_FIX_NOTES.txt           |   0
+ .../PATCH_V65_AUTO_TRANSPARENT_IMAGE_BG_NOTES.txt  |   0
+ .../PATCH_V67_FAST_LIGHT_BLUE_BG_NOTES.txt         |   0
+ .../PATCH_V68_SOFTER_PORTRAIT_BG_NOTES.txt         |   0
+ .../PATCH_V69_PORTRAIT_SLIGHT_ZOOM_NOTES.txt       |   0
+ .../PATCH_V70_PORTRAIT_MORE_ZOOM_NOTES.txt         |   0
+ .../patch-notes/PATCH_V71_COLOR_MAIN_IMAGES_BG.txt |   0
+ .../PATCH_V72_PERSONAL_DETAILS_TOP_NOTES.txt       |   0
+ .../PATCH_V73_ROTATION_AND_FAMILY_ORDER_NOTES.txt  |   0
+ ...ATCH_V74_12_ROTATING_FULL_LIST_BIGGER_NOTES.txt |   0
+ .../patch-notes/PATCH_V77_FULL_LIST_ONLY_NOTES.txt |   0
+ .../PATCH_V78_SIDE_BY_SIDE_FULL_LIST_NOTES.txt     |   0
+ .../PATCH_V79_REMOVE_RIGHT_BG_AND_SPACING.txt      |   0
+ .../PATCH_V80_SEARCH_POSITION_SCROLL_NOTES.txt     |   0
+ ...VIOUS_YEARS_SLUGS_AND_VERIFIED_SEARCH_NOTES.txt |   0
+ README.txt => docs/archive/patch-notes/README.txt  |   0
+ .../archive/patch-notes/README_PATCH100.txt        |   0
+ .../archive/patch-notes/README_PATCH103.txt        |   0
+ .../archive/patch-notes/README_PATCH104.txt        |   0
+ .../archive/patch-notes/README_PATCH106.txt        |   0
+ .../archive/patch-notes/README_PATCH107.txt        |   0
+ .../archive/patch-notes/README_PATCH108.txt        |   0
+ .../archive/patch-notes/README_PATCH109.txt        |   0
+ .../archive/patch-notes/README_PATCH110.txt        |   0
+ .../archive/patch-notes/README_PATCH111.txt        |   0
+ .../archive/patch-notes/README_PATCH112.txt        |   0
+ .../archive/patch-notes/README_PATCH113.txt        |   0
+ .../archive/patch-notes/README_PATCH45.txt         |   0
+ .../archive/patch-notes/README_PATCH46.txt         |   0
+ .../archive/patch-notes/README_PATCH47.txt         |   0
+ .../archive/patch-notes/README_PATCH48.txt         |   0
+ .../archive/patch-notes/README_PATCH49.txt         |   0
+ .../archive/patch-notes/README_PATCH50.txt         |   0
+ .../archive/patch-notes/README_PATCH51.txt         |   0
+ .../archive/patch-notes/README_PATCH57.txt         |   0
+ .../archive/patch-notes/README_PATCH58.txt         |   0
+ .../archive/patch-notes/README_PATCH59.txt         |   0
+ .../archive/patch-notes/README_PATCH60.txt         |   0
+ .../archive/patch-notes/README_PATCH61.txt         |   0
+ .../archive/patch-notes/SOURCE_NOTES_PATCH22.txt   |   0
+ .../archive/patch-notes/SOURCE_NOTES_PATCH34.txt   |   0
+ .../archive/patch-notes/TEXT_FORMAT_POLICY_V56.txt |   0
+ QA_PATCH29.txt => docs/archive/qa/QA_PATCH29.txt   |   0
+ QA_PATCH33.txt => docs/archive/qa/QA_PATCH33.txt   |   0
+ QA_PATCH45.txt => docs/archive/qa/QA_PATCH45.txt   |   0
+ QA_PATCH46.txt => docs/archive/qa/QA_PATCH46.txt   |   0
+ QA_PATCH47.txt => docs/archive/qa/QA_PATCH47.txt   |   0
+ QA_PATCH48.txt => docs/archive/qa/QA_PATCH48.txt   |   0
+ QA_PATCH49.txt => docs/archive/qa/QA_PATCH49.txt   |   0
+ QA_PATCH51.txt => docs/archive/qa/QA_PATCH51.txt   |   0
+ QA_PATCH57.txt => docs/archive/qa/QA_PATCH57.txt   |   0
+ QA_PATCH58.txt => docs/archive/qa/QA_PATCH58.txt   |   0
+ QA_PATCH59.txt => docs/archive/qa/QA_PATCH59.txt   |   0
+ QA_PATCH60.txt => docs/archive/qa/QA_PATCH60.txt   |   0
+ QA_PATCH61.txt => docs/archive/qa/QA_PATCH61.txt   |   0
+ .../archive/validation/SHA256SUMS.txt              |   0
+ .../archive/validation/SHA256SUMS_PATCH45.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH46.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH47.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH48.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH49.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH50.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH51.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH57.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH58.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH59.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH60.txt      |   0
+ .../archive/validation/SHA256SUMS_PATCH61.txt      |   0
+ .../archive/validation/VALIDATION_PATCH102.json    |   0
+ .../archive/validation/VALIDATION_PATCH103.txt     |   0
+ .../archive/working-notes/DELETE.txt               |   0
+ .../archive/working-notes/GALLERY_DEDUP.txt        |   0
+ .../archive/working-notes/NEW_RECORDS.txt          |   0
+ .../working-notes/PATCH23_PORTRAIT_CHECK.jpg       | Bin
+ tools/repo/apply_patch144_cleanup.py               |  23 ++++
+ 99 files changed, 310 insertions(+)

@@ -1,0 +1,11 @@
+V67 — faster portrait loading with unified light blue background
+
+Changes:
+- Disabled the runtime background-removal logic that was slowing image loading.
+- Added a uniform very light blue background behind portraits and gallery images.
+- Updated cache version to v67.
+
+Updated files:
+- index.html
+- assets/js/app.js
+- assets/css/styles.css

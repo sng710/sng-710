@@ -1,0 +1,15 @@
+V63 — Tested fixes
+
+Changes after the v62 quality test:
+- Added a neutral transparent placeholder image for david_s because the source repo referenced assets/people-original/david_s.webp but the file was missing.
+- Added short respectful summaries for angeline_a and seta_h so no profile opens with an empty summary.
+- Kept the v62 fixes: full story fallback, aria-hidden focus fix, safe image zoom-out, and Hendi text update.
+- Cache-bust updated to v=63.
+- Static and browser smoke tests were run after this patch.
+
+Files updated:
+- index.html
+- assets/js/app.js
+- assets/data/people.json
+- assets/people-original/david_s.webp
+- PATCH_V63_TESTED_FIXES_NOTES.txt

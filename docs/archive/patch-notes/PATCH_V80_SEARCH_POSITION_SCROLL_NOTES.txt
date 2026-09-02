@@ -1,0 +1,14 @@
+V80 — search position and scrolling behavior
+
+Changes:
+- Desktop/web: moved the search bar under the left-side text.
+- Left text column now scrolls naturally with the page instead of staying sticky.
+- Mobile/tablet: search bar appears at the bottom of the page and is not fixed/sticky.
+- Kept the side-by-side full-list design.
+- Did not change texts or people data.
+- Cache updated to v80.
+
+Updated files:
+- index.html
+- assets/css/styles.css
+- assets/js/app.js

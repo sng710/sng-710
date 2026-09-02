@@ -1,0 +1,17 @@
+V74 — 12 rotating portraits + full list below + larger images
+
+Changes:
+- Top rotating area now shows 12 portraits at a time.
+- Rotation speed remains faster: 6500ms.
+- Full list is below the hero and visible by default again.
+- Full list still includes everyone, not only the 12 rotating portraits.
+- Portrait frames/images were enlarged a little.
+- maayan_i remains directly after tzachi_i.
+- noam_e remains directly after dikla_a.
+- Cache updated to v74.
+
+Updated files:
+- index.html
+- assets/js/app.js
+- assets/css/styles.css
+- assets/data/people.json

@@ -1,0 +1,9 @@
+V70 — portrait zoom increased a little more
+
+Goal:
+- Show just a very small top section of the shoulders.
+- Fill the portrait frame better without obvious side gaps.
+
+Updated files:
+- index.html
+- assets/css/styles.css

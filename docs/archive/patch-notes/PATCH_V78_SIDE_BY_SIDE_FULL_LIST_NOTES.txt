@@ -1,0 +1,17 @@
+V78 — side-by-side full list only
+
+Changes:
+- Keeps the no-rotation/full-list-only version.
+- Rebuilds the layout into a side-by-side view:
+  left side: poem, title and dedication.
+  right side: full people list grid.
+- Similar direction to the provided PDF reference.
+- Does not change person texts or people data.
+- Popup/lightbox behavior remains.
+- Cache updated to v78.
+
+Updated files:
+- index.html
+- assets/js/app.js
+- assets/css/styles.css
+- assets/data/people.json

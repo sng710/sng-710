@@ -1,0 +1,12 @@
+V79 — side-by-side full list refinements
+
+Changes:
+- Removed the semi-transparent background panel behind the right-side image list.
+- Tightened and regularized spacing in the right-side grid.
+- Kept side-by-side layout, texts, and data unchanged.
+- Cache updated to v79.
+
+Updated files:
+- index.html
+- assets/css/styles.css
+- assets/js/app.js
