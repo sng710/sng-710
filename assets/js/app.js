@@ -56,10 +56,12 @@ document.head.appendChild(candleStyle);
 function isSecurityTeam(p){const r=String(p.role||'');return /כיתת הכוננות|רבש["״]?ץ|סגן רבש["״]?ץ/.test(r)}
 function passesFilters(p){const place=placeFilter?.value||'';if(place&&String(p.place||'')!==place)return false;if(activeGroupFilter==='security'&&!isSecurityTeam(p))return false;return true}
 function e(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function norm(s){return String(s||'').replace(/[״“”]/g,'"').replace(/[׳‘’]/g,"'").replace(/ז\s*["'׳״]{0,2}\s*ל/g,'').replace(/[()\[\]{}.,/:;!?+\-־\u2013\u2014]+/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
-function displayName(p){return String(p.name||'').replace(/(?:^|\s)(?:ז\s*[״"'׳]{0,2}\s*ל|הי\s*[״"'׳]{0,2}\s*ד)(?=\s|$)/gu,' ').replace(/\s+/g,' ').trim()}
+const fallbackPortrait='assets/img/memorial-candle.webp';
+function stripMemorialSuffixes(value){return String(value||'').replace(/\s+(?:(?:ז(?:["״']?ל)?)|(?:זצ(?:["״']?ל)?)|(?:הי(?:["״']?ד)?))\s*$/u,'').trim()}
+function norm(s){return stripMemorialSuffixes(String(s||'').replace(/[״“”]/g,'\"').replace(/[׳‘’]/g,"'")).replace(/[()\[\]{}.,/:;!?+\-־–—]+/g,' ').replace(/\s+/g,' ').trim().toLowerCase()}
+function displayName(p){return stripMemorialSuffixes(p.name||'')}
 function firstName(p){const explicit=String(p.firstNameHebrew||'').trim();if(explicit)return explicit;const parts=displayName(p).split(/\s+/).filter(Boolean);return parts.at(-1)||displayName(p)}
-function pic(p,cls=''){const pos=/^\d{1,3}%\s+\d{1,3}%$/.test(String(p.portrait?.position||''))?p.portrait.position:'50% 38%';const fit=p.portrait?.fit==='contain'?'contain':'cover';const rawScale=Number(p.portrait?.scale);const scale=Number.isFinite(rawScale)&&rawScale>=.8&&rawScale<=1.2?rawScale:1;return p.image?`<img class="${cls}" src="${e(p.image)}" alt="${e(displayName(p))}" loading="lazy" decoding="async" style="--fit:${fit};--pos:${e(pos)};--scale:${scale}">`:`<span class="portrait-placeholder memorial-candle" role="img" aria-label="${e('נר זיכרון לזכר '+displayName(p))}"></span>`}
+function pic(p,cls=''){const pos=/^\d{1,3}%\s+\d{1,3}%$/.test(String(p.portrait?.position||''))?p.portrait.position:'50% 38%';const fit=p.portrait?.fit==='contain'?'contain':'cover';const rawScale=Number(p.portrait?.scale);const scale=Number.isFinite(rawScale)&&rawScale>=.75&&rawScale<=1.45?rawScale:1;const src=String(p.image||fallbackPortrait);const altText=p.image?displayName(p):('נר זיכרון לזכר '+displayName(p));return `<img class="${cls}" src="${e(src)}" alt="${e(altText)}" loading="lazy" decoding="async" style="--fit:${fit};--pos:${e(pos)};--scale:${scale}">`}
 function matches(p,q){const t=norm(q);if(!t)return true;return t.split(' ').every(x=>norm(p.name).includes(x)||norm((p.name||'').split(' ').reverse().join(' ')).includes(x)||norm(p.place).includes(x))}
 
 function getPlaceOptions(){return placeFilter?[...placeFilter.options].map(option=>({value:option.value,label:option.textContent||''})):[]}

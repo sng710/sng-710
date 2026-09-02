@@ -1,0 +1,5 @@
+[x] six requested portraits replaced
+[x] fallback candle added
+[x] obvious previous-years places filled
+[x] displayed memorial suffixes hidden
+[x] cache-busting version refreshed

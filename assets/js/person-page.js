@@ -2824,17 +2824,9 @@ body{
 }
 
 
-/* PATCH 146 — internal-page site brand in the top-left topbar. */
-.person-site-brand{display:inline-flex;align-items:center;gap:10px;direction:ltr;color:#fff;text-decoration:none;font-family:var(--serif);font-size:1.2rem;line-height:1;white-space:nowrap}
-.person-site-brand img{display:block;width:44px;height:44px;object-fit:contain;flex:0 0 auto}
-.person-site-brand span{direction:rtl}
-.person-site-brand:hover span{border-bottom:1px solid rgba(155,213,255,.7)}
-@media(max-width:560px){.person-site-brand{gap:7px;font-size:.92rem}.person-site-brand img{width:34px;height:34px}.person-topbar-inner{gap:8px}.back-link{font-size:.78rem}}
-
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const displayName = (value) => String(value ?? '').replace(/(?:^|\s)(?:ז\s*[״"'׳]{0,2}\s*ל|הי\s*[״"'׳]{0,2}\s*ד)(?=\s|$)/gu, ' ').replace(/\s+/g, ' ').trim();
   const people = Array.isArray(window.MEMORIAL_PEOPLE) ? window.MEMORIAL_PEOPLE : [];
   const id = document.body?.dataset?.personId || '';
   const person = people.find((item) => item.id === id);
@@ -2861,15 +2853,16 @@ body{
     return;
   }
 
-  document.title = `${displayName(person.name)} | רקמה אנושית אחת`;
+  const service = person.serviceRecord || {};
+  const cleanName = cleanMemorialName(person.name || service.displayName || '');
+  document.title = cleanName || 'רקמה אנושית אחת';
   const meta = document.querySelector('meta[name="description"]');
   if (meta && person.summary) meta.setAttribute('content', person.summary);
 
-  const portrait = person.image
-    ? `<img data-viewer-image alt="${esc(person.portraitAlt || person.name || '')}" decoding="async" fetchpriority="high" loading="eager" src="${esc(assetUrl(person.image))}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(person.portrait?.scale || 1)}">`
-    : `<span class="portrait-placeholder memorial-candle" role="img" aria-label="נר זיכרון לזכר ${esc(person.name || '')}"></span>`;
+  const portraitSrc = person.image ? assetUrl(person.image) : assetUrl('img/memorial-candle.webp');
+  const portraitAlt = person.image ? (person.portraitAlt || cleanName || person.name || '') : `נר זיכרון לזכר ${cleanName || person.name || ''}`;
+  const portrait = `<img data-viewer-image alt="${esc(portraitAlt)}" decoding="async" fetchpriority="high" loading="eager" src="${esc(portraitSrc)}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(person.portrait?.scale || 1)}">`;
 
-  const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);
   const serviceHtml = serviceParts.length ? `<div class="service-line">${serviceParts.map((x) => `<span>${esc(x)}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>` : '';
   const facts = (person.generalDetails || []).filter(Boolean).map((x) => `<div class="fact">${esc(x)}</div>`).join('');
@@ -3002,7 +2995,7 @@ body{
   const storyPhotoItems = (() => {
     const result = [];
     const seen = new Set();
-    const fallbackAlt = `תמונה לזכר ${String(person.name || '').replace(/\s+(?:ז״ל|ז"ל|הי״ד|הי"ד)\s*$/u, '').trim()}`;
+    const fallbackAlt = `תמונה לזכר ${cleanName}`;
     const addPhoto = (src, alt) => {
       const cleanSrc = String(src || '').trim();
       if (!cleanSrc || seen.has(cleanSrc)) return;
@@ -3048,9 +3041,10 @@ body{
 
   root.innerHTML = `
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
-<header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a><a class="person-site-brand" href="${esc(new URL('index.html', siteRoot).href)}" aria-label="שער הנגב זוכרת – לדף הבית"><img alt="" src="${esc(assetUrl('favicon-sng.svg'))}"><span dir="rtl">שער הנגב זוכרת</span></a></div></header>
+<div class="council-corner" aria-hidden="true"><img alt="" src="${esc(assetUrl('favicon-sng.svg'))}"></div>
+<header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a></div></header>
 <main class="person-main" id="mainContent">
-  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(person.role)}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
+  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(cleanName || person.name || '')}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(person.role)}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
   ${renderTopMedia()}
   ${storyHtml}
   ${pageLinks}
