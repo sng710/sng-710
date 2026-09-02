@@ -1,0 +1,5 @@
+QA PATCH155
+- Changed records: ['livnat_k']
+- Added YouTube src: https://www.youtube.com/embed/IQZmUu0XV4I?si=UkSRDvaaq3lvYs6z
+- No image files included.
+- No CSS or person-page renderer changes included.
