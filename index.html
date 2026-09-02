@@ -2139,6 +2139,43 @@
 }
 </style>
 
+
+<style>
+/* PATCH 157 — mobile settlement dropdown flow fix only.
+   On phones, keep the open settlement list in normal document flow so it
+   pushes the memorial grid down instead of covering names/portraits. */
+@media (max-width:899px){
+  .home-page .left-search-wrap .place-filter.is-open .place-filter-panel{
+    position:relative !important;
+    inset:auto !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    width:100% !important;
+    min-width:0 !important;
+    margin-top:6px !important;
+    max-height:min(320px,46vh) !important;
+    z-index:auto !important;
+  }
+
+  .home-page .left-search-wrap .place-filter.is-open .place-filter-list{
+    max-height:min(286px,41vh) !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain;
+  }
+
+  .home-page .left-search-wrap .place-filter.is-open{
+    overflow:visible !important;
+  }
+
+  .home-page .memorial-grid{
+    clear:both !important;
+    margin-top:18px !important;
+  }
+}
+</style>
+
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
@@ -2288,7 +2325,7 @@
   });
 })();
 </script>
-<script defer="" src="assets/js/people.js?v=341"></script>
-<script defer="" src="assets/js/app.js?v=341"></script>
+<script defer="" src="assets/js/people.js?v=339"></script>
+<script defer="" src="assets/js/app.js?v=339"></script>
 </body>
 </html>

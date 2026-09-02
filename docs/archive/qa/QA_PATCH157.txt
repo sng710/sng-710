@@ -1,0 +1,8 @@
+PATCH157 QA
+- Verified index.html differs from the base by one appended CSS block only.
+- No JavaScript changes.
+- No people.js changes.
+- No image files.
+- No site.css changes.
+- No person-page files.
+- Desktop rules are untouched; fix is scoped to max-width:899px.
