@@ -1,0 +1,9 @@
+QA PATCH148
+===========
+PASS: person-page.js no longer references cleanMemorialName before declaration.
+PASS: PATCH146 inner-page branding is present.
+PASS: six requested portrait files are included.
+PASS: common memorial-candle fallback file is included and wired on index + person pages.
+PASS: new portrait framing is centered at scale 1.0.
+PASS: cache version is 336.
+PASS: no biography/story/video/gallery text was intentionally changed.
