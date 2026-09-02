@@ -1,0 +1,13 @@
+PATCH158 QA
+
+- People records changed: 19
+- Expected records only: YES
+- Allowed changed fields only: image, portrait
+- AI/generated image assets included: NO
+- CSS changes: NO
+- app.js changes: NO
+- person-page.js changes: NO
+- biography/text changes: NO
+- video/gallery/link changes: NO
+- PATCH157 mobile dropdown CSS preserved in index.html: True
+- people.js cache URL updated to v=344: True
