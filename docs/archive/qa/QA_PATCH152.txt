@@ -1,0 +1,7 @@
+QA PATCH152
+- 18 replacement WEBP files included.
+- 18 and only 18 people records changed.
+- Changed fields are image + portrait only.
+- No biography, video, gallery, links, names, settlements, or other people changed.
+- No AI image manipulation used.
+- Uploads 19 and 20 were not assigned.
