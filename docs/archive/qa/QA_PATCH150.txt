@@ -1,0 +1,13 @@
+QA PATCH150
+===========
+Portraits normalized: 110
+No-photo records untouched: 44
+Target face ratio: 0.56
+Min calculated visible face ratio: 0.560
+Max calculated visible face ratio: 0.560
+Median calculated visible face ratio: 0.560
+[PASS] No non-portrait people data changed.
+[PASS] No image files included in patch.
+[PASS] app.js syntax.
+[PASS] person-page.js syntax.
+[PASS] people.js syntax.
