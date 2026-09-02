@@ -1,0 +1,5 @@
+PATCH153 QA
+- Updated only alon_s and aran_g image paths in assets/js/people.js.
+- No non-image person data changed.
+- index.html script cache-bust updated to v=341.
+- assets/site-version.json updated to version 341.
