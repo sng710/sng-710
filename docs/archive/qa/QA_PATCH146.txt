@@ -1,0 +1,24 @@
+QA PATCH 146
+
+Base: sng-710-main (5).zip supplied by the user.
+
+Scope verified:
+- assets/js/app.js: display-only name cleanup for index cards + index preview title.
+- assets/js/person-page.js: display-only name cleanup for H1/browser title + top-left "שער הנגב זוכרת" brand/logo.
+- index.html: app.js cache query only, v325 -> v326.
+- assets/site-version.json: v334 -> v335, to force the new personal-page renderer to load.
+- 154/154 people/*/index.html files: only static <title> and noscript <h1> names cleaned.
+
+Automated QA:
+- node --check assets/js/app.js: PASS
+- node --check assets/js/person-page.js: PASS
+- Static personal pages checked: 154
+- Honorifics remaining in static personal-page <title>: 0
+- Honorifics remaining in static noscript <h1>: 0
+- assets/js/people.js changed: NO
+- Memorial data records still retain their original names internally: 154/154 (intentional)
+- Biographies/photos/videos/galleries/facts/links/order changed: NO
+- Existing memorial-candle CSS and existing index result-counter behavior preserved from the supplied base.
+
+Supported display variants removed:
+ז"ל, ז״ל, ז'ל, ז׳ל, doubled quote/apostrophe variants, הי"ד, הי״ד and equivalent spacing variants.
