@@ -1,0 +1,4 @@
+QA PATCH 154
+- Verified patch only contains assets/js/people.js and assets/site-version.json plus docs notes.
+- Verified no assets/img files are included.
+- Verified only portrait display metadata was changed for the listed records.
