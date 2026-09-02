@@ -1,99 +1,172 @@
-# PATCH144 — Move Manifest
+# PATCH144B — repository cleanup manifest
 
-קבצי הארכיון הועברו בלבד; תוכנם לא שונה.
+This manifest records the cleanup performed against the user-provided current full repository snapshot.
 
-| מקור ברוט | יעד חדש | SHA-256 |
-|---|---|---|
-| `AUDIT.txt` | `docs/archive/audits/AUDIT.txt` | `a7cdee1543bebdf5dab616b7220cab04f77d8ded824066da111a1eaad0d371ae` |
-| `AUDIT_CHANGES_PATCH101.txt` | `docs/archive/audits/AUDIT_CHANGES_PATCH101.txt` | `f33aa2510009b27a8436cb53a82d8cfa5cf7bf008e56e382de6f59ec23e20a36` |
-| `AUDIT_CHANGES_PATCH103.txt` | `docs/archive/audits/AUDIT_CHANGES_PATCH103.txt` | `34a7c7259721a7bd5c6f7fa8d403ff262f7d0fbde36a5a79ee59d7c533ffa1b9` |
-| `AUDIT_PATCH50.txt` | `docs/archive/audits/AUDIT_PATCH50.txt` | `c6a2d9bfcdee3255de6a40c71c00c1540838a525759bd701a1b47aa7b268fa9a` |
-| `AUDIT_UPDATE_PATCH102.txt` | `docs/archive/audits/AUDIT_UPDATE_PATCH102.txt` | `0b2aec5443e38010de07dd8337f8432fe327f7af0f2a7f8ba1e8d54bad79c017` |
-| `DELETE.txt` | `docs/archive/working-notes/DELETE.txt` | `de13433c635fb5de6fe1926bd5609912e911b1aa66efe9741430d408a2597cc8` |
-| `GALLERY_DEDUP.txt` | `docs/archive/working-notes/GALLERY_DEDUP.txt` | `ac9b6219c3c53ec2ce50acf93b964b3e3889b08b260d9284a52bfafbe2d56dc4` |
-| `NEW_RECORDS.txt` | `docs/archive/working-notes/NEW_RECORDS.txt` | `931808ad247edfda75ad5e1be9861d5c51af4d96e6212cd57c5e57d00cbaf15d` |
-| `PATCH23_PORTRAIT_CHECK.jpg` | `docs/archive/working-notes/PATCH23_PORTRAIT_CHECK.jpg` | `886c04fee9e46e3c947eaff3b8df7ddb56710fc6d1d3f0d9973bac76616f83a4` |
-| `PATCH_V41_NOTES.txt` | `docs/archive/patch-notes/PATCH_V41_NOTES.txt` | `9547bd88e56714ea7793c5a0f6b121dfead95a34e8d69e6b828ba479313b4b84` |
-| `PATCH_V51_NOTES.txt` | `docs/archive/patch-notes/PATCH_V51_NOTES.txt` | `25bb1ba05f0d52dd8535c741a3cd1eb55c8a2dccf3b6fc0ce9cebf5ba4bb5bf3` |
-| `PATCH_V52_NOTES.txt` | `docs/archive/patch-notes/PATCH_V52_NOTES.txt` | `5deec1c26240efb478b8c59e288f0c75890fba0c0fe7c4d3df90c36c88ddafe3` |
-| `PATCH_V53_NOTES.txt` | `docs/archive/patch-notes/PATCH_V53_NOTES.txt` | `a06cc40e110839b0a1998db27d8fdc2a5c872b928b4f59013969507853c23705` |
-| `PATCH_V54_NOTES.txt` | `docs/archive/patch-notes/PATCH_V54_NOTES.txt` | `65e54c46ff4049591335c030524401c2e876e0dc7e80f0c5590381f1d80aee69` |
-| `PATCH_V56_EDITORIAL_UNIFORM_TEXTS_NOTES.txt` | `docs/archive/patch-notes/PATCH_V56_EDITORIAL_UNIFORM_TEXTS_NOTES.txt` | `2aa744cd9707905af6ea397dbb66f95e3f9b048d7a475f2305b40c6818e9333d` |
-| `PATCH_V57_BETTER_POPUP_SUMMARIES_NOTES.txt` | `docs/archive/patch-notes/PATCH_V57_BETTER_POPUP_SUMMARIES_NOTES.txt` | `31034f7a58b9e12d415f2c2fc2981f5ef8cc2663addc6ad4a34aee126a8c090c` |
-| `PATCH_V58_FIRST_NAME_ABOUT_NOTES.txt` | `docs/archive/patch-notes/PATCH_V58_FIRST_NAME_ABOUT_NOTES.txt` | `10eda2f867ccd7292efa27ce4c901f7aad88f2c745f689dab568f3e5c562cb85` |
-| `PATCH_V60_FIX_FULL_LIST_TOGGLE_NOTES.txt` | `docs/archive/patch-notes/PATCH_V60_FIX_FULL_LIST_TOGGLE_NOTES.txt` | `408988bf2638d922f06640c4f250e2c3f983c3e5dd38408b82b6f0925f865f37` |
-| `PATCH_V61_RECHECK_FULL_STORY_ZOOM_ARIA_NOTES.txt` | `docs/archive/patch-notes/PATCH_V61_RECHECK_FULL_STORY_ZOOM_ARIA_NOTES.txt` | `856f341571a1a0a0c929f99d9b3095edc3f291a81d072f3be5562eb34d9e2cb2` |
-| `PATCH_V62_SAFE_RECHECK_NOTES.txt` | `docs/archive/patch-notes/PATCH_V62_SAFE_RECHECK_NOTES.txt` | `1f475a515c69ccd98d733e2ffac282a74d94473d4b6ef90c3908e0f62ba17146` |
-| `PATCH_V63_TESTED_FIXES_NOTES.txt` | `docs/archive/patch-notes/PATCH_V63_TESTED_FIXES_NOTES.txt` | `294465b620b0e495880a348514426b1d27724cb55f7609d1440d74c237478a3c` |
-| `PATCH_V64_POPUP_SCROLL_FIX_NOTES.txt` | `docs/archive/patch-notes/PATCH_V64_POPUP_SCROLL_FIX_NOTES.txt` | `f51430b706fee44c8dbd085e67e57a0d268f400bcee28f4b6536d375e9341d70` |
-| `PATCH_V65_AUTO_TRANSPARENT_IMAGE_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V65_AUTO_TRANSPARENT_IMAGE_BG_NOTES.txt` | `79a8918c3502f402ab3edf2d8dd4ab2c7e64cff39fc77d437fd06248318404c6` |
-| `PATCH_V67_FAST_LIGHT_BLUE_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V67_FAST_LIGHT_BLUE_BG_NOTES.txt` | `a7109819362bef31adc6966e457db80b39d6ad03926c5f97a2d5f1ac9f1a57b0` |
-| `PATCH_V68_SOFTER_PORTRAIT_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V68_SOFTER_PORTRAIT_BG_NOTES.txt` | `e6bb5bba957da5af21a08a704acf6ee67f65244e760d310d0d8f61739f1fa67f` |
-| `PATCH_V69_PORTRAIT_SLIGHT_ZOOM_NOTES.txt` | `docs/archive/patch-notes/PATCH_V69_PORTRAIT_SLIGHT_ZOOM_NOTES.txt` | `3e3e8bfde3e007d1d8d021d99463723fbeb48c86af761979e26199ff664a2d77` |
-| `PATCH_V70_PORTRAIT_MORE_ZOOM_NOTES.txt` | `docs/archive/patch-notes/PATCH_V70_PORTRAIT_MORE_ZOOM_NOTES.txt` | `9a42e6363937092a79884198924994d0a6f1ee674a4a45726e78674381376845` |
-| `PATCH_V71_COLOR_MAIN_IMAGES_BG.txt` | `docs/archive/patch-notes/PATCH_V71_COLOR_MAIN_IMAGES_BG.txt` | `bb9258fe751ef4875db1eb92fa7c6d5dd16a659e9cfd6dae0c41eae1fa798d9e` |
-| `PATCH_V72_PERSONAL_DETAILS_TOP_NOTES.txt` | `docs/archive/patch-notes/PATCH_V72_PERSONAL_DETAILS_TOP_NOTES.txt` | `e75598841ab8146e873de397f3541814c42b5acc34572bad42ed48e1f3d4a1e4` |
-| `PATCH_V73_ROTATION_AND_FAMILY_ORDER_NOTES.txt` | `docs/archive/patch-notes/PATCH_V73_ROTATION_AND_FAMILY_ORDER_NOTES.txt` | `084239e4201be4bdaa77536fce720ec8ba81700e625e6e142c450b27b7fb7116` |
-| `PATCH_V74_12_ROTATING_FULL_LIST_BIGGER_NOTES.txt` | `docs/archive/patch-notes/PATCH_V74_12_ROTATING_FULL_LIST_BIGGER_NOTES.txt` | `f718a94fd2327f4cbb1f7c30e2d6b89adfee192ac9b0dc421a7e878ca353ffa2` |
-| `PATCH_V77_FULL_LIST_ONLY_NOTES.txt` | `docs/archive/patch-notes/PATCH_V77_FULL_LIST_ONLY_NOTES.txt` | `a8226db2acac783a67ce7e46fa3a55abf87f6668d20fd94b1505e052f49ed89f` |
-| `PATCH_V78_SIDE_BY_SIDE_FULL_LIST_NOTES.txt` | `docs/archive/patch-notes/PATCH_V78_SIDE_BY_SIDE_FULL_LIST_NOTES.txt` | `0e79079d6c20750e52cbe8162fc18568845e15069e0840cf8a5e12f1631458ac` |
-| `PATCH_V79_REMOVE_RIGHT_BG_AND_SPACING.txt` | `docs/archive/patch-notes/PATCH_V79_REMOVE_RIGHT_BG_AND_SPACING.txt` | `2e47bad0b8d128bdf9789beba4915c92e090e769717165908202c0fd4bf69c10` |
-| `PATCH_V80_SEARCH_POSITION_SCROLL_NOTES.txt` | `docs/archive/patch-notes/PATCH_V80_SEARCH_POSITION_SCROLL_NOTES.txt` | `80c7f86f89f8e613322b53b39f724a9c1824e5d4628db523905d47689ae8fe19` |
-| `PATCH_V82_PREVIOUS_YEARS_SLUGS_AND_VERIFIED_SEARCH_NOTES.txt` | `docs/archive/patch-notes/PATCH_V82_PREVIOUS_YEARS_SLUGS_AND_VERIFIED_SEARCH_NOTES.txt` | `4d94d72187a6353f4c19d36f9c199b3af0f5425018c638e2e7ea22693111fb1f` |
-| `QA_PATCH29.txt` | `docs/archive/qa/QA_PATCH29.txt` | `b4d9cf0a010e5cc20182225437e6be2d22a0b3c721ad84493331b05dfd4c8833` |
-| `QA_PATCH33.txt` | `docs/archive/qa/QA_PATCH33.txt` | `c375573d4d79b44f0bc31d19c3dbdd9d1c871aefcb7be7eec3dc72a35047156e` |
-| `QA_PATCH45.txt` | `docs/archive/qa/QA_PATCH45.txt` | `8799f1064136259d9dc8393c5ddd3659888f3a2d911d99c39d0f750a3f3c9459` |
-| `QA_PATCH46.txt` | `docs/archive/qa/QA_PATCH46.txt` | `1f2a07f0023d1171b0504278a7d50abb29a680fcc315cc548572d18058d5dda1` |
-| `QA_PATCH47.txt` | `docs/archive/qa/QA_PATCH47.txt` | `314f19d5261ca3434046fb9f064f21bbda510e86b081d2cdd4e4a5d4d51952cd` |
-| `QA_PATCH48.txt` | `docs/archive/qa/QA_PATCH48.txt` | `f5570b442d4234186326c0b68b5475e5ab899b3aabfb688ed04528d4c02e51ef` |
-| `QA_PATCH49.txt` | `docs/archive/qa/QA_PATCH49.txt` | `cb85dbe768b992cce64221fd782405283a2f25f823e28eb69c99e4f4d869f09b` |
-| `QA_PATCH51.txt` | `docs/archive/qa/QA_PATCH51.txt` | `7ec8bcf893574e2f52fff50be5aab4bc857688634417cf99f997ed58c4525308` |
-| `QA_PATCH57.txt` | `docs/archive/qa/QA_PATCH57.txt` | `cf1c315e4901e92b97dc71f7b808efa421adabbb340145c840396e5410854105` |
-| `QA_PATCH58.txt` | `docs/archive/qa/QA_PATCH58.txt` | `6edc939ecce1d99dd446378af1006925a38c73189bee09bf5cca2bcc4c626103` |
-| `QA_PATCH59.txt` | `docs/archive/qa/QA_PATCH59.txt` | `d4138b0ce79026793dd75e918edcd4d5599fc583f1c598ee0b56dbd2be9f58cc` |
-| `QA_PATCH60.txt` | `docs/archive/qa/QA_PATCH60.txt` | `0c22699eb620f2dead707567abc9b66e239748ebdf34f5acdc4873b034a0046f` |
-| `QA_PATCH61.txt` | `docs/archive/qa/QA_PATCH61.txt` | `a2a368bf6a65d15567e4feaee213cfb8bae208a14ad53cef28ee5c4570ed7704` |
-| `README.txt` | `docs/archive/patch-notes/README.txt` | `082b0a8ab54a5b8fe3be8667fa91756ff9a73988addc06278b36348708d6f641` |
-| `README_PATCH100.txt` | `docs/archive/patch-notes/README_PATCH100.txt` | `24815acc75e8ff8b2ec215cd20715d96ee659f7accc24e164e06e5018ddf49b9` |
-| `README_PATCH103.txt` | `docs/archive/patch-notes/README_PATCH103.txt` | `c162ac0385c72424f41aaa940e4c8617667febc58569c4ae0120fa8ccc420ab0` |
-| `README_PATCH104.txt` | `docs/archive/patch-notes/README_PATCH104.txt` | `3cf2d5d675618ede423dba5c18c0408a1c14948e951fe916248f46bbcc6d323c` |
-| `README_PATCH106.txt` | `docs/archive/patch-notes/README_PATCH106.txt` | `9e2cb39c4144688067d117cdb9f6bc24772e950f2a46fd8018454d73d979b126` |
-| `README_PATCH107.txt` | `docs/archive/patch-notes/README_PATCH107.txt` | `2c3c7a0ebbba69b0018dd8ce1aff0e14ee4e420dd75ce12a4eaa89b034a70aa0` |
-| `README_PATCH108.txt` | `docs/archive/patch-notes/README_PATCH108.txt` | `0a17798884ba81a0581870d09bc207d767d6ffdd43508bc09a2c6b8c35605434` |
-| `README_PATCH109.txt` | `docs/archive/patch-notes/README_PATCH109.txt` | `7dc81c8ffc506a929fb51b6c721adca899e5231e9ce4e016ba75c05299dc7e6d` |
-| `README_PATCH110.txt` | `docs/archive/patch-notes/README_PATCH110.txt` | `3ce798cbf8a053e9c5fcee0608a369645626b88384d4df4158537d4751143691` |
-| `README_PATCH111.txt` | `docs/archive/patch-notes/README_PATCH111.txt` | `030e5485e4b24d8759afaa12622fc85c53cb0f0a6b396dc91c6c95fd961aa5e9` |
-| `README_PATCH112.txt` | `docs/archive/patch-notes/README_PATCH112.txt` | `faa8117b122b1f909b747359a0bdaa8b0459b30cbc2121beebba3aa5cd96430b` |
-| `README_PATCH113.txt` | `docs/archive/patch-notes/README_PATCH113.txt` | `792fc1710e13e7b184283c731150bdd8268bdffd858ea62dd03a968f8b8528fa` |
-| `README_PATCH45.txt` | `docs/archive/patch-notes/README_PATCH45.txt` | `af08d608226288d7674a45c15f6862c9cd9241c545ef73bcef293422ef21b77e` |
-| `README_PATCH46.txt` | `docs/archive/patch-notes/README_PATCH46.txt` | `33aef2ca3f93b10c67d69c1a81cb2d82adf3218ace120674acfdbd37f470149b` |
-| `README_PATCH47.txt` | `docs/archive/patch-notes/README_PATCH47.txt` | `55d6ccc220f26c1682f99ebda1d0dd01d4c13a51ff6ad7ec458ac6f5415ae0a0` |
-| `README_PATCH48.txt` | `docs/archive/patch-notes/README_PATCH48.txt` | `84a1d6cf62dca3f591ad0a7a40545c639dfdd1b65b9e8855140310bed43d5af2` |
-| `README_PATCH49.txt` | `docs/archive/patch-notes/README_PATCH49.txt` | `72456198655a5f7fb3176668179227425f2a624b8f25dd0f2f12f7366c0bb523` |
-| `README_PATCH50.txt` | `docs/archive/patch-notes/README_PATCH50.txt` | `ec95d819ad09724961921f0d502ccc3f279b7a3aecd90fd381401a9416ea38e3` |
-| `README_PATCH51.txt` | `docs/archive/patch-notes/README_PATCH51.txt` | `25aeb1da75309f6135dfddd624b67866be000ca158c593632a56c4d7c115b8b2` |
-| `README_PATCH57.txt` | `docs/archive/patch-notes/README_PATCH57.txt` | `65f5b4378652e2ff65221ce27b462e9f3f1084c1e744917bff1f7a81d4bbf809` |
-| `README_PATCH58.txt` | `docs/archive/patch-notes/README_PATCH58.txt` | `e5428fb3c129acf8c069ccb1b7281673367ca1adabf6c6f88aa6da5b08ca32af` |
-| `README_PATCH59.txt` | `docs/archive/patch-notes/README_PATCH59.txt` | `4cf803c80052b512a1732f9949a2882a1a27a66529eb43d8a30d0d64f51d794d` |
-| `README_PATCH60.txt` | `docs/archive/patch-notes/README_PATCH60.txt` | `c6d512a5682ac50d44e4afff992d3e76ccb3969a66f3df509ab719ee56db6313` |
-| `README_PATCH61.txt` | `docs/archive/patch-notes/README_PATCH61.txt` | `7cd911f6fd59db0878a5e731ff7296653b8cdcfb6538e4ef213d23e11011c6ea` |
-| `REVIEW.txt` | `docs/archive/audits/REVIEW.txt` | `edd3c1a97e1d70c2da93cb29734f6af2ae1c76769f27b7394251ef026a269ade` |
-| `SHA256SUMS.txt` | `docs/archive/validation/SHA256SUMS.txt` | `431f4924e5f1ee5db9e6c5e37767bb8cedd4ea4da04ae685d8ebbf60e9e06142` |
-| `SHA256SUMS_PATCH45.txt` | `docs/archive/validation/SHA256SUMS_PATCH45.txt` | `065eb958680423558a905acc53ca7d0a86614c2b5f18090c35ff96704c62d311` |
-| `SHA256SUMS_PATCH46.txt` | `docs/archive/validation/SHA256SUMS_PATCH46.txt` | `3e379cc795ffb19b2d91100d4ed10b31c77a66cdd408b9cbdf70054afb07d981` |
-| `SHA256SUMS_PATCH47.txt` | `docs/archive/validation/SHA256SUMS_PATCH47.txt` | `1d8aa150f5dc4c9dff73a18a08522b9ce973a8ad8bf310c1314b108cbb97efc4` |
-| `SHA256SUMS_PATCH48.txt` | `docs/archive/validation/SHA256SUMS_PATCH48.txt` | `dfcf4a353dd265dd1641eeb6ad4f77050f6233ca9550d9088acbf9b7a99e3f42` |
-| `SHA256SUMS_PATCH49.txt` | `docs/archive/validation/SHA256SUMS_PATCH49.txt` | `1a468d21424aacae85d79c24dca48ac1a174a4634f3fce65865c9ffc46520ea0` |
-| `SHA256SUMS_PATCH50.txt` | `docs/archive/validation/SHA256SUMS_PATCH50.txt` | `c2cba1b0b07be03c5b4633b5c25cff750503d341e5d7c3e3502b299d8626dc9a` |
-| `SHA256SUMS_PATCH51.txt` | `docs/archive/validation/SHA256SUMS_PATCH51.txt` | `61bff5fd47830f15166984a4e5bf4230b02f596b2e4220ca7fa513c5a5ce545b` |
-| `SHA256SUMS_PATCH57.txt` | `docs/archive/validation/SHA256SUMS_PATCH57.txt` | `0529d7c96965c66d08eb6b97cb45da42108a6f06e58f943e877a9ffa4302ef81` |
-| `SHA256SUMS_PATCH58.txt` | `docs/archive/validation/SHA256SUMS_PATCH58.txt` | `9cf9295af1b0a91fe24e2271138c7298d8e1d982931a0b8fdb7b351944275371` |
-| `SHA256SUMS_PATCH59.txt` | `docs/archive/validation/SHA256SUMS_PATCH59.txt` | `ed4cf1abc9404d4981cae5324a566ba295dc2927083ce3bce11f70fc70b28e92` |
-| `SHA256SUMS_PATCH60.txt` | `docs/archive/validation/SHA256SUMS_PATCH60.txt` | `07553a345e2c90d6c7346ce75f9f92b1f1e2b264e02e9ec83a6058506fdcaefe` |
-| `SHA256SUMS_PATCH61.txt` | `docs/archive/validation/SHA256SUMS_PATCH61.txt` | `c2ac6ce11070a9ab7be65db1bd740e0287a567c01cb2736960caaa602067f730` |
-| `SOURCE_NOTES_PATCH22.txt` | `docs/archive/patch-notes/SOURCE_NOTES_PATCH22.txt` | `d506c46670e2646113bba99752394c57395044fcc3c4adf648254c8955d31575` |
-| `SOURCE_NOTES_PATCH34.txt` | `docs/archive/patch-notes/SOURCE_NOTES_PATCH34.txt` | `73747905262daed953e1e9148680ee7ef6a42b045f2c4a1805940b4317d6246d` |
-| `TEXT_FORMAT_POLICY_V56.txt` | `docs/archive/patch-notes/TEXT_FORMAT_POLICY_V56.txt` | `c097c2602f9cac3e7fc71cafb1fdc8d64d65540aec78a07addb41b1001645c45` |
-| `V63_QUALITY_TEST_REPORT.txt` | `docs/archive/audits/V63_QUALITY_TEST_REPORT.txt` | `32c02ba54bcec234bdb3c8d268e9f17531edf34a7743327ad73cf997fbd11977` |
-| `VALIDATION_PATCH102.json` | `docs/archive/validation/VALIDATION_PATCH102.json` | `d705e71539aa7f7dc626df689f33c0e126b4805c01250b8355d78440abe5dbca` |
-| `VALIDATION_PATCH103.txt` | `docs/archive/validation/VALIDATION_PATCH103.txt` | `d6c7966b265a7d9b09fe0502ddcadeb9074f60bb9bd30f2606903a59c8ebdbdb` |
+No active site/runtime file was modified by this cleanup. Historical files were moved or deduplicated only after byte comparison.
+
+| Original path | Archived path | SHA-256 | Action |
+|---|---|---|---|
+| `docs/archive/patch-notes/README.txt` | `docs/archive/patch-notes/README_PATCH18.txt` | `082b0a8ab54a5b8fe3be8667fa91756ff9a73988addc06278b36348708d6f641` | `moved` |
+| `docs/archive/validation/SHA256SUMS.txt` | `docs/archive/validation/SHA256SUMS_PATCH18.txt` | `431f4924e5f1ee5db9e6c5e37767bb8cedd4ea4da04ae685d8ebbf60e9e06142` | `moved` |
+| `README.txt` | `docs/archive/patch-notes/README_PATCH114.txt` | `666345441a073ac814391d480df09a095be91a65a9adbe277a049938042bf69a` | `moved` |
+| `SHA256SUMS.txt` | `docs/archive/validation/SHA256SUMS_PATCH114.txt` | `07d3cec29c2f02c65e77383923b6d622c8059efcaef73e3a0fbc1d13e232fce6` | `moved` |
+| `AUDIT.txt` | `docs/archive/audits/AUDIT.txt` | `a7cdee1543bebdf5dab616b7220cab04f77d8ded824066da111a1eaad0d371ae` | `duplicate-removed` |
+| `AUDIT_CHANGES_PATCH101.txt` | `docs/archive/audits/AUDIT_CHANGES_PATCH101.txt` | `f33aa2510009b27a8436cb53a82d8cfa5cf7bf008e56e382de6f59ec23e20a36` | `duplicate-removed` |
+| `AUDIT_CHANGES_PATCH103.txt` | `docs/archive/audits/AUDIT_CHANGES_PATCH103.txt` | `34a7c7259721a7bd5c6f7fa8d403ff262f7d0fbde36a5a79ee59d7c533ffa1b9` | `duplicate-removed` |
+| `AUDIT_PATCH50.txt` | `docs/archive/audits/AUDIT_PATCH50.txt` | `c6a2d9bfcdee3255de6a40c71c00c1540838a525759bd701a1b47aa7b268fa9a` | `duplicate-removed` |
+| `AUDIT_UPDATE_PATCH102.txt` | `docs/archive/audits/AUDIT_UPDATE_PATCH102.txt` | `0b2aec5443e38010de07dd8337f8432fe327f7af0f2a7f8ba1e8d54bad79c017` | `duplicate-removed` |
+| `DELETE.txt` | `docs/archive/working-notes/DELETE.txt` | `de13433c635fb5de6fe1926bd5609912e911b1aa66efe9741430d408a2597cc8` | `duplicate-removed` |
+| `GALLERY_DEDUP.txt` | `docs/archive/working-notes/GALLERY_DEDUP.txt` | `ac9b6219c3c53ec2ce50acf93b964b3e3889b08b260d9284a52bfafbe2d56dc4` | `duplicate-removed` |
+| `NEW_RECORDS.txt` | `docs/archive/working-notes/NEW_RECORDS.txt` | `931808ad247edfda75ad5e1be9861d5c51af4d96e6212cd57c5e57d00cbaf15d` | `duplicate-removed` |
+| `PATCH144-repository-cleanup.git.patch` | `docs/archive/patch144/PATCH144-repository-cleanup.git.patch` | `303c80a70175e7283d856e6dea896b7a55ab49f3cb7176990b0059007bf771aa` | `moved` |
+| `PATCH144_README.txt` | `docs/archive/patch144/PATCH144_README.txt` | `3a80202cbcdadddf19db794c67a0c80632a32b90590cbc3008459a8df82dac5e` | `moved` |
+| `PATCH23_PORTRAIT_CHECK.jpg` | `docs/archive/working-notes/PATCH23_PORTRAIT_CHECK.jpg` | `886c04fee9e46e3c947eaff3b8df7ddb56710fc6d1d3f0d9973bac76616f83a4` | `duplicate-removed` |
+| `PATCH_V41_NOTES.txt` | `docs/archive/patch-notes/PATCH_V41_NOTES.txt` | `9547bd88e56714ea7793c5a0f6b121dfead95a34e8d69e6b828ba479313b4b84` | `duplicate-removed` |
+| `PATCH_V51_NOTES.txt` | `docs/archive/patch-notes/PATCH_V51_NOTES.txt` | `25bb1ba05f0d52dd8535c741a3cd1eb55c8a2dccf3b6fc0ce9cebf5ba4bb5bf3` | `duplicate-removed` |
+| `PATCH_V52_NOTES.txt` | `docs/archive/patch-notes/PATCH_V52_NOTES.txt` | `5deec1c26240efb478b8c59e288f0c75890fba0c0fe7c4d3df90c36c88ddafe3` | `duplicate-removed` |
+| `PATCH_V53_NOTES.txt` | `docs/archive/patch-notes/PATCH_V53_NOTES.txt` | `a06cc40e110839b0a1998db27d8fdc2a5c872b928b4f59013969507853c23705` | `duplicate-removed` |
+| `PATCH_V54_NOTES.txt` | `docs/archive/patch-notes/PATCH_V54_NOTES.txt` | `65e54c46ff4049591335c030524401c2e876e0dc7e80f0c5590381f1d80aee69` | `duplicate-removed` |
+| `PATCH_V56_EDITORIAL_UNIFORM_TEXTS_NOTES.txt` | `docs/archive/patch-notes/PATCH_V56_EDITORIAL_UNIFORM_TEXTS_NOTES.txt` | `2aa744cd9707905af6ea397dbb66f95e3f9b048d7a475f2305b40c6818e9333d` | `duplicate-removed` |
+| `PATCH_V57_BETTER_POPUP_SUMMARIES_NOTES.txt` | `docs/archive/patch-notes/PATCH_V57_BETTER_POPUP_SUMMARIES_NOTES.txt` | `31034f7a58b9e12d415f2c2fc2981f5ef8cc2663addc6ad4a34aee126a8c090c` | `duplicate-removed` |
+| `PATCH_V58_FIRST_NAME_ABOUT_NOTES.txt` | `docs/archive/patch-notes/PATCH_V58_FIRST_NAME_ABOUT_NOTES.txt` | `10eda2f867ccd7292efa27ce4c901f7aad88f2c745f689dab568f3e5c562cb85` | `duplicate-removed` |
+| `PATCH_V60_FIX_FULL_LIST_TOGGLE_NOTES.txt` | `docs/archive/patch-notes/PATCH_V60_FIX_FULL_LIST_TOGGLE_NOTES.txt` | `408988bf2638d922f06640c4f250e2c3f983c3e5dd38408b82b6f0925f865f37` | `duplicate-removed` |
+| `PATCH_V61_RECHECK_FULL_STORY_ZOOM_ARIA_NOTES.txt` | `docs/archive/patch-notes/PATCH_V61_RECHECK_FULL_STORY_ZOOM_ARIA_NOTES.txt` | `856f341571a1a0a0c929f99d9b3095edc3f291a81d072f3be5562eb34d9e2cb2` | `duplicate-removed` |
+| `PATCH_V62_SAFE_RECHECK_NOTES.txt` | `docs/archive/patch-notes/PATCH_V62_SAFE_RECHECK_NOTES.txt` | `1f475a515c69ccd98d733e2ffac282a74d94473d4b6ef90c3908e0f62ba17146` | `duplicate-removed` |
+| `PATCH_V63_TESTED_FIXES_NOTES.txt` | `docs/archive/patch-notes/PATCH_V63_TESTED_FIXES_NOTES.txt` | `294465b620b0e495880a348514426b1d27724cb55f7609d1440d74c237478a3c` | `duplicate-removed` |
+| `PATCH_V64_POPUP_SCROLL_FIX_NOTES.txt` | `docs/archive/patch-notes/PATCH_V64_POPUP_SCROLL_FIX_NOTES.txt` | `f51430b706fee44c8dbd085e67e57a0d268f400bcee28f4b6536d375e9341d70` | `duplicate-removed` |
+| `PATCH_V65_AUTO_TRANSPARENT_IMAGE_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V65_AUTO_TRANSPARENT_IMAGE_BG_NOTES.txt` | `79a8918c3502f402ab3edf2d8dd4ab2c7e64cff39fc77d437fd06248318404c6` | `duplicate-removed` |
+| `PATCH_V67_FAST_LIGHT_BLUE_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V67_FAST_LIGHT_BLUE_BG_NOTES.txt` | `a7109819362bef31adc6966e457db80b39d6ad03926c5f97a2d5f1ac9f1a57b0` | `duplicate-removed` |
+| `PATCH_V68_SOFTER_PORTRAIT_BG_NOTES.txt` | `docs/archive/patch-notes/PATCH_V68_SOFTER_PORTRAIT_BG_NOTES.txt` | `e6bb5bba957da5af21a08a704acf6ee67f65244e760d310d0d8f61739f1fa67f` | `duplicate-removed` |
+| `PATCH_V69_PORTRAIT_SLIGHT_ZOOM_NOTES.txt` | `docs/archive/patch-notes/PATCH_V69_PORTRAIT_SLIGHT_ZOOM_NOTES.txt` | `3e3e8bfde3e007d1d8d021d99463723fbeb48c86af761979e26199ff664a2d77` | `duplicate-removed` |
+| `PATCH_V70_PORTRAIT_MORE_ZOOM_NOTES.txt` | `docs/archive/patch-notes/PATCH_V70_PORTRAIT_MORE_ZOOM_NOTES.txt` | `9a42e6363937092a79884198924994d0a6f1ee674a4a45726e78674381376845` | `duplicate-removed` |
+| `PATCH_V71_COLOR_MAIN_IMAGES_BG.txt` | `docs/archive/patch-notes/PATCH_V71_COLOR_MAIN_IMAGES_BG.txt` | `bb9258fe751ef4875db1eb92fa7c6d5dd16a659e9cfd6dae0c41eae1fa798d9e` | `duplicate-removed` |
+| `PATCH_V72_PERSONAL_DETAILS_TOP_NOTES.txt` | `docs/archive/patch-notes/PATCH_V72_PERSONAL_DETAILS_TOP_NOTES.txt` | `e75598841ab8146e873de397f3541814c42b5acc34572bad42ed48e1f3d4a1e4` | `duplicate-removed` |
+| `PATCH_V73_ROTATION_AND_FAMILY_ORDER_NOTES.txt` | `docs/archive/patch-notes/PATCH_V73_ROTATION_AND_FAMILY_ORDER_NOTES.txt` | `084239e4201be4bdaa77536fce720ec8ba81700e625e6e142c450b27b7fb7116` | `duplicate-removed` |
+| `PATCH_V74_12_ROTATING_FULL_LIST_BIGGER_NOTES.txt` | `docs/archive/patch-notes/PATCH_V74_12_ROTATING_FULL_LIST_BIGGER_NOTES.txt` | `f718a94fd2327f4cbb1f7c30e2d6b89adfee192ac9b0dc421a7e878ca353ffa2` | `duplicate-removed` |
+| `PATCH_V77_FULL_LIST_ONLY_NOTES.txt` | `docs/archive/patch-notes/PATCH_V77_FULL_LIST_ONLY_NOTES.txt` | `a8226db2acac783a67ce7e46fa3a55abf87f6668d20fd94b1505e052f49ed89f` | `duplicate-removed` |
+| `PATCH_V78_SIDE_BY_SIDE_FULL_LIST_NOTES.txt` | `docs/archive/patch-notes/PATCH_V78_SIDE_BY_SIDE_FULL_LIST_NOTES.txt` | `0e79079d6c20750e52cbe8162fc18568845e15069e0840cf8a5e12f1631458ac` | `duplicate-removed` |
+| `PATCH_V79_REMOVE_RIGHT_BG_AND_SPACING.txt` | `docs/archive/patch-notes/PATCH_V79_REMOVE_RIGHT_BG_AND_SPACING.txt` | `2e47bad0b8d128bdf9789beba4915c92e090e769717165908202c0fd4bf69c10` | `duplicate-removed` |
+| `PATCH_V80_SEARCH_POSITION_SCROLL_NOTES.txt` | `docs/archive/patch-notes/PATCH_V80_SEARCH_POSITION_SCROLL_NOTES.txt` | `80c7f86f89f8e613322b53b39f724a9c1824e5d4628db523905d47689ae8fe19` | `duplicate-removed` |
+| `PATCH_V82_PREVIOUS_YEARS_SLUGS_AND_VERIFIED_SEARCH_NOTES.txt` | `docs/archive/patch-notes/PATCH_V82_PREVIOUS_YEARS_SLUGS_AND_VERIFIED_SEARCH_NOTES.txt` | `4d94d72187a6353f4c19d36f9c199b3af0f5425018c638e2e7ea22693111fb1f` | `duplicate-removed` |
+| `QA_PATCH115.txt` | `docs/archive/qa/QA_PATCH115.txt` | `3485de09a7f92233aa330fa2b7d95905adb1d529e902f661a6ba66cef9ac1ca8` | `moved` |
+| `QA_PATCH116.txt` | `docs/archive/qa/QA_PATCH116.txt` | `aa65c497b0ebcc43bfebf00260c27fdd21464a39b7a8736f6b6f24eb9457b64e` | `moved` |
+| `QA_PATCH117.txt` | `docs/archive/qa/QA_PATCH117.txt` | `eb7dab4061a31c6ab14a56044615c804a4c79435231bf52804a00f067a21337c` | `moved` |
+| `QA_PATCH119.txt` | `docs/archive/qa/QA_PATCH119.txt` | `d0261799231ab0f5551092f84a8db1fff89807f20d419ff7b7432f7cb5dc8df2` | `moved` |
+| `QA_PATCH120.txt` | `docs/archive/qa/QA_PATCH120.txt` | `0a188695b758aebfc629f1bff183b74d6de78d40fd9b2fe11b60ba17f922c292` | `moved` |
+| `QA_PATCH121.txt` | `docs/archive/qa/QA_PATCH121.txt` | `c628524b7c85d28591ddaf84d3969fa7e4924166d8924a2184f92bf466094811` | `moved` |
+| `QA_PATCH122.txt` | `docs/archive/qa/QA_PATCH122.txt` | `33ae6187965f768d66075bf03fdcca24144659f38c32c7cd6254a2f2c1f3b848` | `moved` |
+| `QA_PATCH123.txt` | `docs/archive/qa/QA_PATCH123.txt` | `7ea6eaf49317c543549b5c6695b4b4a85fcb3fd978d3be9d0deb57414c79a160` | `moved` |
+| `QA_PATCH124.txt` | `docs/archive/qa/QA_PATCH124.txt` | `6df23535acea5b99d64dc08a4320bc236f73f167b2b791e2e42f1bf7561c8d73` | `moved` |
+| `QA_PATCH125.txt` | `docs/archive/qa/QA_PATCH125.txt` | `3d4b4e83e5319a320a79b435fcc5f5ce0485469a05b266afb41b9a6a169f2d8e` | `moved` |
+| `QA_PATCH126.txt` | `docs/archive/qa/QA_PATCH126.txt` | `782768c76ddd9e4feee70b667d153588fa475ca888ebe987c4d301e952ecc265` | `moved` |
+| `QA_PATCH127.txt` | `docs/archive/qa/QA_PATCH127.txt` | `7c4aab9029ef9d3cee678c56b01f2795ee97c9c6e51f61a66dd7f68c16ccd3d9` | `moved` |
+| `QA_PATCH128.txt` | `docs/archive/qa/QA_PATCH128.txt` | `e312108680a31f7a9c86911f547935abecd2630a3032b5697ea89d55d07ea7a2` | `moved` |
+| `QA_PATCH129.txt` | `docs/archive/qa/QA_PATCH129.txt` | `3e1627a56b716a382f73ed236340a05757791a86560f6e90439cfff6d9348058` | `moved` |
+| `QA_PATCH130.txt` | `docs/archive/qa/QA_PATCH130.txt` | `2c1001a1d94e3c7a9141fb3d1fcaf987a1172402d23340ce1ac8be39bd367482` | `moved` |
+| `QA_PATCH131.txt` | `docs/archive/qa/QA_PATCH131.txt` | `79edc6b6148ca378644d5375b882fc0a4ba14faf76542ac47864f55b585d78f7` | `moved` |
+| `QA_PATCH132.txt` | `docs/archive/qa/QA_PATCH132.txt` | `d7cb0a237dec3e7e2f00016d9655b6a2b4ccfc811c0e4fc3513f9b56c04fce55` | `moved` |
+| `QA_PATCH134.txt` | `docs/archive/qa/QA_PATCH134.txt` | `73f25fa7eaf06fdf0a136b3f1637cf7675d7145c42e961fa60df4de10f2867e8` | `moved` |
+| `QA_PATCH135.txt` | `docs/archive/qa/QA_PATCH135.txt` | `6901ba199cfd2d9cfde5d88454260082a333dc618acb7af6419892f40c4e2b35` | `moved` |
+| `QA_PATCH136.txt` | `docs/archive/qa/QA_PATCH136.txt` | `4bee8b00f38eedd3945cbd0ebc73708ef733a98c395d138e1d0559167665c542` | `moved` |
+| `QA_PATCH141.txt` | `docs/archive/qa/QA_PATCH141.txt` | `4487f4ee6a0f5155d77c17b2c106b500165edd0b8752a30f362faa2151bfa45d` | `moved` |
+| `QA_PATCH142.txt` | `docs/archive/qa/QA_PATCH142.txt` | `736c7e6d0c0bccc7dd52774a03fbacda14c559df52a2b799ad0a29799b7c03f4` | `moved` |
+| `QA_PATCH144.txt` | `docs/archive/qa/QA_PATCH144.txt` | `69d7bde7554286ff1e669cc7a01991230cfec6052e1d382cf0a603a24497d404` | `moved` |
+| `QA_PATCH29.txt` | `docs/archive/qa/QA_PATCH29.txt` | `b4d9cf0a010e5cc20182225437e6be2d22a0b3c721ad84493331b05dfd4c8833` | `duplicate-removed` |
+| `QA_PATCH33.txt` | `docs/archive/qa/QA_PATCH33.txt` | `c375573d4d79b44f0bc31d19c3dbdd9d1c871aefcb7be7eec3dc72a35047156e` | `duplicate-removed` |
+| `QA_PATCH45.txt` | `docs/archive/qa/QA_PATCH45.txt` | `8799f1064136259d9dc8393c5ddd3659888f3a2d911d99c39d0f750a3f3c9459` | `duplicate-removed` |
+| `QA_PATCH46.txt` | `docs/archive/qa/QA_PATCH46.txt` | `1f2a07f0023d1171b0504278a7d50abb29a680fcc315cc548572d18058d5dda1` | `duplicate-removed` |
+| `QA_PATCH47.txt` | `docs/archive/qa/QA_PATCH47.txt` | `314f19d5261ca3434046fb9f064f21bbda510e86b081d2cdd4e4a5d4d51952cd` | `duplicate-removed` |
+| `QA_PATCH48.txt` | `docs/archive/qa/QA_PATCH48.txt` | `f5570b442d4234186326c0b68b5475e5ab899b3aabfb688ed04528d4c02e51ef` | `duplicate-removed` |
+| `QA_PATCH49.txt` | `docs/archive/qa/QA_PATCH49.txt` | `cb85dbe768b992cce64221fd782405283a2f25f823e28eb69c99e4f4d869f09b` | `duplicate-removed` |
+| `QA_PATCH51.txt` | `docs/archive/qa/QA_PATCH51.txt` | `7ec8bcf893574e2f52fff50be5aab4bc857688634417cf99f997ed58c4525308` | `duplicate-removed` |
+| `QA_PATCH57.txt` | `docs/archive/qa/QA_PATCH57.txt` | `cf1c315e4901e92b97dc71f7b808efa421adabbb340145c840396e5410854105` | `duplicate-removed` |
+| `QA_PATCH58.txt` | `docs/archive/qa/QA_PATCH58.txt` | `6edc939ecce1d99dd446378af1006925a38c73189bee09bf5cca2bcc4c626103` | `duplicate-removed` |
+| `QA_PATCH59.txt` | `docs/archive/qa/QA_PATCH59.txt` | `d4138b0ce79026793dd75e918edcd4d5599fc583f1c598ee0b56dbd2be9f58cc` | `duplicate-removed` |
+| `QA_PATCH60.txt` | `docs/archive/qa/QA_PATCH60.txt` | `0c22699eb620f2dead707567abc9b66e239748ebdf34f5acdc4873b034a0046f` | `duplicate-removed` |
+| `QA_PATCH61.txt` | `docs/archive/qa/QA_PATCH61.txt` | `a2a368bf6a65d15567e4feaee213cfb8bae208a14ad53cef28ee5c4570ed7704` | `duplicate-removed` |
+| `README_PATCH100.txt` | `docs/archive/patch-notes/README_PATCH100.txt` | `24815acc75e8ff8b2ec215cd20715d96ee659f7accc24e164e06e5018ddf49b9` | `duplicate-removed` |
+| `README_PATCH103.txt` | `docs/archive/patch-notes/README_PATCH103.txt` | `c162ac0385c72424f41aaa940e4c8617667febc58569c4ae0120fa8ccc420ab0` | `duplicate-removed` |
+| `README_PATCH104.txt` | `docs/archive/patch-notes/README_PATCH104.txt` | `3cf2d5d675618ede423dba5c18c0408a1c14948e951fe916248f46bbcc6d323c` | `duplicate-removed` |
+| `README_PATCH106.txt` | `docs/archive/patch-notes/README_PATCH106.txt` | `9e2cb39c4144688067d117cdb9f6bc24772e950f2a46fd8018454d73d979b126` | `duplicate-removed` |
+| `README_PATCH107.txt` | `docs/archive/patch-notes/README_PATCH107.txt` | `2c3c7a0ebbba69b0018dd8ce1aff0e14ee4e420dd75ce12a4eaa89b034a70aa0` | `duplicate-removed` |
+| `README_PATCH108.txt` | `docs/archive/patch-notes/README_PATCH108.txt` | `0a17798884ba81a0581870d09bc207d767d6ffdd43508bc09a2c6b8c35605434` | `duplicate-removed` |
+| `README_PATCH109.txt` | `docs/archive/patch-notes/README_PATCH109.txt` | `7dc81c8ffc506a929fb51b6c721adca899e5231e9ce4e016ba75c05299dc7e6d` | `duplicate-removed` |
+| `README_PATCH110.txt` | `docs/archive/patch-notes/README_PATCH110.txt` | `3ce798cbf8a053e9c5fcee0608a369645626b88384d4df4158537d4751143691` | `duplicate-removed` |
+| `README_PATCH111.txt` | `docs/archive/patch-notes/README_PATCH111.txt` | `030e5485e4b24d8759afaa12622fc85c53cb0f0a6b396dc91c6c95fd961aa5e9` | `duplicate-removed` |
+| `README_PATCH112.txt` | `docs/archive/patch-notes/README_PATCH112.txt` | `faa8117b122b1f909b747359a0bdaa8b0459b30cbc2121beebba3aa5cd96430b` | `duplicate-removed` |
+| `README_PATCH113.txt` | `docs/archive/patch-notes/README_PATCH113.txt` | `792fc1710e13e7b184283c731150bdd8268bdffd858ea62dd03a968f8b8528fa` | `duplicate-removed` |
+| `README_PATCH115.txt` | `docs/archive/patch-notes/README_PATCH115.txt` | `c7068365c46b43c6439f957a20649a00975ed95a70b94f576d6c9ec54ff7d494` | `moved` |
+| `README_PATCH116.txt` | `docs/archive/patch-notes/README_PATCH116.txt` | `867172a24e80339ea82ca1ed71024a65d12f8caae5912a2099d80dfcb98e4f07` | `moved` |
+| `README_PATCH117.txt` | `docs/archive/patch-notes/README_PATCH117.txt` | `f0e5cff06658202cef3416bbb999fb577fd2bc12b053b1c41ac4523e5821c0be` | `moved` |
+| `README_PATCH119.txt` | `docs/archive/patch-notes/README_PATCH119.txt` | `c000af74496c99133a58c6352ad9225b87ffcb6891bc69c35c952be8200683af` | `moved` |
+| `README_PATCH120.txt` | `docs/archive/patch-notes/README_PATCH120.txt` | `fc3abb56f225f2054c44cea8bceb3162275a7537ffc2df06dc9d859cd9c6e038` | `moved` |
+| `README_PATCH121.txt` | `docs/archive/patch-notes/README_PATCH121.txt` | `921c8b50018dbb97ce5cb4ea873e80b702e3b1d4f81aa92a775fdb44d02ae158` | `moved` |
+| `README_PATCH122.txt` | `docs/archive/patch-notes/README_PATCH122.txt` | `369f5cab7eb0b4d360fb227d09d79f223304ace717f92e5045c45132dce1755d` | `moved` |
+| `README_PATCH123.txt` | `docs/archive/patch-notes/README_PATCH123.txt` | `f9a2b3e1e3053c81a29e827bc77ac27c8b597ff9fb264cae93d81af9cc4198ec` | `moved` |
+| `README_PATCH124.txt` | `docs/archive/patch-notes/README_PATCH124.txt` | `484f41538fcccaf1f8c7090ff51b515f429878e19d016dfcd820c296b7c4ea07` | `moved` |
+| `README_PATCH125.txt` | `docs/archive/patch-notes/README_PATCH125.txt` | `fc5a0d58b85ffe1ee56e21e75fa860229ee8c2cff6307c0bb152a289acdae290` | `moved` |
+| `README_PATCH126.txt` | `docs/archive/patch-notes/README_PATCH126.txt` | `9903aca088130110d110cc0d38ef2574c9b8caebc368f5e10692171ca5cf1834` | `moved` |
+| `README_PATCH127.txt` | `docs/archive/patch-notes/README_PATCH127.txt` | `ba59c4f26058a7e4822e0d0721ab56a445fd9ce1b8e10d9e54cb04b1af188e63` | `moved` |
+| `README_PATCH128.txt` | `docs/archive/patch-notes/README_PATCH128.txt` | `d1c230aa2993547154aadd2608fc9d92be642ee11c4c2083a0865a36f80b7304` | `moved` |
+| `README_PATCH129.txt` | `docs/archive/patch-notes/README_PATCH129.txt` | `4083bdfe4f59110030ce3842bd2281712cd15791367cf2cdad739df3fba357a4` | `moved` |
+| `README_PATCH130.txt` | `docs/archive/patch-notes/README_PATCH130.txt` | `de7f46b2f0e0d167a6626912ad6f9364e1fe5584ffd90d64da419956b68fcaf9` | `moved` |
+| `README_PATCH131.txt` | `docs/archive/patch-notes/README_PATCH131.txt` | `c2fd5a1ae0b5c7fbdbea41dab27d13e3d040033eef33e81aeda448489db17d66` | `moved` |
+| `README_PATCH132.txt` | `docs/archive/patch-notes/README_PATCH132.txt` | `eef0258085d3a074c1b21e121c4019faf93afe5a014f28ccda6e092707225c3d` | `moved` |
+| `README_PATCH134.txt` | `docs/archive/patch-notes/README_PATCH134.txt` | `3f268b3bd4b31c5b2921af01546b01d176b809f143f40b70b0712adce721e945` | `moved` |
+| `README_PATCH135.txt` | `docs/archive/patch-notes/README_PATCH135.txt` | `131b0313953541b9455c6c30fccf41dd3fcc6302e1203573f9a36d76ca85c5b6` | `moved` |
+| `README_PATCH136.txt` | `docs/archive/patch-notes/README_PATCH136.txt` | `3226f621477645bf04997fb0856d702dcef92821f4e9f6cebb9481d71ea5cb4d` | `moved` |
+| `README_PATCH141.txt` | `docs/archive/patch-notes/README_PATCH141.txt` | `328a5d007d6e8696657c8a5fb7893b520ec06dc16aeb2a05cf5ccd7a292c2ac1` | `moved` |
+| `README_PATCH142.txt` | `docs/archive/patch-notes/README_PATCH142.txt` | `65ab4b441382371687b3ee440fd604f9d3adbea975f262d2f75e1b06135fc31d` | `moved` |
+| `README_PATCH45.txt` | `docs/archive/patch-notes/README_PATCH45.txt` | `af08d608226288d7674a45c15f6862c9cd9241c545ef73bcef293422ef21b77e` | `duplicate-removed` |
+| `README_PATCH46.txt` | `docs/archive/patch-notes/README_PATCH46.txt` | `33aef2ca3f93b10c67d69c1a81cb2d82adf3218ace120674acfdbd37f470149b` | `duplicate-removed` |
+| `README_PATCH47.txt` | `docs/archive/patch-notes/README_PATCH47.txt` | `55d6ccc220f26c1682f99ebda1d0dd01d4c13a51ff6ad7ec458ac6f5415ae0a0` | `duplicate-removed` |
+| `README_PATCH48.txt` | `docs/archive/patch-notes/README_PATCH48.txt` | `84a1d6cf62dca3f591ad0a7a40545c639dfdd1b65b9e8855140310bed43d5af2` | `duplicate-removed` |
+| `README_PATCH49.txt` | `docs/archive/patch-notes/README_PATCH49.txt` | `72456198655a5f7fb3176668179227425f2a624b8f25dd0f2f12f7366c0bb523` | `duplicate-removed` |
+| `README_PATCH50.txt` | `docs/archive/patch-notes/README_PATCH50.txt` | `ec95d819ad09724961921f0d502ccc3f279b7a3aecd90fd381401a9416ea38e3` | `duplicate-removed` |
+| `README_PATCH51.txt` | `docs/archive/patch-notes/README_PATCH51.txt` | `25aeb1da75309f6135dfddd624b67866be000ca158c593632a56c4d7c115b8b2` | `duplicate-removed` |
+| `README_PATCH57.txt` | `docs/archive/patch-notes/README_PATCH57.txt` | `65f5b4378652e2ff65221ce27b462e9f3f1084c1e744917bff1f7a81d4bbf809` | `duplicate-removed` |
+| `README_PATCH58.txt` | `docs/archive/patch-notes/README_PATCH58.txt` | `e5428fb3c129acf8c069ccb1b7281673367ca1adabf6c6f88aa6da5b08ca32af` | `duplicate-removed` |
+| `README_PATCH59.txt` | `docs/archive/patch-notes/README_PATCH59.txt` | `4cf803c80052b512a1732f9949a2882a1a27a66529eb43d8a30d0d64f51d794d` | `duplicate-removed` |
+| `README_PATCH60.txt` | `docs/archive/patch-notes/README_PATCH60.txt` | `c6d512a5682ac50d44e4afff992d3e76ccb3969a66f3df509ab719ee56db6313` | `duplicate-removed` |
+| `README_PATCH61.txt` | `docs/archive/patch-notes/README_PATCH61.txt` | `7cd911f6fd59db0878a5e731ff7296653b8cdcfb6538e4ef213d23e11011c6ea` | `duplicate-removed` |
+| `REVIEW.txt` | `docs/archive/audits/REVIEW.txt` | `edd3c1a97e1d70c2da93cb29734f6af2ae1c76769f27b7394251ef026a269ade` | `duplicate-removed` |
+| `SHA256SUMS_PATCH115.txt` | `docs/archive/validation/SHA256SUMS_PATCH115.txt` | `d38c8b01e638d4db790b5f08a998861b24834398477279ef1c5731dcfd882b50` | `moved` |
+| `SHA256SUMS_PATCH116.txt` | `docs/archive/validation/SHA256SUMS_PATCH116.txt` | `6275fa9830553b77485d7bef2a9de65c38c28d77e8055ff1dc9ecfa629cebde4` | `moved` |
+| `SHA256SUMS_PATCH117.txt` | `docs/archive/validation/SHA256SUMS_PATCH117.txt` | `dde83e94611d3869122624ccc928a080e9903f6e18628a3b37e4984c8a1131a7` | `moved` |
+| `SHA256SUMS_PATCH119.txt` | `docs/archive/validation/SHA256SUMS_PATCH119.txt` | `4b437d8a314461ee2c6ed13da395ab2037e6af6bc9605e535851a825727c8646` | `moved` |
+| `SHA256SUMS_PATCH120.txt` | `docs/archive/validation/SHA256SUMS_PATCH120.txt` | `13667988a85126c3c1ae39002394c04175bfbc97661c9dbccd5402317d9aa87b` | `moved` |
+| `SHA256SUMS_PATCH121.txt` | `docs/archive/validation/SHA256SUMS_PATCH121.txt` | `1d9af6844fb01952c83004670bd0271b97d41d428d67274862cd1385d47d4552` | `moved` |
+| `SHA256SUMS_PATCH122.txt` | `docs/archive/validation/SHA256SUMS_PATCH122.txt` | `1037730a39cf082c3d433a26c4655b2cc8a37a154f85148bffbe9ab3900a7db6` | `moved` |
+| `SHA256SUMS_PATCH123.txt` | `docs/archive/validation/SHA256SUMS_PATCH123.txt` | `b181a2f3247bdf38f157d013407a27c22c7062879ce4ea09ef60ae907737d0ad` | `moved` |
+| `SHA256SUMS_PATCH124.txt` | `docs/archive/validation/SHA256SUMS_PATCH124.txt` | `e35b2d00dfd6b3c339f0f2f80fe6804d17734ca3a20e8ab1b960ba81eb8e57db` | `moved` |
+| `SHA256SUMS_PATCH125.txt` | `docs/archive/validation/SHA256SUMS_PATCH125.txt` | `bf7d1a0921d45061a37526e4dda7bcbf33394f5b1c8003c39fddc3aee5821fe7` | `moved` |
+| `SHA256SUMS_PATCH126.txt` | `docs/archive/validation/SHA256SUMS_PATCH126.txt` | `dc088552455cf85a20f58b4b9eea7fbebbab86b3030962909ea7ad71221e6eb3` | `moved` |
+| `SHA256SUMS_PATCH127.txt` | `docs/archive/validation/SHA256SUMS_PATCH127.txt` | `3434a1a20c896562b7b13a617c6470a3a333da95908bdce2b533fab4604389d1` | `moved` |
+| `SHA256SUMS_PATCH128.txt` | `docs/archive/validation/SHA256SUMS_PATCH128.txt` | `6ff1f58827e0ebd0136f1127fb047cd7b882b45fa97e1c0f9fd5357343996742` | `moved` |
+| `SHA256SUMS_PATCH129.txt` | `docs/archive/validation/SHA256SUMS_PATCH129.txt` | `442ce1c3c47467796fb3961b8adcd28974cdf69c6969203797d6fed00e5377c7` | `moved` |
+| `SHA256SUMS_PATCH130.txt` | `docs/archive/validation/SHA256SUMS_PATCH130.txt` | `da93b54323fdfac71d3353e4c601ae3498b76749171f94c9d62ab08ae5e6ad06` | `moved` |
+| `SHA256SUMS_PATCH131.txt` | `docs/archive/validation/SHA256SUMS_PATCH131.txt` | `288cdb0561d5c792b296dc0c5045784f8748e0ec67c0bfff5520c61ffeb0a3fd` | `moved` |
+| `SHA256SUMS_PATCH132.txt` | `docs/archive/validation/SHA256SUMS_PATCH132.txt` | `61577bb95cbb981a0f98b34b67a0180631ed04c8d21c5d68452f04ac7dd3415a` | `moved` |
+| `SHA256SUMS_PATCH134.txt` | `docs/archive/validation/SHA256SUMS_PATCH134.txt` | `d81b07657326b12a348300d4cc6b520942c8ee1285a8f3c064a84f669457cbee` | `moved` |
+| `SHA256SUMS_PATCH135.txt` | `docs/archive/validation/SHA256SUMS_PATCH135.txt` | `731bf68a454140d027ca21d414b4876c954d9e09e5ae4a2a3b65aea25bc456fd` | `moved` |
+| `SHA256SUMS_PATCH136.txt` | `docs/archive/validation/SHA256SUMS_PATCH136.txt` | `49e7e169cf3bd4a9bf22ebe5d66e10d4c41f1e725eecc2747c43196b61daafc3` | `moved` |
+| `SHA256SUMS_PATCH140.txt` | `docs/archive/validation/SHA256SUMS_PATCH140.txt` | `24c990baea2ed8a684eb4b1eb617e3e7cb8660677ae53e1a84a3ed493a8b177c` | `moved` |
+| `SHA256SUMS_PATCH45.txt` | `docs/archive/validation/SHA256SUMS_PATCH45.txt` | `065eb958680423558a905acc53ca7d0a86614c2b5f18090c35ff96704c62d311` | `duplicate-removed` |
+| `SHA256SUMS_PATCH46.txt` | `docs/archive/validation/SHA256SUMS_PATCH46.txt` | `3e379cc795ffb19b2d91100d4ed10b31c77a66cdd408b9cbdf70054afb07d981` | `duplicate-removed` |
+| `SHA256SUMS_PATCH47.txt` | `docs/archive/validation/SHA256SUMS_PATCH47.txt` | `1d8aa150f5dc4c9dff73a18a08522b9ce973a8ad8bf310c1314b108cbb97efc4` | `duplicate-removed` |
+| `SHA256SUMS_PATCH48.txt` | `docs/archive/validation/SHA256SUMS_PATCH48.txt` | `dfcf4a353dd265dd1641eeb6ad4f77050f6233ca9550d9088acbf9b7a99e3f42` | `duplicate-removed` |
+| `SHA256SUMS_PATCH49.txt` | `docs/archive/validation/SHA256SUMS_PATCH49.txt` | `1a468d21424aacae85d79c24dca48ac1a174a4634f3fce65865c9ffc46520ea0` | `duplicate-removed` |
+| `SHA256SUMS_PATCH50.txt` | `docs/archive/validation/SHA256SUMS_PATCH50.txt` | `c2cba1b0b07be03c5b4633b5c25cff750503d341e5d7c3e3502b299d8626dc9a` | `duplicate-removed` |
+| `SHA256SUMS_PATCH51.txt` | `docs/archive/validation/SHA256SUMS_PATCH51.txt` | `61bff5fd47830f15166984a4e5bf4230b02f596b2e4220ca7fa513c5a5ce545b` | `duplicate-removed` |
+| `SHA256SUMS_PATCH57.txt` | `docs/archive/validation/SHA256SUMS_PATCH57.txt` | `0529d7c96965c66d08eb6b97cb45da42108a6f06e58f943e877a9ffa4302ef81` | `duplicate-removed` |
+| `SHA256SUMS_PATCH58.txt` | `docs/archive/validation/SHA256SUMS_PATCH58.txt` | `9cf9295af1b0a91fe24e2271138c7298d8e1d982931a0b8fdb7b351944275371` | `duplicate-removed` |
+| `SHA256SUMS_PATCH59.txt` | `docs/archive/validation/SHA256SUMS_PATCH59.txt` | `ed4cf1abc9404d4981cae5324a566ba295dc2927083ce3bce11f70fc70b28e92` | `duplicate-removed` |
+| `SHA256SUMS_PATCH60.txt` | `docs/archive/validation/SHA256SUMS_PATCH60.txt` | `07553a345e2c90d6c7346ce75f9f92b1f1e2b264e02e9ec83a6058506fdcaefe` | `duplicate-removed` |
+| `SHA256SUMS_PATCH61.txt` | `docs/archive/validation/SHA256SUMS_PATCH61.txt` | `c2ac6ce11070a9ab7be65db1bd740e0287a567c01cb2736960caaa602067f730` | `duplicate-removed` |
+| `SOURCE_NOTES_PATCH22.txt` | `docs/archive/patch-notes/SOURCE_NOTES_PATCH22.txt` | `d506c46670e2646113bba99752394c57395044fcc3c4adf648254c8955d31575` | `duplicate-removed` |
+| `SOURCE_NOTES_PATCH34.txt` | `docs/archive/patch-notes/SOURCE_NOTES_PATCH34.txt` | `73747905262daed953e1e9148680ee7ef6a42b045f2c4a1805940b4317d6246d` | `duplicate-removed` |
+| `TEXT_FORMAT_POLICY_V56.txt` | `docs/archive/patch-notes/TEXT_FORMAT_POLICY_V56.txt` | `c097c2602f9cac3e7fc71cafb1fdc8d64d65540aec78a07addb41b1001645c45` | `duplicate-removed` |
+| `V63_QUALITY_TEST_REPORT.txt` | `docs/archive/audits/V63_QUALITY_TEST_REPORT.txt` | `32c02ba54bcec234bdb3c8d268e9f17531edf34a7743327ad73cf997fbd11977` | `duplicate-removed` |
+| `VALIDATION_PATCH102.json` | `docs/archive/validation/VALIDATION_PATCH102.json` | `d705e71539aa7f7dc626df689f33c0e126b4805c01250b8355d78440abe5dbca` | `duplicate-removed` |
+| `VALIDATION_PATCH103.txt` | `docs/archive/validation/VALIDATION_PATCH103.txt` | `d6c7966b265a7d9b09fe0502ddcadeb9074f60bb9bd30f2606903a59c8ebdbdb` | `duplicate-removed` |
+| `tools/repo/apply_patch144_cleanup.py` | `docs/archive/patch144/apply_patch144_cleanup.py` | `f644dafec84ffd61d9943a17223804d488fe8bb44ed3f410f15540d94d12fd01` | `moved` |
