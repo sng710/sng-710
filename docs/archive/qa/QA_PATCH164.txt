@@ -1,0 +1,19 @@
+PATCH164 QA
+
+Included site files:
+- assets/js/person-page.js
+- assets/site-version.json
+
+Scope:
+- display-only cleanup in the internal-page TOP section
+- people.js not included
+- index.html not included
+- CSS not included
+- images not included
+
+Checks:
+- Node syntax check: PASS
+- PATCH160 Assistant/logo code preserved: YES
+- PATCH161 spacing code preserved: YES
+- PATCH163 homepage grid/font changes unaffected: YES
+- PATCH162 data-removal patch not used: YES

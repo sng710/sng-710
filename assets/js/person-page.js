@@ -3006,6 +3006,11 @@ a,
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const displayName = (value) => String(value ?? '').replace(/(?:^|\s)(?:ז\s*[״"'׳]{0,2}\s*ל|הי\s*[״"'׳]{0,2}\s*ד)(?=\s|$)/gu, ' ').replace(/\s+/g, ' ').trim();
+  const topSectionText = (value) => String(value ?? '')
+    .replace(/(?:^|\s)ז\s*[״"'׳]+\s*ל(?=\s|[.,;:!?…)}\]]|$)/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([.,;:!?…])/g, '$1')
+    .trim();
   const people = Array.isArray(window.MEMORIAL_PEOPLE) ? window.MEMORIAL_PEOPLE : [];
   const id = document.body?.dataset?.personId || '';
   const person = people.find((item) => item.id === id);
@@ -3047,8 +3052,8 @@ a,
 
   const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);
-  const serviceHtml = serviceParts.length ? `<div class="service-line">${serviceParts.map((x) => `<span>${esc(x)}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>` : '';
-  const facts = (person.generalDetails || []).filter(Boolean).map((x) => `<div class="fact">${esc(x)}</div>`).join('');
+  const serviceHtml = serviceParts.length ? `<div class="service-line">${serviceParts.map((x) => `<span>${esc(topSectionText(x))}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>` : '';
+  const facts = (person.generalDetails || []).filter(Boolean).map((x) => `<div class="fact">${esc(topSectionText(x))}</div>`).join('');
 
   const youtubeEmbedUrl = (source) => {
     try {
@@ -3227,7 +3232,7 @@ a,
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
 <header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a><a class="person-site-brand" href="${esc(new URL('index.html', siteRoot).href)}" aria-label="שער הנגב זוכרת – לדף הבית"><img alt="" src="${esc(assetUrl('img/sng-council-logo-20260903.png'))}"><span dir="rtl">שער הנגב זוכרת</span></a></div></header>
 <main class="person-main" id="mainContent">
-  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(person.role)}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
+  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(topSectionText(person.role))}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
   ${renderTopMedia()}
   ${storyHtml}
   ${pageLinks}
