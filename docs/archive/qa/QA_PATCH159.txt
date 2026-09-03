@@ -1,0 +1,12 @@
+PATCH159 QA
+
+Changed records: ['neta_e']
+Changed fields in neta_e: ['topMedia']
+Added Vimeo:
+https://player.vimeo.com/video/1014257325?h=627a6ed5df
+
+Existing YouTube preserved: YES
+Existing Facebook preserved: YES
+Portrait/image changes: NO
+Text/story/gallery changes: NO
+CSS/renderer changes: NO
