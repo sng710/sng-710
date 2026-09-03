@@ -2,6 +2,14 @@
   'use strict';
 
   const STYLE_ID = 'sng-person-page-style';
+  const FONT_LINK_ID = 'sng-assistant-font';
+  if (!document.getElementById(FONT_LINK_ID)) {
+    const fontLink = document.createElement('link');
+    fontLink.id = FONT_LINK_ID;
+    fontLink.rel = 'stylesheet';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap';
+    document.head.appendChild(fontLink);
+  }
   const CSS = String.raw`
 :root{--bg:#243b63;--bg2:#304a7d;--cyan:#55b8d4;--white:#f8f7f3;--muted:#dce7ea;--card:rgba(36,59,99,.76);--line:rgba(85,184,212,.32);--serif:"Frank Ruhl Libre","Noto Serif Hebrew","David Libre",Georgia,serif;--sans:"Rubik","Heebo","Assistant",Arial,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:var(--sans);color:var(--white);line-height:1.65;background:linear-gradient(90deg,rgba(35,57,96,.92),rgba(48,74,125,.97)),var(--leaf-bg) 18% top/cover fixed no-repeat}button,input,a{font:inherit}img{max-width:100%}a{color:inherit}.skip-link{position:fixed;top:8px;right:8px;z-index:10000;transform:translateY(-160%);padding:10px 14px;border-radius:8px;background:#fff;color:#132d49;text-decoration:none}.skip-link:focus{transform:none}:where(a,button,[role="button"],[tabindex]):focus-visible{outline:3px solid #9bd5ff;outline-offset:4px}.council-corner{position:fixed;top:14px;left:24px;z-index:45;width:88px;height:88px;padding:10px;border:1px solid rgba(85,184,212,.34);border-radius:18px;background:rgba(20,38,65,.42);backdrop-filter:blur(6px);pointer-events:none}.council-corner img{display:block;width:100%;height:100%;object-fit:contain}.person-topbar{position:sticky;top:0;z-index:30;padding:12px 24px;background:rgba(31,51,86,.95);border-bottom:1px solid rgba(85,184,212,.38);backdrop-filter:blur(10px)}.person-topbar-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}.person-topbar a{text-decoration:none}.person-brand{font-family:var(--serif);font-size:1.14rem}.back-link{display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid rgba(85,184,212,.55)}.person-main{width:min(1180px,calc(100% - 32px));margin:auto;padding:30px 0 72px}.person-intro{display:grid;grid-template-columns:190px minmax(0,1fr);gap:36px;align-items:center;padding:32px 36px 34px;border:1px solid rgba(248,247,243,.2);border-top-color:rgba(85,184,212,.72);border-radius:10px;background:linear-gradient(135deg,rgba(47,73,123,.78),rgba(35,58,99,.80));backdrop-filter:blur(3px)}.person-portrait{width:184px;height:184px;margin:0;padding:6px;border:2px solid rgba(248,247,243,.82);border-radius:50%;overflow:hidden;background:transparent}.person-portrait img,.portrait-placeholder{display:block;width:100%;height:100%;border-radius:50%;object-fit:var(--fit,cover);object-position:var(--pos,50% 38%);transform:scale(var(--scale,1))}.portrait-placeholder{display:grid;place-items:center;background:#c9d0d1;color:#17324a;text-align:center;padding:14px}.person-head{min-width:0}.place{margin:0 0 5px;color:#d8e6ea;font-size:1.04rem;font-weight:700}.person-head h1{margin:0 0 10px;font-family:var(--serif);font-size:clamp(2.7rem,4.6vw,4.15rem);font-weight:400;line-height:1.02;letter-spacing:-.018em}.service-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 7px;color:#f5f7f7;font-size:1.09rem;font-weight:700}.service-line .dot{opacity:.55}.role{max-width:70ch;margin:7px 0 0;color:#e2eaec;font-size:1.14rem;line-height:1.72}.facts-panel{margin-top:22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}.fact{min-height:47px;display:flex;align-items:center;padding:9px 0;border-top:1px solid var(--line);color:#edf2f2;font-size:1.07rem;line-height:1.6}.media-section,.story-section,.links-section{margin-top:24px;padding:clamp(28px,4vw,42px) clamp(20px,5vw,54px);border:1px solid rgba(248,247,243,.17);border-top-color:rgba(85,184,212,.52);border-radius:9px;background:var(--card);backdrop-filter:blur(3px)}.media-section h2,.story-section>h2,.links-section h2{margin:0 0 1.45rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,1.72rem + .7vw,2.35rem);line-height:1.2}.story-section>h2::after{content:"";display:block;width:72px;height:2px;margin-top:.9rem;border-radius:999px;background:rgba(85,184,212,.78)}.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px}.media-image-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),300px));gap:16px;margin-top:18px}.media-image-link{display:grid;gap:9px;justify-items:center;width:100%;padding:10px;border:1px solid rgba(248,247,243,.24);border-radius:13px;background:rgba(16,32,55,.3);color:#fff;text-decoration:none}.media-image-link img{display:block;width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:9px;background:#fff}.media-image-label{font-size:1rem;line-height:1.55;text-align:center}.video-embed{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:9px;background:#101c31;border:1px solid rgba(248,247,243,.18)}.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.media-actions,.memorial-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.media-actions a,.memorial-links a,.family-contact-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 16px;border:1px solid rgba(248,247,243,.48);border-radius:999px;color:#fff;text-decoration:none}.story-copy{max-width:88ch;margin-inline:auto}.story-chapter+.story-chapter{margin-top:clamp(2.8rem,5vw,4.3rem);padding-top:clamp(1.55rem,3vw,2.15rem);border-top:1px solid rgba(85,184,212,.30)}.story-chapter>h3{width:fit-content;max-width:100%;margin:0 0 1.55rem;padding:.28rem .85rem .34rem 0;border-inline-start:3px solid rgba(85,184,212,.82);font-size:clamp(1.56rem,1.35rem + .65vw,1.98rem);font-weight:700;line-height:1.28}.story-chapter.event>h3{border-inline-start-color:rgba(229,169,60,.9)}.story-text{max-width:78ch;margin-inline:auto}.story-text p{margin:0 0 1.2em;color:#f3f5f4;font-size:clamp(1.20rem,1.13rem + .25vw,1.32rem);line-height:1.92;text-wrap:pretty}.story-text p:last-child{margin-bottom:0}.story-media-break{width:fit-content;max-width:min(680px,100%);margin:clamp(1.2rem,2.5vw,1.8rem) 0 clamp(2.3rem,4vw,3.35rem)}.story-media-break.side-right{margin-left:auto;margin-right:0}.story-media-break.side-left{margin-right:auto;margin-left:0}.story-media-break figure{display:inline-flex;width:auto;max-width:100%;margin:0;padding:8px;align-items:center;justify-content:center;border:1px solid rgba(85,184,212,.30);border-radius:16px;background:rgba(23,43,73,.36);box-shadow:0 12px 26px rgba(10,27,48,.14);overflow:hidden}.story-media-break img{display:block;width:auto;height:auto;max-width:100%;max-height:620px;object-fit:contain;border-radius:10px;cursor:zoom-in}.links-section{max-width:88ch;margin-inline:auto;margin-top:24px}.family-contact{max-width:880px;margin:28px auto 0;padding:22px 24px;border:1px solid rgba(85,184,212,.30);border-radius:9px;background:rgba(30,52,89,.62);text-align:center}.family-contact-text{margin:0 0 14px;font-size:1.08rem;line-height:1.78}.page-footer{max-width:820px;margin:36px auto 0;padding-top:22px;border-top:1px solid rgba(85,184,212,.34);font-family:var(--serif);font-size:1.14rem;text-align:center;color:#eef1f0}.image-zoom-target{cursor:zoom-in}.image-viewer{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:clamp(12px,3vw,34px);opacity:0;transition:opacity .16s ease}.image-viewer[hidden]{display:none}.image-viewer.is-open{opacity:1}.image-viewer-backdrop{position:absolute;inset:0;background:rgba(7,17,31,.92);backdrop-filter:blur(7px)}.image-viewer-dialog{position:relative;z-index:1;width:min(1500px,96vw);height:min(900px,92vh);display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:12px}.image-viewer-figure{min-width:0;min-height:0;max-height:92vh;margin:0;display:grid;grid-template-rows:minmax(0,1fr) auto;justify-items:center;gap:10px}.image-viewer-image{display:block;max-width:100%;max-height:84vh;width:auto;height:auto;object-fit:contain;border-radius:8px;background:#16263e;box-shadow:0 24px 70px rgba(0,0,0,.42)}.image-viewer-caption{max-width:70ch;color:#eef4f6;text-align:center;font-size:.96rem}.image-viewer-close,.image-viewer-nav{appearance:none;border:1px solid rgba(255,255,255,.25);background:rgba(38,63,107,.88);color:#fff;cursor:pointer}.image-viewer-close{position:absolute;top:0;inset-inline-end:0;width:46px;height:46px;border-radius:50%;font-size:1.8rem;z-index:2}.image-viewer-nav{width:48px;height:62px;border-radius:14px;font-size:2rem}.error-card{max-width:760px;margin:80px auto;padding:28px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(36,59,99,.76);text-align:center}.error-card a{display:inline-block;margin-top:15px}
@@ -2831,6 +2839,94 @@ body{
 .person-site-brand:hover span{border-bottom:1px solid rgba(155,213,255,.7)}
 @media(max-width:560px){.person-site-brand{gap:7px;font-size:.92rem}.person-site-brand img{width:34px;height:34px}.person-topbar-inner{gap:8px}.back-link{font-size:.78rem}}
 
+
+/* PATCH 160 — Assistant + spacing + supplied council logo on internal pages. */
+:root{
+  --serif:"Assistant",Arial,sans-serif !important;
+  --sans:"Assistant",Arial,sans-serif !important;
+}
+body,
+button,
+input,
+a,
+.person-head h1,
+.media-section h2,
+.story-section>h2,
+.links-section h2,
+.story-chapter>h3,
+.page-footer,
+.person-site-brand{
+  font-family:"Assistant",Arial,sans-serif !important;
+}
+.person-site-brand{
+  gap:9px !important;
+  font-weight:600 !important;
+  letter-spacing:0 !important;
+}
+.person-site-brand img{
+  width:50px !important;
+  height:58px !important;
+  object-fit:contain !important;
+}
+.person-head .place{
+  margin-bottom:1px !important;
+  line-height:1.25 !important;
+}
+.person-head h1{
+  margin-top:0 !important;
+  margin-bottom:7px !important;
+  line-height:1.04 !important;
+  letter-spacing:0 !important;
+}
+.service-line{
+  margin-bottom:5px !important;
+}
+.person-intro{
+  row-gap:24px !important;
+}
+.facts-panel{
+  margin-top:18px !important;
+}
+.media-section,
+.story-section,
+.links-section{
+  margin-top:20px !important;
+}
+.media-section h2,
+.story-section>h2,
+.links-section h2{
+  margin-bottom:1.15rem !important;
+}
+.story-chapter>h3{
+  margin-bottom:1.15rem !important;
+  letter-spacing:0 !important;
+}
+.story-text p{
+  line-height:1.78 !important;
+  margin-bottom:1.05em !important;
+}
+.family-contact{
+  margin-top:22px !important;
+}
+.page-footer{
+  margin-top:28px !important;
+}
+@media(max-width:560px){
+  .person-site-brand img{
+    width:38px !important;
+    height:44px !important;
+  }
+  .person-intro{
+    gap:16px !important;
+  }
+  .person-head h1{
+    margin-bottom:5px !important;
+  }
+  .story-text p{
+    line-height:1.72 !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2867,7 +2963,12 @@ body{
 
   const portraitSrc = person.image ? assetUrl(person.image) : assetUrl('img/memorial-candle.webp');
   const portraitAlt = person.image ? (person.portraitAlt || displayName(person.name) || person.name || '') : `נר זיכרון לזכר ${displayName(person.name) || person.name || ''}`;
-  const portrait = `<img data-viewer-image alt="${esc(portraitAlt)}" decoding="async" fetchpriority="high" loading="eager" src="${esc(portraitSrc)}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(person.portrait?.scale || 1)}">`;
+  const portraitPad = Number.isFinite(Number(person.portrait?.pad)) ? Math.max(0, Math.min(22, Number(person.portrait.pad))) : 0;
+  const portraitBg = /^#[0-9a-f]{6}$/i.test(String(person.portrait?.bg || '')) ? person.portrait.bg : '#d7dde0';
+  const portraitScale = Number.isFinite(Number(person.portrait?.scale)) ? Math.max(1, Math.min(3.75, Number(person.portrait.scale))) : 1;
+  const portraitTx = Number.isFinite(Number(person.portrait?.tx)) ? Math.max(-140, Math.min(140, Number(person.portrait.tx))) : 0;
+  const portraitTy = Number.isFinite(Number(person.portrait?.ty)) ? Math.max(-140, Math.min(140, Number(person.portrait.ty))) : 0;
+  const portrait = `<img data-viewer-image alt="${esc(portraitAlt)}" decoding="async" fetchpriority="high" loading="eager" src="${esc(portraitSrc)}" style="--fit:${esc(person.portrait?.fit || 'cover')};--pos:${esc(person.portrait?.position || '50% 38%')};--scale:${esc(portraitScale)};padding:${esc(portraitPad)}%;background:${esc(portraitBg)};transform:translate(${esc(portraitTx)}%,${esc(portraitTy)}%) scale(${esc(portraitScale)})">`;
 
   const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);
@@ -3026,7 +3127,8 @@ body{
     if ((story.personal || []).length) personalChapter = `<div class="story-chapter personal">${renderParagraphs(story.personal)}</div>`;
     if ((story.event || []).length) {
       const eventHeading = person.isPreviousYears ? 'יום הנפילה והנסיבות' : (story.eventHeading || 'שבת ה7.10.2023');
-      eventChapter = `<section class="story-chapter event" aria-labelledby="eventHeading"><h3 id="eventHeading">${esc(eventHeading)}</h3>${renderParagraphs(story.event)}</section>`;
+      const displayEventHeading = String(eventHeading).replace(/^שבת\s+ה[-–—]?\s*(?=\d)/u, 'שבת ה-');
+      eventChapter = `<section class="story-chapter event" aria-labelledby="eventHeading"><h3 id="eventHeading">${esc(displayEventHeading)}</h3>${renderParagraphs(story.event)}</section>`;
     }
     const mainChapters = personalChapter || eventChapter ? `<div class="story-main-grid${personalChapter && eventChapter ? '' : ' single-column'}">${personalChapter}${eventChapter}</div>` : '';
     const legacyChapter = (story.legacy || []).length ? `<section class="story-chapter legacy" aria-labelledby="legacyHeading"><h3 id="legacyHeading">${esc(story.legacyHeading || 'זיכרון, מורשת והנצחה')}</h3>${renderParagraphs(story.legacy)}</section>` : '';
@@ -3048,7 +3150,7 @@ body{
 
   root.innerHTML = `
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
-<header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a><a class="person-site-brand" href="${esc(new URL('index.html', siteRoot).href)}" aria-label="שער הנגב זוכרת – לדף הבית"><img alt="" src="${esc(assetUrl('favicon-sng.svg'))}"><span dir="rtl">שער הנגב זוכרת</span></a></div></header>
+<header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a><a class="person-site-brand" href="${esc(new URL('index.html', siteRoot).href)}" aria-label="שער הנגב זוכרת – לדף הבית"><img alt="" src="${esc(assetUrl('img/sng-council-logo-20260903.png'))}"><span dir="rtl">שער הנגב זוכרת</span></a></div></header>
 <main class="person-main" id="mainContent">
   <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(person.role)}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
   ${renderTopMedia()}

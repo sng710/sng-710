@@ -1,0 +1,22 @@
+PATCH160 QA
+
+Included site files:
+- index.html
+- assets/js/person-page.js
+- assets/site-version.json
+- assets/img/sng-council-logo-20260903.png
+
+Not included / not changed:
+- assets/js/people.js
+- assets/js/app.js
+- assets/css/site.css
+- portrait assets
+- biography content
+- videos / galleries / links
+
+Checks:
+- PATCH157 mobile dropdown fix remains in index.html.
+- PATCH159 people/video data is untouched because people.js is not included.
+- Assistant stylesheet is loaded on homepage and internal pages.
+- Internal brand uses the new supplied logo.
+- "שבת ה7.10.2023" is display-formatted to "שבת ה-7.10.2023".
