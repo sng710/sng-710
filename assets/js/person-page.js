@@ -2927,6 +2927,81 @@ a,
   }
 }
 
+
+/* PATCH 161 — tighter internal-page spacing only. */
+.story-section{
+  padding-top:24px !important;
+  padding-bottom:28px !important;
+}
+
+.story-copy{
+  margin-top:0 !important;
+}
+
+.story-chapter{
+  margin-top:0 !important;
+}
+
+.story-chapter + .story-chapter{
+  margin-top:1.15rem !important;
+  padding-top:1.05rem !important;
+}
+
+.story-chapter > h3{
+  margin-top:0 !important;
+  margin-bottom:.65rem !important;
+  padding-top:.15rem !important;
+  padding-bottom:.18rem !important;
+}
+
+.story-text{
+  margin-top:0 !important;
+}
+
+.story-text p{
+  margin-top:0 !important;
+  margin-bottom:.52em !important;
+  line-height:1.56 !important;
+}
+
+.story-text p:last-child{
+  margin-bottom:0 !important;
+}
+
+.story-section > h2{
+  margin-bottom:.8rem !important;
+}
+
+.story-section > h2::after{
+  margin-top:.5rem !important;
+}
+
+.story-media-break{
+  margin-top:.85rem !important;
+  margin-bottom:1.15rem !important;
+}
+
+@media(max-width:560px){
+  .story-section{
+    padding-top:20px !important;
+    padding-bottom:24px !important;
+  }
+
+  .story-chapter + .story-chapter{
+    margin-top:.95rem !important;
+    padding-top:.85rem !important;
+  }
+
+  .story-chapter > h3{
+    margin-bottom:.55rem !important;
+  }
+
+  .story-text p{
+    margin-bottom:.46em !important;
+    line-height:1.52 !important;
+  }
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

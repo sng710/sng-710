@@ -1,0 +1,16 @@
+PATCH161 QA
+
+Included site files:
+- assets/js/person-page.js
+- assets/site-version.json
+
+Not changed:
+- index.html
+- assets/js/people.js
+- assets/js/app.js
+- assets/css/site.css
+- images
+- content/data
+
+PATCH160 Assistant + logo rules remain preserved.
+Only an additional final CSS override block for internal-page spacing was added.
