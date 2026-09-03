@@ -1,0 +1,10 @@
+PATCH163 QA
+
+Verified:
+- index.html differs from the PATCH161 homepage state by ONE final CSS block only.
+- Desktop grid override is 5 columns.
+- Left-panel font sizing only is increased.
+- Existing PATCH157 mobile dropdown fix remains untouched.
+- Existing PATCH160 logo/Assistant rules remain untouched.
+- PATCH161 internal-page spacing remains untouched because person-page.js is not included.
+- PATCH162 is not used.

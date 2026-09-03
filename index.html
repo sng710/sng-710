@@ -2304,6 +2304,75 @@
 }
 </style>
 
+
+<style>
+/* PATCH 163 — homepage only: five people per desktop row + larger left-panel type. */
+
+/* Return the desktop memorial grid to five cards per row. */
+@media (min-width:900px){
+  .home-page .memorial-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  }
+}
+
+/* Increase typography only in the left memorial/search panel. */
+@media (min-width:900px){
+  .home-page .left-site-title{
+    font-size:clamp(2.2rem,3.8vh,2.85rem) !important;
+    line-height:1.08 !important;
+  }
+
+  .home-page .hero .poem{
+    font-size:clamp(1.72rem,2.9vh,2.08rem) !important;
+    line-height:1.36 !important;
+  }
+
+  .home-page .hero .dedication{
+    font-size:clamp(1.18rem,1.95vh,1.42rem) !important;
+    line-height:1.58 !important;
+  }
+
+  .home-page .left-search-wrap,
+  .home-page .left-search-wrap input,
+  .home-page .left-search-wrap button,
+  .home-page .left-search-wrap .place-filter-label,
+  .home-page .left-search-wrap .place-filter-current,
+  .home-page .left-search-wrap .place-filter-option{
+    font-size:1.05rem !important;
+  }
+
+  .home-page .hero-links a{
+    font-size:1.02rem !important;
+  }
+}
+
+/* Keep the same request on mobile, but without changing layout/count. */
+@media (max-width:899px){
+  .home-page .left-site-title{
+    font-size:clamp(1.72rem,6vw,2.08rem) !important;
+  }
+
+  .home-page .hero .poem{
+    font-size:clamp(1.42rem,5.1vw,1.74rem) !important;
+    line-height:1.42 !important;
+  }
+
+  .home-page .hero .dedication{
+    font-size:clamp(1.04rem,3.8vw,1.2rem) !important;
+    line-height:1.58 !important;
+  }
+
+  .home-page .left-search-wrap,
+  .home-page .left-search-wrap input,
+  .home-page .left-search-wrap button,
+  .home-page .left-search-wrap .place-filter-label,
+  .home-page .left-search-wrap .place-filter-current,
+  .home-page .left-search-wrap .place-filter-option{
+    font-size:1rem !important;
+  }
+}
+</style>
+
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
