@@ -1,0 +1,38 @@
+SNG-710 PATCH 170 — QA
+========================================
+[PASS] Base: PATCH169 people.js
+[PASS] people.js parses
+[PASS] Total memorial records unchanged: 154
+[PASS] Unique IDs: 154
+[PASS] Exactly 13 records changed
+[PASS] 13 user-supplied portraits included
+[PASS] Every updated portrait path is assets/img/patch170/<id>.png
+[PASS] Every referenced portrait exists in the ZIP
+[PASS] All 13 updated records have non-empty place and military unit
+[PASS] Eight newly completed records have personal/event/legacy story sections
+[PASS] fullStory equals personal+event+legacy for all eight newly completed records
+[PASS] Existing official sourceUrl/sourceImageUrl metadata retained
+[PASS] Cache query bumped to people.js?v=355
+[PASS] site-version.json = 355
+[PASS] ZIP root contains proper site hierarchy (assets/, docs/, index.html)
+
+CHANGED RECORD IDS:
+- otniel_shamir
+- shabtai_nahon
+- yiftach_geva
+- david_hazan
+- marius_aharon
+- yaakov_grubler
+- moshe_benhari
+- ram_inbar
+- yaakov_migovski
+- tal_nir
+- shoshana_zlotnik
+- shlomo_zuckerman
+- aizik_shvartzman
+
+SOURCE TEXT DISCREPANCIES PRESERVED FOR REVIEW (not silently changed):
+- יעקב גרובלר: heading says כ"ו בסיון תשט"ז / 4.6.1956; biography says כ"ו בניסן תשט"ז / 4.6.1956.
+- משה בן-הרי: heading says 21.5.1968; biography says 22.5.1968.
+- יעקב מיגובסקי מגד: heading says ב' בחשון תשט"ז; biography says ב' בחשוון תשט"ו, both paired with 18.10.1955.
+- אייזיק שוארצמן: heading says י"א באייר תש"ח / 20.5.1948; biography says י' באייר תש"ח / 19.5.1948.
