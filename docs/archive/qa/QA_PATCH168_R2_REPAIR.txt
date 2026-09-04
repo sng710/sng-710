@@ -1,0 +1,12 @@
+SNG-710 PATCH168 R2 — PATH REPAIR QA
+========================================
+[PASS] 154 memorial records
+[PASS] 154 unique person IDs
+[PASS] 26 portraits referenced from PATCH165-PATCH168
+[PASS] all 26 referenced portrait files included at exact nested paths
+[PASS] assets/js/people.js present
+[PASS] assets/site-version.json present and version=353
+[PASS] index.html references assets/js/people.js?v=353
+[PASS] no patch portrait is packaged at repository root
+[PASS] no root people.js or root site-version.json in repair package
+[PASS] cumulative repair contains PATCH165, PATCH166, PATCH167 and PATCH168 image folders
