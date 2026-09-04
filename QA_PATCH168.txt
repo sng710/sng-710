@@ -1,0 +1,31 @@
+SNG-710 PATCH 168 — QA
+========================================
+
+BASE DATA:
+- people.js from PATCH167
+
+STATIC CHECKS:
+[PASS] people.js parses as JSON payload
+[PASS] Total memorial records unchanged: 154
+[PASS] Unique person IDs: 154
+[PASS] Exactly eight person records changed
+[PASS] Eight user-supplied portrait files exist at referenced paths
+[PASS] All eight records have non-empty place fields
+[PASS] All eight records have the supplied military unit
+[PASS] All eight records have personal/event/legacy story sections
+[PASS] fullStory/story data present for all eight
+[PASS] Existing sourceUrl/sourceImageUrl metadata retained
+[PASS] Roy Rotberg has the requested YouTube embed in topMedia
+[PASS] Homepage people.js cache query bumped to v=353
+[PASS] No CSS, app.js, person-page.js or unrelated media files included
+[PASS] ZIP root layout is directly extractable over site root
+
+CHANGED RECORD IDS:
+- otniel_shamir
+- shabtai_nahon
+- yiftach_geva
+- eliyahu_saybahi
+- david_hazan
+- marius_aharon
+- yaakov_tuchman
+- roi_rotberg
