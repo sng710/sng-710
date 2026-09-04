@@ -1,0 +1,10 @@
+SNG-710 PATCH 169 — QA
+========================================
+[PASS] people.js parses
+[PASS] Total memorial records unchanged: 154
+[PASS] Exactly one record changed: omer_z
+[PASS] General details now list: לירן, נטע-לי, ליאור וגלי
+[PASS] Life-story sentence now lists the same four names
+[PASS] No other person records changed
+[PASS] people.js cache query bumped to v=354
+[PASS] Correct repository paths used
