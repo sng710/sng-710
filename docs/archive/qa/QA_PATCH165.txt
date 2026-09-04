@@ -1,0 +1,38 @@
+SNG-710 PATCH 165 — QA
+========================================
+
+BASE DATA:
+- people.js from PATCH159 (latest intended data patch in the active chain)
+- PATCH160, PATCH161, PATCH163 and PATCH164 preserved as later display/layout patches
+- PATCH162 intentionally excluded per PATCH163/PATCH164 notes
+
+STATIC CHECKS:
+[PASS] people.js parses as JSON payload
+[PASS] Total memorial records unchanged: 154
+[PASS] Unique person IDs: 154
+[PASS] Exactly six person records changed
+[PASS] Six supplied portrait files exist and match their referenced paths
+[PASS] All six records now have non-empty place fields
+[PASS] All six records now have the supplied military unit
+[PASS] All six records now have personal/event/legacy story sections
+[PASS] fullStory matches the three story sections for all six
+[PASS] Existing sourceUrl/sourceImageUrl metadata retained
+[PASS] Homepage people.js cache query bumped to v=350
+[PASS] No CSS, app.js, person-page.js, video or gallery files included
+[PASS] ZIP root layout is directly extractable over the site root
+
+CHANGED RECORD IDS:
+- uri_rosen
+- yitzhak_yehuda_g
+- yitzhak_bab
+- michael_misok
+- zeev_brikman
+- eliezer_kilinski
+
+PORTRAIT MAPPING (upload order):
+1. uri_rosen <- d7bfefdc-4030-4abd-97e5-177c395b59f4.png
+2. yitzhak_yehuda_g <- 05bdcc57-7a25-45c8-93d2-998951c12372.png
+3. yitzhak_bab <- d29eedf6-315c-4c5d-819a-36a1e4d1c41a.png
+4. michael_misok <- d44f237f-9c6d-42e0-8357-01cc48266d6f.png
+5. zeev_brikman <- 943e1ed7-80ab-449e-bbb4-1371b1b610a2.png
+6. eliezer_kilinski <- a2d1b6b8-1f87-49b8-8345-08b10a73a5d5.png
