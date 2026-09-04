@@ -1,0 +1,28 @@
+SNG-710 PATCH 172 — QA
+========================================
+[PASS] Base: PATCH171 / people.js v356
+[PASS] Output version: 357
+[PASS] 154 memorial records retained
+[PASS] 154 unique person IDs retained
+[PASS] Exactly 12 records changed
+[PASS] All 9 unique user-supplied President's Residence URLs assigned
+[PASS] Shared pages assigned to both relevant people where appropriate
+[PASS] Existing videos / Instagram / image media preserved
+[PASS] Links are stored in topMedia, the same content area as videos
+[PASS] No biography text or person metadata changed
+[PASS] people.js exists only at assets/js/people.js in this patch
+[PASS] ZIP root is directly extractable over the site root
+
+CHANGED IDS:
+- ofir_l
+- omer_z
+- yehonatan_h
+- tal_a
+- amir_n
+- roee_i
+- smadar_i
+- niv_r
+- niral_z
+- sivan_e
+- naor_h
+- yotam_h
