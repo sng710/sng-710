@@ -1,0 +1,42 @@
+SNG-710 PATCH 166 — QA
+========================================
+
+BASE DATA:
+- people.js from PATCH165
+
+STATIC CHECKS:
+[PASS] people.js parses as JSON payload
+[PASS] Total memorial records unchanged: 154
+[PASS] Unique person IDs: 154
+[PASS] Exactly eight person records changed
+[PASS] Eight supplied portrait files exist and match their referenced paths
+[PASS] Duplicate David Magen upload detected as byte-identical and safely omitted
+[PASS] All eight records now have non-empty place fields
+[PASS] All eight records now have the supplied military unit
+[PASS] All eight records now have personal/event/legacy story sections
+[PASS] fullStory matches the three story sections for all eight
+[PASS] Existing sourceUrl/sourceImageUrl metadata retained
+[PASS] Homepage people.js cache query bumped to v=351
+[PASS] No CSS, app.js, person-page.js, video or gallery files included
+[PASS] ZIP root layout is directly extractable over the site root
+
+CHANGED RECORD IDS:
+- yaakov_alush
+- natan_rossi
+- david_magen
+- asher_hershkovitz
+- gershon_kalo
+- tzur_golan
+- nadav_cohen
+- uzi_heinberg
+
+PORTRAIT MAPPING (upload order, duplicate #4 ignored):
+1. yaakov_alush <- 32a6fd5d-bd9a-48bc-aff1-b9ac23c444d6.png
+2. natan_rossi <- dcc38c5d-d127-404f-be88-5743eaeeeaf2.png
+3. david_magen <- c625e6b5-b9cc-4935-a26f-7551e422cc35.png
+4. duplicate david_magen <- f603d4e4-4377-468a-97d9-5cdea0a5c31a.png
+5. asher_hershkovitz <- 193b1c95-f531-444c-8232-232acdf41cfa.png
+6. gershon_kalo <- 1b0d1238-8a7b-4d93-87e8-7de240028286.png
+7. tzur_golan <- 2b2b85b9-383d-4026-9217-40485ebfaf21.png
+8. nadav_cohen <- b4fc0459-36c5-4159-9759-86bd41572735.png
+9. uzi_heinberg <- 7d1d390f-9be0-4917-8f5a-938088160ae5.png
