@@ -1,0 +1,42 @@
+SNG-710 PATCH 171 — QA
+========================================
+BASE: PATCH170 / people.js v355
+NEW CACHE/SITE VERSION: 356
+
+[PASS] people.js parses
+[PASS] 154 records preserved
+[PASS] 154 unique IDs
+[PASS] 154 unique names
+[PASS] Exactly 21 person records changed
+[PASS] Changes limited to fullStory/story prose in those records
+[PASS] Protected metadata unchanged (name/place/rank/unit/date/image/etc.)
+[PASS] fullStory and story sections remain synchronized for changed records with structured story data
+[PASS] "אחרי נפלו" / "לאחר נפלו" / "לפני נפלו" / "ביום נפלו" / "לנפלו" / "לנפלה" possessive forms removed
+[PASS] Reported high-confidence spelling/grammar tokens removed
+[PASS] Known date conflicts intentionally remain unresolved
+[PASS] Omer Tzadikbitch children names preserved: לירן, נטע-לי, ליאור וגלי
+[PASS] index.html references assets/js/people.js?v=356
+[PASS] Correct ZIP folder structure; no people.js at ZIP root
+
+CHANGED IDS:
+- uri_rosen
+- yitzhak_yehuda_g
+- yitzhak_bab
+- michael_misok
+- yaakov_alush
+- amiram_asa
+- uzi_heinberg
+- dan_yaakobi
+- tziona_staviski
+- lior_yekutiel
+- otniel_shamir
+- shabtai_nahon
+- david_hazan
+- roi_rotberg
+- moshe_benhari
+- tal_nir
+- aizik_shvartzman
+- asaf_rabinovitz
+- zeev_lavi
+- hagai_benshmuel
+- tzvi_goldfeld
