@@ -1,0 +1,32 @@
+SNG-710 PATCH 167 — QA
+========================================
+
+BASE DATA:
+- people.js from PATCH166
+
+STATIC CHECKS:
+[PASS] people.js parses as JSON payload
+[PASS] Total memorial records unchanged: 154
+[PASS] Unique person IDs: 154
+[PASS] Exactly four person records changed
+[PASS] Four supplied portrait files exist and match their referenced paths
+[PASS] All four records now have non-empty place fields
+[PASS] All four records now have the supplied military unit
+[PASS] All four records now have personal/event/legacy story sections
+[PASS] fullStory matches the three story sections for all four
+[PASS] Existing sourceUrl/sourceImageUrl metadata retained
+[PASS] Homepage people.js cache query bumped to v=352
+[PASS] No CSS, app.js, person-page.js, video or gallery files included
+[PASS] ZIP root layout is directly extractable over the site root
+
+CHANGED RECORD IDS:
+- dan_yaakobi
+- tziona_staviski
+- lior_yekutiel
+- orly_artzi
+
+PORTRAIT MAPPING (upload order):
+1. dan_yaakobi <- 523dd0f8-e818-5d77-8ac0-c6e5fdea3694.png
+2. tziona_staviski <- f99bee45-569b-57ff-ad94-67e46395b8f6.png
+3. lior_yekutiel <- 79c08cd3-11bf-53c7-a644-f5e62211cf39.png
+4. orly_artzi <- 79454ea5-d4ea-585c-a249-14be09008c4c.png
