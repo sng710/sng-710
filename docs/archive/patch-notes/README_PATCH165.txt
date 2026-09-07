@@ -1,35 +1,23 @@
-SNG-710 PATCH 165 — six previous-years portraits + life stories
+SNG-710 PATCH 165 — homepage left-panel balance fix
 
 BASE:
-- Apply on top of PATCH164.
-- Intended patch chain remains PATCH159 -> PATCH160 -> PATCH161 -> PATCH163 -> PATCH164.
-- PATCH162 is intentionally NOT part of this chain.
+- Continue from PATCH161 + PATCH163 + PATCH164.
+- PATCH162 remains ignored / unused.
 
-ADDED / COMPLETED:
-1. אורי (ג'ימי) רוזן — portrait, ארז, חיל רגלים, full life story
-2. יצחק-יהודה (בבה) גליקו — portrait, ברור חיל, חטיבת הצנחנים, full life story
-3. יצחק בבסקי — portrait, ברור חיל, חטיבת הצנחנים, full life story, עיטור העוז fact
-4. מיכאל מיסוק — portrait, ברור חיל, חטיבת הצנחנים, full life story
-5. זאב בריקמן — portrait, ברור חיל, נח"ל, full life story
-6. אליעזר קילינסקי — portrait, ברור חיל, נח"ל, full life story
+Fix:
+- Keeps the homepage memorial grid at 5 people per row.
+- Rebalances the left section after PATCH163 so it is larger than before,
+  but not crowded/oversized.
+- Reduces the supplied logo size slightly on desktop/laptop.
+- Tightens the poem, dedication and filter area so the left panel fits cleanly.
+- Adds an extra safety rule for shorter laptop-height screens.
+- Keeps mobile readable without making the left text too large.
 
-FILES:
-- assets/js/people.js
-- assets/img/patch165/*.png (6 user-supplied portraits; copied losslessly, no AI/editing)
-- index.html (ONLY people.js cache query bumped to v=350)
-- assets/site-version.json
-- patch documentation / QA / hashes
-
-NOT CHANGED:
-- no other person's content
-- no existing portrait assignments outside these six
-- no CSS
-- no app.js
+No changes:
+- no people.js
 - no person-page.js
-- no videos or galleries
-- no homepage layout
-- no internal-page layout
-
-NOTE:
-- The story wording was kept as supplied by the user, including historical spelling/punctuation.
-- Existing official sourceUrl/sourceImageUrl metadata was retained.
+- no images
+- no biography text
+- no names / settlements
+- no videos / galleries
+- no portrait assignments

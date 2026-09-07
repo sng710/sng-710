@@ -2373,6 +2373,135 @@
 }
 </style>
 
+
+<style>
+/* PATCH 165 — homepage left-panel balance fix only.
+   Keeps PATCH163 five-per-row, but prevents the left section from looking too crowded. */
+
+@media (min-width:900px){
+  .home-page .main-layout,
+  .home-page .home-shell,
+  .home-page .hero{
+    min-height:100vh !important;
+  }
+
+  .home-page .hero{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding-top:22px !important;
+    padding-bottom:22px !important;
+  }
+
+  .home-page .hero-inner{
+    max-width:430px !important;
+    width:min(92%,430px) !important;
+  }
+
+  .home-page::after{
+    width:86px !important;
+    height:108px !important;
+    top:18px !important;
+    left:20px !important;
+  }
+
+  .home-page .left-site-title{
+    font-size:clamp(1.72rem,2.35vw,2.18rem) !important;
+    line-height:1.08 !important;
+    margin-bottom:8px !important;
+  }
+
+  .home-page .hero .poem{
+    font-size:clamp(1.56rem,2.15vw,1.92rem) !important;
+    line-height:1.26 !important;
+    margin-top:4px !important;
+    margin-bottom:8px !important;
+  }
+
+  .home-page .hero .dedication{
+    max-width:390px !important;
+    margin-top:6px !important;
+    margin-bottom:10px !important;
+    font-size:clamp(1.02rem,1.32vw,1.18rem) !important;
+    line-height:1.46 !important;
+  }
+
+  .home-page .left-search-wrap{
+    width:min(92%,390px) !important;
+    margin-top:6px !important;
+  }
+
+  .home-page .left-search-wrap,
+  .home-page .left-search-wrap input,
+  .home-page .left-search-wrap button,
+  .home-page .left-search-wrap .place-filter-label,
+  .home-page .left-search-wrap .place-filter-current,
+  .home-page .left-search-wrap .place-filter-option{
+    font-size:.96rem !important;
+  }
+
+  .home-page .hero-links{
+    gap:6px !important;
+    margin-top:8px !important;
+  }
+
+  .home-page .hero-links a{
+    font-size:.94rem !important;
+    line-height:1.15 !important;
+  }
+}
+
+/* Extra safety for laptop-height screens like the screenshot. */
+@media (min-width:900px) and (max-height:760px){
+  .home-page .hero{
+    padding-top:14px !important;
+    padding-bottom:14px !important;
+  }
+
+  .home-page::after{
+    width:76px !important;
+    height:96px !important;
+    top:12px !important;
+    left:16px !important;
+  }
+
+  .home-page .hero .poem{
+    font-size:clamp(1.36rem,2vw,1.66rem) !important;
+    line-height:1.2 !important;
+    margin-bottom:6px !important;
+  }
+
+  .home-page .hero .dedication{
+    font-size:.98rem !important;
+    line-height:1.38 !important;
+    margin-bottom:8px !important;
+  }
+
+  .home-page .left-search-wrap{
+    margin-top:4px !important;
+  }
+}
+
+/* Keep mobile readable, but not oversized. */
+@media (max-width:899px){
+  .home-page .left-site-title{
+    font-size:clamp(1.52rem,5.2vw,1.82rem) !important;
+  }
+
+  .home-page .hero .poem{
+    font-size:clamp(1.28rem,4.55vw,1.56rem) !important;
+    line-height:1.32 !important;
+    margin-bottom:8px !important;
+  }
+
+  .home-page .hero .dedication{
+    font-size:clamp(.98rem,3.45vw,1.12rem) !important;
+    line-height:1.46 !important;
+    margin-bottom:10px !important;
+  }
+}
+</style>
+
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
@@ -2522,7 +2651,7 @@
   });
 })();
 </script>
-<script defer="" src="assets/js/people.js?v=357"></script>
+<script defer="" src="assets/js/people.js?v=344"></script>
 <script defer="" src="assets/js/app.js?v=339"></script>
 </body>
 </html>
