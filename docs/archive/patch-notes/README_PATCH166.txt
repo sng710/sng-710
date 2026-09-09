@@ -1,36 +1,22 @@
-SNG-710 PATCH 166 — eight previous-years portraits + life stories
+SNG-710 PATCH 166 — Shlomi Davidovich memorial text update
 
 BASE:
-- Apply on top of PATCH165.
+- Continue from PATCH161 + PATCH163 + PATCH164 + PATCH165.
+- PATCH162 remains intentionally ignored / unused.
 
-ADDED / COMPLETED:
-1. יעקב-מצליח אלוש — portrait, גבים, חיל תותחנים, full life story
-2. נתן (גואלטיירו) רוסי — portrait, גבים, חיל שריון, full life story
-3. דויד (דוידקה) מגן — portrait, גבים, חיל רגלים, full life story
-4. אשר הרשקוביץ — portrait, גבים, חיל רגלים, full life story
-5. גרשון (סילויו) קאלו — portrait, גבים, חיל שריון, full life story
-6. צור גולן — portrait, גבים, חטיבת הצנחנים, full life story
-7. נדב כהן — portrait, דורות, נח"ל, full life story
-8. עוזי היינברג — portrait, דורות, חיל רפואה, full life story
+Updates ONLY the record shlomi_d (שלומי דוידוביץ'):
+- age corrected to 51
+- family details updated
+- 7.10 account updated from the supplied text
+- adds the supplied remembrance texts from:
+  - ניסים קלו
+  - אלי דוידוביץ
+  - אור מוזס
+  - רג׳ין חזן דוידוביץ
+- keeps the page structure:
+  סיפור חיים → שבת ה-7.10.2023 → זיכרון, מורשת והנצחה
+- keeps Shlomi's existing images; the existing story image is simply positioned
+  after the personal section for a cleaner page flow
 
-FILES:
-- assets/js/people.js
-- assets/img/patch166/*.png (8 user-supplied portraits; copied losslessly, no AI/editing)
-- index.html (ONLY people.js cache query bumped to v=351)
-- assets/site-version.json
-- patch documentation / QA / hashes
-
-NOT CHANGED:
-- no other person's content
-- no existing portrait assignments outside these eight
-- no CSS
-- no app.js
-- no person-page.js
-- no videos or galleries
-- no homepage layout
-- no internal-page layout
-
-NOTE:
-- The story wording was kept as supplied by the user, with only website-control markup removed.
-- The fourth uploaded portrait was byte-for-byte identical to the third (David Magen), so one copy is used.
-- Existing official sourceUrl/sourceImageUrl metadata was retained.
+No other person's record is changed.
+No images, portraits, videos, galleries, CSS, person-page.js, links or layout are changed.
