@@ -1,31 +1,35 @@
-SNG-710 PATCH 167 — four previous-years portraits + life stories
+SNG-710 PATCH 167 — self-hosted accessibility toolbar + cross-site code audit
 
-BASE:
-- Apply on top of PATCH166.
+BASE
+- Continue from the current PATCH166 site state.
+- PATCH162 remains excluded, consistent with the chosen patch chain.
 
-ADDED / COMPLETED:
-1. דן יעקבי — portrait, דורות, חטיבת כפיר, full life story
-2. ציונה סטביסקי — portrait, דורות, חיל אוויר, full life story
-3. ליאור יקותיאל — portrait, דורות, חיל שריון, full life story
-4. אורלי ארצי — portrait, דורות, חיל הים, full life story
+ADDED
+- Free, self-hosted accessibility toolbar (no vendor, subscription, tracking or external JS):
+  * text enlargement / reduction, up to 200%
+  * high contrast
+  * link highlighting
+  * stop animations
+  * reset
+  * preferences saved locally in the browser
+  * full keyboard operation and Escape-to-close
 
-FILES:
-- assets/js/people.js
-- assets/img/patch167/*.png (4 user-supplied portraits; copied losslessly, no AI/editing)
-- index.html (ONLY people.js cache query bumped to v=352)
-- assets/site-version.json
-- patch documentation / QA / hashes
+CROSS-SITE CODE FIXES
+- Strong visible keyboard focus indicator across interactive controls.
+- Search field gets a clear focus-within indicator.
+- 44px minimum touch target safeguards for key mobile controls.
+- Homepage memorial cards receive explicit accessible names.
+- "נופלות ונופלים משנים קודמות" is now a semantic H2 instead of a generic DIV.
+- Text containers are allowed to grow without clipping under text enlargement/zoom.
+- Desktop hero no longer relies on a clipping max-height/overflow combination.
+- Person-page story disclosure now exposes aria-controls.
+- Top-media images have a meaningful fallback alt when explicit alt is absent.
+- Page closing memorial line is rendered as a semantic FOOTER.
+- Accessibility toolbar is loaded automatically on every internal memorial page through person-bootstrap.js.
 
-NOT CHANGED:
-- no other person's content
-- no existing portrait assignments outside these four
-- no CSS
-- no app.js
-- no person-page.js
-- no videos or galleries
-- no homepage layout
-- no internal-page layout
-
-NOTE:
-- Website-control markup from the pasted source was removed.
-- Existing official sourceUrl/sourceImageUrl metadata was retained.
+NOT CHANGED
+- Memorial biographies/content
+- Names/settlements
+- Portrait assignments/images
+- Videos/gallery data/links
+- Existing design except accessibility states/focus safeguards

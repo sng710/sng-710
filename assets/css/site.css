@@ -1290,3 +1290,22 @@ body {
     margin-top: 16px;
   }
 }
+
+
+/* PATCH 167 — cross-site accessibility safeguards */
+:where(a,button,input,select,summary,[role="button"],[tabindex]:not([tabindex="-1"])):focus-visible{
+  outline:3px solid #ffd166 !important;
+  outline-offset:3px !important;
+}
+.search-control:focus-within{outline:3px solid #ffd166 !important;outline-offset:3px !important;}
+.lightbox-close{min-width:44px;min-height:44px;}
+@media (max-width:899px){
+  .mobile-filter-toggle,.place-filter-trigger,.filter-chip,.place-filter-option,.mobile-site-menu summary,.mobile-site-menu a,.mobile-site-menu button{min-height:44px;}
+}
+/* Text content must be allowed to grow under browser zoom / enlarged text. */
+.memory-card{grid-template-rows:var(--portrait-size) auto auto;}
+.card-name,.card-place{height:auto;max-height:none;overflow:visible;}
+@media (min-width:900px){
+  .home-page .hero{height:auto !important;min-height:100vh !important;max-height:none !important;overflow:visible !important;}
+  .home-page .hero-inner{height:auto !important;max-height:none !important;overflow:visible !important;}
+}

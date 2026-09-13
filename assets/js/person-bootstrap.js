@@ -32,6 +32,7 @@
     const version = await getVersion();
     await loadScript('js/people.js', version);
     await loadScript('js/person-page.js', version);
+    await loadScript('js/accessibility.js', version);
   })().catch(() => {
     const root = document.getElementById('personApp');
     if (root) root.innerHTML = '<main style="max-width:760px;margin:80px auto;padding:28px;text-align:center"><h1>לא ניתן לטעון את הדף</h1><p>אירעה תקלה בטעינת דף ההנצחה. אנא נסו לרענן את העמוד.</p></main>';

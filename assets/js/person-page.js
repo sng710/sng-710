@@ -3002,6 +3002,21 @@ a,
   }
 }
 
+
+/* PATCH 167 — internal-page accessibility safeguards */
+:where(a,button,input,select,summary,[role="button"],[tabindex]:not([tabindex="-1"])):focus-visible{
+  outline:3px solid #ffd166 !important;
+  outline-offset:3px !important;
+  box-shadow:0 0 0 2px #17324a !important;
+}
+.person-intro,.facts-panel,.fact,.role,.story-section,.story-copy,.story-text,.story-text p,.family-contact,.family-contact-text{
+  max-height:none;
+  overflow:visible;
+}
+@media(max-width:820px){
+  .person-topbar a,.story-mobile-toggle,.media-v2-carousel-btn,.media-v2-carousel-dot,.family-contact-btn{min-height:44px;}
+}
+
 `;
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -3149,7 +3164,7 @@ a,
       }
       const tag = href ? 'a' : 'div';
       const attrs = href ? ` href="${esc(href)}" rel="noopener noreferrer" target="_blank"` : '';
-      return `<div class="media-v2-item media-v2-image"><${tag} class="media-v2-image-card"${attrs}><img alt="${esc(image.alt || '')}" decoding="async" loading="lazy" src="${esc(assetUrl(image.src))}">${image.label ? `<span class="media-v2-image-label">${esc(image.label)}</span>` : ''}</${tag}></div>`;
+      return `<div class="media-v2-item media-v2-image"><${tag} class="media-v2-image-card"${attrs}><img alt="${esc(image.alt || image.label || `תמונה לזכר ${displayName(person.name)}`)}" decoding="async" loading="lazy" src="${esc(assetUrl(image.src))}">${image.label ? `<span class="media-v2-image-label">${esc(image.label)}</span>` : ''}</${tag}></div>`;
     }).filter(Boolean);
 
     const mediaItems = [...videoItems, ...facebookItems, ...imageItems];
@@ -3212,7 +3227,7 @@ a,
     }
     const mainChapters = personalChapter || eventChapter ? `<div class="story-main-grid${personalChapter && eventChapter ? '' : ' single-column'}">${personalChapter}${eventChapter}</div>` : '';
     const legacyChapter = (story.legacy || []).length ? `<section class="story-chapter legacy" aria-labelledby="legacyHeading"><h3 id="legacyHeading">${esc(story.legacyHeading || 'זיכרון, מורשת והנצחה')}</h3>${renderParagraphs(story.legacy)}</section>` : '';
-    storyHtml = `<article class="story-section${storyPhotoItems.length ? ' has-story-photos' : ''}" aria-labelledby="lifeStoryHeading"><h2 id="lifeStoryHeading">סיפור חיים</h2><div class="story-layout${storyPhotoItems.length ? ' has-photos' : ' no-photos'}">${renderStoryPhotoRail()}<div class="story-copy">${mainChapters}${legacyChapter}</div></div></article>`;
+    storyHtml = `<article class="story-section${storyPhotoItems.length ? ' has-story-photos' : ''}" aria-labelledby="lifeStoryHeading"><h2 id="lifeStoryHeading">סיפור חיים</h2><div class="story-layout${storyPhotoItems.length ? ' has-photos' : ' no-photos'}">${renderStoryPhotoRail()}<div class="story-copy" id="storyCopy">${mainChapters}${legacyChapter}</div></div></article>`;
   }
 
   const pageLinks = (person.pageLinks || []).length ? `<section class="links-section" aria-labelledby="pageLinksHeading"><h2 id="pageLinksHeading">קישורים</h2><div class="memorial-links">${person.pageLinks.map((link) => `<a href="${esc(link.href)}" rel="noopener noreferrer" target="_blank">${esc(link.label)}</a>`).join('')}</div></section>` : '';
@@ -3237,7 +3252,7 @@ a,
   ${storyHtml}
   ${pageLinks}
   ${family}
-  <p class="page-footer">${esc(person.footerText || (person.gender === 'female' ? 'יהי זכרה ברוך' : 'יהי זכרו ברוך'))}</p>
+  <footer class="page-footer">${esc(person.footerText || (person.gender === 'female' ? 'יהי זכרה ברוך' : 'יהי זכרו ברוך'))}</footer>
 </main>`;
 
 
@@ -3365,6 +3380,7 @@ a,
     button.type = 'button';
     button.className = 'story-mobile-toggle';
     button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', 'storyCopy');
     button.textContent = 'המשך קריאה';
     button.addEventListener('click', () => {
       const expanded = section.classList.toggle('is-expanded');
