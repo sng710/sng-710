@@ -1292,6 +1292,66 @@ body {
 }
 
 
+/* Homepage desktop left panel — integrated sticky behavior.
+   This intentionally uses selectors stronger than the legacy inline homepage
+   patches and the runtime accessibility stylesheet, so the left panel never
+   stretches to the full document height. Enlarged text remains accessible
+   through internal panel scrolling instead of clipping or jumping downward. */
+@media (min-width:900px){
+  .home-page .home-layout{
+    align-items:flex-start !important;
+    overflow:visible !important;
+  }
+
+  .home-page .home-layout > .hero{
+    position:-webkit-sticky !important;
+    position:sticky !important;
+    top:0 !important;
+    align-self:flex-start !important;
+    height:100vh !important;
+    height:100dvh !important;
+    min-height:100vh !important;
+    min-height:100dvh !important;
+    max-height:100vh !important;
+    max-height:100dvh !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain;
+  }
+
+  .home-page .home-layout > .hero > .hero-inner{
+    height:auto !important;
+    min-height:100% !important;
+    max-height:none !important;
+    overflow:visible !important;
+    align-self:flex-start !important;
+  }
+
+  /* accessibility.js is injected after the page styles; keep the same
+     sticky viewport behavior when saved text enlargement is restored. */
+  html.a11y-text-scaled body.home-page .home-layout > .hero{
+    position:-webkit-sticky !important;
+    position:sticky !important;
+    top:0 !important;
+    align-self:flex-start !important;
+    height:100vh !important;
+    height:100dvh !important;
+    min-height:100vh !important;
+    min-height:100dvh !important;
+    max-height:100vh !important;
+    max-height:100dvh !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+  }
+
+  html.a11y-text-scaled body.home-page .home-layout > .hero > .hero-inner{
+    height:auto !important;
+    min-height:100% !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+}
+
 /* PATCH 167 — cross-site accessibility safeguards */
 :where(a,button,input,select,summary,[role="button"],[tabindex]:not([tabindex="-1"])):focus-visible{
   outline:3px solid #ffd166 !important;
@@ -1305,7 +1365,3 @@ body {
 /* Text content must be allowed to grow under browser zoom / enlarged text. */
 .memory-card{grid-template-rows:var(--portrait-size) auto auto;}
 .card-name,.card-place{height:auto;max-height:none;overflow:visible;}
-@media (min-width:900px){
-  .home-page .hero{height:auto !important;min-height:100vh !important;max-height:none !important;overflow:visible !important;}
-  .home-page .hero-inner{height:auto !important;max-height:none !important;overflow:visible !important;}
-}
