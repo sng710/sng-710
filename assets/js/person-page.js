@@ -3032,11 +3032,20 @@ a,
   const root = document.getElementById('personApp');
   const siteRoot = new URL('../../', location.href);
   const assetRoot = new URL('assets/', siteRoot);
+  const assetVersion = (() => {
+    try {
+      const script = [...document.scripts].find((item) => /\/person-page\.js(?:\?|$)/.test(item.src));
+      return script ? new URL(script.src, location.href).searchParams.get('v') || '' : '';
+    } catch {
+      return '';
+    }
+  })();
   const assetUrl = (path) => {
     const clean = String(path || '').replace(/^\.\.\/\.\.\//, '').replace(/^\//, '');
     if (/^https?:\/\//i.test(clean)) return clean;
-    if (clean.startsWith('assets/')) return new URL(clean, siteRoot).href;
-    return new URL(clean, assetRoot).href;
+    const url = clean.startsWith('assets/') ? new URL(clean, siteRoot) : new URL(clean, assetRoot);
+    if (assetVersion && location.protocol !== 'file:') url.searchParams.set('v', assetVersion);
+    return url.href;
   };
   document.documentElement.style.setProperty('--leaf-bg', `url("${assetUrl('img/leaf-bg.webp')}")`);
 

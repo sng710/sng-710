@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const assetRoot = new URL('../../assets/', location.href);
-  const fallbackVersion = '263';
+  const fallbackVersion = '359';
 
   const loadScript = (relativePath, version) => new Promise((resolve, reject) => {
     const script = document.createElement('script');
