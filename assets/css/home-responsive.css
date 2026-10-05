@@ -1,0 +1,161 @@
+/* Homepage responsive hardening — 2026-10-05
+   Loaded after the legacy homepage styles so layout remains fluid at every
+   viewport/browser zoom without changing memorial content or interactions. */
+
+.home-page{
+  overflow-x:clip;
+}
+
+.home-page main,
+.home-page .index-section,
+.home-page .main-title-band,
+.home-page .main-title-copy,
+.home-page .memorial-grid,
+.home-page .memory-card{
+  min-inline-size:0;
+  max-inline-size:100%;
+}
+
+/* The old desktop rule forced five cards even when the right-hand content
+   area was too narrow. Let the grid choose only as many columns as actually
+   fit; on genuinely wide screens we keep the requested five-card rhythm. */
+.home-page .memorial-grid{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr)) !important;
+  width:100% !important;
+  max-width:1320px !important;
+  margin-inline:auto !important;
+  align-items:start !important;
+}
+
+.home-page .memory-card{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  justify-self:stretch !important;
+}
+
+/* Final safety net: a portrait can never be wider than its grid cell. */
+.home-page .portrait-ring{
+  inline-size:min(var(--portrait-size),100%) !important;
+  max-inline-size:100% !important;
+  block-size:auto !important;
+  aspect-ratio:1 / 1 !important;
+}
+
+.home-page .portrait-ring img,
+.home-page .portrait-ring .portrait-placeholder{
+  max-inline-size:100% !important;
+  max-block-size:100% !important;
+}
+
+/* Keep the main title flexible instead of letting one unbreakable line push
+   outside a narrower desktop content column. */
+.home-page .main-title-band{
+  box-sizing:border-box !important;
+  max-width:100% !important;
+  flex-wrap:wrap !important;
+}
+.home-page .main-title-copy{
+  flex:1 1 auto !important;
+  max-width:100% !important;
+}
+.home-page .main-primary-title{
+  max-width:100% !important;
+  overflow-wrap:normal !important;
+  text-wrap:balance;
+}
+
+/* Wide desktop: preserve the requested five portraits per row. */
+@media (min-width:1400px){
+  .home-page .memorial-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  }
+}
+
+/* Narrow/medium desktop: keep title and controls comfortable beside the
+   sticky memorial panel instead of squeezing the main area. */
+@media (min-width:900px) and (max-width:1180px){
+  .home-page .index-section{
+    padding-inline:clamp(14px,1.7vw,20px) !important;
+  }
+
+  .home-page .main-title-band{
+    gap:8px !important;
+    padding-inline:0 !important;
+  }
+
+  .home-page .main-primary-title{
+    white-space:normal !important;
+    font-size:clamp(2.15rem,4.1vw,3rem) !important;
+    line-height:1.05 !important;
+  }
+}
+
+/* Tablet: three comfortable columns rather than two oversized columns. */
+@media (min-width:700px) and (max-width:899px){
+  .home-page{
+    --portrait-size:138px;
+  }
+  .home-page .memorial-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    column-gap:clamp(14px,2.8vw,22px) !important;
+  }
+}
+
+/* Phones: two columns, with portrait size allowed to shrink on very narrow
+   screens instead of overflowing the cell. */
+@media (max-width:699px){
+  .home-page{
+    --portrait-size:clamp(112px,34vw,138px);
+  }
+  .home-page .memorial-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    column-gap:clamp(10px,3vw,14px) !important;
+  }
+
+  .home-page .main-title-band{
+    width:100% !important;
+  }
+
+  .home-page .main-primary-title{
+    white-space:normal !important;
+    line-height:1.08 !important;
+  }
+}
+
+/* Very narrow phones: preserve the logo/menu safe area while allowing the
+   title to wrap cleanly instead of clipping or creating horizontal scroll. */
+@media (max-width:380px){
+  .home-page .main-title-band{
+    padding-left:78px !important;
+    padding-right:52px !important;
+  }
+  .home-page .main-primary-title{
+    font-size:clamp(1.48rem,7vw,1.9rem) !important;
+  }
+}
+
+/* Accessibility text enlargement needs more room per card as text grows. */
+html.a11y-text-scaled body.home-page .memorial-grid{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)) !important;
+}
+@media (min-width:1600px){
+  html.a11y-text-scaled body.home-page .memorial-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  }
+}
+
+/* Popup: never exceed the usable viewport even with browser zoom. */
+.home-page .lightbox-card{
+  max-width:calc(100vw - 24px) !important;
+}
+@media (max-width:520px){
+  .home-page .lightbox{
+    padding:10px !important;
+  }
+  .home-page .lightbox-card{
+    width:100% !important;
+    max-width:100% !important;
+    padding-inline:16px !important;
+  }
+}
