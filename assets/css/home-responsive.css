@@ -159,3 +159,92 @@ html.a11y-text-scaled body.home-page .memorial-grid{
     padding-inline:16px !important;
   }
 }
+
+/* v366 — compact settlement groups on the homepage.
+   Settlement headings are group labels, not grid cells, so small settlements
+   no longer leave empty columns/rows between portraits. */
+.home-page .memorial-grid{
+  display:block !important;
+  width:100% !important;
+  max-width:1180px !important;
+  margin:10px auto 0 !important;
+}
+.home-page .settlement-group{
+  width:100%;
+  margin:0 auto 14px;
+  padding:0;
+}
+.home-page .settlement-divider{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
+  width:min(100%,1080px) !important;
+  margin:0 auto 6px !important;
+  padding:0 !important;
+  font-size:clamp(1.05rem,.98rem + .22vw,1.22rem) !important;
+  line-height:1.25 !important;
+  text-align:center !important;
+}
+.home-page .settlement-divider::before,
+.home-page .settlement-divider::after{
+  content:"";
+  height:1px;
+  flex:1 1 auto;
+  max-width:120px;
+  background:rgba(245,240,232,.18);
+}
+.home-page .settlement-divider span{
+  white-space:nowrap;
+}
+.home-page .settlement-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(156px,184px));
+  justify-content:center;
+  align-items:start;
+  gap:18px 16px;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+.home-page .settlement-cards .memory-card{
+  min-height:0 !important;
+  width:100% !important;
+  max-width:184px !important;
+  justify-self:center !important;
+}
+.home-page .period-divider{
+  width:min(100%,1100px) !important;
+  margin:24px auto 12px !important;
+}
+.home-page .current-period-heading{
+  margin:0 auto 10px !important;
+}
+
+@media (min-width:700px) and (max-width:899px){
+  .home-page .settlement-group{margin-bottom:13px;}
+  .home-page .settlement-cards{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    max-width:680px;
+    gap:18px 14px;
+  }
+}
+@media (max-width:699px){
+  .home-page .memorial-grid{margin-top:6px !important;}
+  .home-page .settlement-group{margin-bottom:12px;}
+  .home-page .settlement-divider{
+    margin-bottom:6px !important;
+    gap:9px !important;
+    font-size:1.05rem !important;
+  }
+  .home-page .settlement-divider::before,
+  .home-page .settlement-divider::after{max-width:46px;}
+  .home-page .settlement-cards{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:430px;
+    gap:17px 10px;
+  }
+  .home-page .settlement-cards .memory-card{max-width:none !important;}
+  .home-page .period-divider{margin:20px auto 10px !important;}
+  .home-page .current-period-heading{margin:0 auto 6px !important;}
+}

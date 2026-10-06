@@ -93,7 +93,64 @@ function togglePlaceFilter(){if(placeFilterPanel?.hidden!==false)openPlaceFilter
 function initPlaceFilter(){if(!placeFilter)return;const places=[...new Set(people.filter(p=>!p.hidden).map(p=>String(p.place||'').trim()).filter(x=>x&&x!=='תאילנד'))].sort((a,b)=>a.localeCompare(b,'he'));for(const place of places){const o=document.createElement('option');o.value=place;o.textContent=place;placeFilter.append(o)}syncPlaceButton();renderPlaceFilterOptions()}
 
 function setGroupFilter(value){activeGroupFilter=(value==='security'&&activeGroupFilter==='security')?'all':value;groupFilterButtons.forEach(btn=>{const on=btn.dataset.groupFilter===activeGroupFilter;btn.classList.toggle('is-active',on);btn.setAttribute('aria-pressed',String(on))});render()}
-function render(){const q=search?.value||'';const list=people.filter(p=>!p.hidden&&matches(p,q)&&passesFilters(p)).sort(comparePeople);grid.innerHTML='';let divider=false,lastGroup='';for(const p of list){if(p.isPreviousYears&&!divider){const d=document.createElement('h2');d.className='period-divider';d.id='previousYearsDivider';d.innerHTML='<span>בנותינו ובנינו אשר נפלו בשנים קודמות</span>';grid.append(d);divider=true;lastGroup=''}const group=groupLabel(p);if(group!==lastGroup){const h=document.createElement('h3');h.className='settlement-divider';h.innerHTML=`<span>${e(group)}</span>`;grid.append(h);lastGroup=group}const b=document.createElement('button');b.type='button';b.className='memory-card';b.dataset.id=p.id;b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-controls','lightbox');b.setAttribute('aria-label',`פתיחת פרטים על ${displayName(p)}${p.place?`, ${p.place}`:''}`);b.innerHTML=`<span class="portrait-ring">${pic(p)}</span><span class="card-name">${e(displayName(p))}</span>`;b.addEventListener('click',()=>openPreview(p,true));grid.append(b)}if(count){const total=list.length;const label=total===1?'תוצאה אחת':`${total} תוצאות`;const filters=[];if(activeGroupFilter==='security')filters.push('חברי כיתות הכוננות');if(placeFilter?.value)filters.push(placeFilter.value);const suffix=filters.length?` · ${filters.join(' · ')}`:'';count.textContent=(q||filters.length)?(q?`נמצאו ${label} עבור "${q}"${suffix}`:`נמצאו ${label}${suffix}`):'';}empty.hidden=!!list.length}
+function createMemoryCard(p){
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='memory-card';
+  b.dataset.id=p.id;
+  b.setAttribute('aria-haspopup','dialog');
+  b.setAttribute('aria-controls','lightbox');
+  b.setAttribute('aria-label',`פתיחת פרטים על ${displayName(p)}${p.place?`, ${p.place}`:''}`);
+  b.innerHTML=`<span class="portrait-ring">${pic(p)}</span><span class="card-name">${e(displayName(p))}</span>`;
+  b.addEventListener('click',()=>openPreview(p,true));
+  return b;
+}
+function appendSettlementGroups(items){
+  let lastLabel='',section=null,cards=null;
+  for(const p of items){
+    const label=groupLabel(p);
+    if(label!==lastLabel){
+      section=document.createElement('section');
+      section.className='settlement-group';
+      section.setAttribute('aria-label',label);
+      const h=document.createElement('h3');
+      h.className='settlement-divider';
+      h.innerHTML=`<span>${e(label)}</span>`;
+      cards=document.createElement('div');
+      cards.className='settlement-cards';
+      section.append(h,cards);
+      grid.append(section);
+      lastLabel=label;
+    }
+    cards.append(createMemoryCard(p));
+  }
+}
+function render(){
+  const q=search?.value||'';
+  const list=people.filter(p=>!p.hidden&&matches(p,q)&&passesFilters(p)).sort(comparePeople);
+  grid.innerHTML='';
+  const current=list.filter(p=>!p.isPreviousYears);
+  const previous=list.filter(p=>p.isPreviousYears);
+  appendSettlementGroups(current);
+  if(previous.length){
+    const d=document.createElement('h2');
+    d.className='period-divider';
+    d.id='previousYearsDivider';
+    d.innerHTML='<span>בנותינו ובנינו אשר נפלו בשנים קודמות</span>';
+    grid.append(d);
+    appendSettlementGroups(previous);
+  }
+  if(count){
+    const total=list.length;
+    const label=total===1?'תוצאה אחת':`${total} תוצאות`;
+    const filters=[];
+    if(activeGroupFilter==='security')filters.push('חברי כיתות הכוננות');
+    if(placeFilter?.value)filters.push(placeFilter.value);
+    const suffix=filters.length?` · ${filters.join(' · ')}`:'';
+    count.textContent=(q||filters.length)?(q?`נמצאו ${label} עבור "${q}"${suffix}`:`נמצאו ${label}${suffix}`):'';
+  }
+  empty.hidden=!!list.length;
+}
 function service(p){const r=p.serviceRecord||{};const a=[];if(r.rank)a.push(e(r.rank));if(r.unit)a.push(e(r.unit));return a.length?`<div class="service-line">${a.map(x=>`<span>${x}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>`:''}
 function setHash(p){history.replaceState(null,'',`${location.pathname}${location.search}#${encodeURIComponent(p.id)}`)}
 function clearHash(){history.replaceState(null,'',`${location.pathname}${location.search}`)}
