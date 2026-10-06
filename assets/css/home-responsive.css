@@ -328,3 +328,26 @@ html.a11y-text-scaled body.home-page .memorial-grid{
 html.a11y-text-scaled body.home-page .settlement-group{
   grid-column:1 / -1 !important;
 }
+
+
+/* v373 — keep the memorial sprig between the main title and period heading.
+   The ornament is absolutely positioned below the H1, so reserve its own
+   vertical lane instead of allowing the following heading to overlap it. */
+.home-page .main-title-band{
+  padding-bottom:34px !important;
+  margin-bottom:2px !important;
+}
+.home-page .main-primary-title::after{
+  bottom:-30px !important;
+}
+.home-page .current-period-heading{
+  margin-top:0 !important;
+}
+@media (max-width:699px){
+  .home-page .main-title-band{
+    padding-bottom:29px !important;
+  }
+  .home-page .main-primary-title::after{
+    bottom:-26px !important;
+  }
+}
