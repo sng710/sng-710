@@ -69,16 +69,15 @@ const nameCollator=new Intl.Collator('he',{sensitivity:'base',ignorePunctuation:
 const foreignWorkerIds=new Set(['angeline_a','seta_h','arad_p','joshua_m']);
 function isForeignWorker(p){return foreignWorkerIds.has(String(p?.id||''))}
 function surnameKey(p){return displayName(p).split(/\s+/).filter(Boolean)[0]||displayName(p)}
-function groupLabel(p){if(!p.isPreviousYears&&isForeignWorker(p))return 'עובדים זרים';const place=String(p.place||'').trim();return place||'ללא שיוך יישובי'}
+function groupLabel(p){const place=String(p.place||'').trim();return place||'ללא שיוך יישובי'}
 function comparePeople(a,b){
   const period=Number(!!a.isPreviousYears)-Number(!!b.isPreviousYears);if(period)return period;
-  if(!a.isPreviousYears){
-    const foreign=Number(isForeignWorker(a))-Number(isForeignWorker(b));if(foreign)return foreign;
-    if(isForeignWorker(a)&&isForeignWorker(b)){const surnameOrder=nameCollator.compare(surnameKey(a),surnameKey(b));return surnameOrder||nameCollator.compare(displayName(a),displayName(b))}
-  }
   const aPlace=String(a.place||'').trim(),bPlace=String(b.place||'').trim();
   const missingPlace=Number(!aPlace)-Number(!bPlace);if(missingPlace)return missingPlace;
   const placeOrder=nameCollator.compare(aPlace,bPlace);if(placeOrder)return placeOrder;
+  if(!a.isPreviousYears&&!b.isPreviousYears){
+    const foreign=Number(isForeignWorker(a))-Number(isForeignWorker(b));if(foreign)return foreign;
+  }
   const surnameOrder=nameCollator.compare(surnameKey(a),surnameKey(b));return surnameOrder||nameCollator.compare(displayName(a),displayName(b))
 }
 
