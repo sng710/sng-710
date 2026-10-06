@@ -2503,6 +2503,26 @@
 </style>
 
 <link href="assets/css/home-responsive.css?v=369" rel="stylesheet"/>
+
+<style>
+/* v371 — keep the reset option visible and the settlement menu inside the viewport. */
+@media (min-width:900px){
+  .home-page .left-search-wrap .place-filter-panel{
+    max-height:min(430px,50vh) !important;
+  }
+  .home-page .left-search-wrap .place-filter-list{
+    max-height:min(396px,46vh) !important;
+  }
+}
+.home-page .left-search-wrap .place-filter-option:first-child{
+  position:sticky !important;
+  top:0 !important;
+  z-index:3 !important;
+  background:#0b3151 !important;
+  box-shadow:0 1px 0 rgba(170,218,234,.22) !important;
+  font-weight:700 !important;
+}
+</style>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
@@ -2653,8 +2673,8 @@
   });
 })();
 </script>
-<script defer="" src="assets/js/people.js?v=370"></script>
-<script defer="" src="assets/js/app.js?v=370"></script>
+<script defer="" src="assets/js/people.js?v=371"></script>
+<script defer="" src="assets/js/app.js?v=371"></script>
 <script defer src="assets/js/accessibility.js?v=369"></script>
 </body>
 </html>
