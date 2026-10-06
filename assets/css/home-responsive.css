@@ -160,91 +160,171 @@ html.a11y-text-scaled body.home-page .memorial-grid{
   }
 }
 
-/* v366 — compact settlement groups on the homepage.
-   Settlement headings are group labels, not grid cells, so small settlements
-   no longer leave empty columns/rows between portraits. */
+/* v368 — compact, structured settlement layout.
+   Small consecutive settlements can share a row; large settlements stay full
+   width. This keeps the alphabetical grouping visible without wasting an
+   entire portrait row for every short settlement. */
+.home-page .main-title-band{
+  margin:0 auto 2px !important;
+  padding-bottom:4px !important;
+}
+.home-page .current-period-heading{
+  width:min(100%,1080px) !important;
+  margin:0 auto 14px !important;
+  padding:0 12px !important;
+  font-size:clamp(1.12rem,1.02rem + .45vw,1.42rem) !important;
+  line-height:1.3 !important;
+}
 .home-page .memorial-grid{
-  display:block !important;
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start !important;
+  gap:18px 22px !important;
   width:100% !important;
   max-width:1180px !important;
-  margin:10px auto 0 !important;
+  margin:0 auto !important;
+  direction:rtl;
 }
 .home-page .settlement-group{
-  width:100%;
-  margin:0 auto 14px;
-  padding:0;
+  min-width:0;
+  margin:0 !important;
+  padding:13px 14px 15px !important;
+  border:1px solid rgba(232,240,244,.09);
+  border-radius:18px;
+  background:rgba(255,255,255,.018);
+}
+.home-page .settlement-group.is-full{
+  grid-column:1 / -1;
+  padding:5px 0 10px !important;
+  border-color:transparent;
+  background:transparent;
+}
+.home-page .settlement-group.is-paired{
+  grid-column:span 1;
 }
 .home-page .settlement-divider{
   display:flex !important;
   align-items:center !important;
-  justify-content:center !important;
-  gap:12px !important;
-  width:min(100%,1080px) !important;
-  margin:0 auto 6px !important;
-  padding:0 !important;
-  font-size:clamp(1.05rem,.98rem + .22vw,1.22rem) !important;
-  line-height:1.25 !important;
-  text-align:center !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:0 0 11px !important;
+  padding:0 2px 7px !important;
+  font-size:clamp(1.08rem,1rem + .25vw,1.25rem) !important;
+  line-height:1.2 !important;
+  font-weight:700 !important;
+  color:#f3f6f7 !important;
+  text-align:right !important;
 }
-.home-page .settlement-divider::before,
+.home-page .settlement-divider::before{display:none !important;}
 .home-page .settlement-divider::after{
-  content:"";
-  height:1px;
-  flex:1 1 auto;
-  max-width:120px;
-  background:rgba(245,240,232,.18);
+  content:"" !important;
+  display:block !important;
+  height:1px !important;
+  flex:1 1 auto !important;
+  max-width:none !important;
+  background:linear-gradient(90deg,rgba(245,240,232,.03),rgba(245,240,232,.22)) !important;
 }
 .home-page .settlement-divider span{
   white-space:nowrap;
+  border-inline-start:3px solid rgba(85,184,212,.7);
+  padding-inline-start:9px;
 }
 .home-page .settlement-cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(156px,184px));
-  justify-content:center;
-  align-items:start;
-  gap:18px 16px;
-  width:100%;
-  max-width:1100px;
-  margin:0 auto;
+  display:grid !important;
+  align-items:start !important;
+  justify-content:center !important;
+  width:100% !important;
+  margin:0 auto !important;
+  gap:18px 14px !important;
+}
+.home-page .settlement-group.is-full .settlement-cards{
+  grid-template-columns:repeat(auto-fit,minmax(150px,180px)) !important;
+}
+.home-page .settlement-group.is-paired .settlement-cards{
+  grid-template-columns:repeat(auto-fit,minmax(145px,165px)) !important;
 }
 .home-page .settlement-cards .memory-card{
-  min-height:0 !important;
   width:100% !important;
-  max-width:184px !important;
+  max-width:180px !important;
+  min-height:0 !important;
   justify-self:center !important;
 }
-.home-page .period-divider{
-  width:min(100%,1100px) !important;
-  margin:24px auto 12px !important;
+.home-page .settlement-group.is-paired .memory-card{
+  max-width:165px !important;
 }
-.home-page .current-period-heading{
-  margin:0 auto 10px !important;
+.home-page .period-divider{
+  grid-column:1 / -1 !important;
+  width:min(100%,1100px) !important;
+  margin:22px auto 0 !important;
+  padding-top:4px !important;
 }
 
-@media (min-width:700px) and (max-width:899px){
-  .home-page .settlement-group{margin-bottom:13px;}
-  .home-page .settlement-cards{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    max-width:680px;
-    gap:18px 14px;
+/* Medium desktop/laptop: use one settlement panel per row, but keep the
+   portraits dense inside it. */
+@media (max-width:1240px){
+  .home-page .memorial-grid{
+    grid-template-columns:1fr !important;
+    gap:15px !important;
   }
+  .home-page .settlement-group,
+  .home-page .settlement-group.is-full,
+  .home-page .settlement-group.is-paired{
+    grid-column:1 / -1 !important;
+  }
+  .home-page .settlement-cards,
+  .home-page .settlement-group.is-full .settlement-cards,
+  .home-page .settlement-group.is-paired .settlement-cards{
+    grid-template-columns:repeat(auto-fit,minmax(145px,175px)) !important;
+  }
+  .home-page .settlement-group.is-paired .memory-card{max-width:175px !important;}
 }
+
 @media (max-width:699px){
-  .home-page .memorial-grid{margin-top:6px !important;}
-  .home-page .settlement-group{margin-bottom:12px;}
+  .home-page .main-title-band{
+    margin-bottom:0 !important;
+    padding-bottom:2px !important;
+  }
+  .home-page .current-period-heading{
+    margin:0 auto 10px !important;
+    padding-inline:8px !important;
+    font-size:1.06rem !important;
+  }
+  .home-page .memorial-grid{
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+    margin-top:0 !important;
+  }
+  .home-page .settlement-group{
+    padding:10px 8px 12px !important;
+    border-radius:14px;
+  }
   .home-page .settlement-divider{
-    margin-bottom:6px !important;
-    gap:9px !important;
+    margin-bottom:8px !important;
+    padding:0 3px 6px !important;
+    gap:8px !important;
     font-size:1.05rem !important;
   }
-  .home-page .settlement-divider::before,
-  .home-page .settlement-divider::after{max-width:46px;}
-  .home-page .settlement-cards{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    max-width:430px;
-    gap:17px 10px;
+  .home-page .settlement-cards,
+  .home-page .settlement-group.is-full .settlement-cards,
+  .home-page .settlement-group.is-paired .settlement-cards{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:16px 8px !important;
+    max-width:430px !important;
   }
-  .home-page .settlement-cards .memory-card{max-width:none !important;}
-  .home-page .period-divider{margin:20px auto 10px !important;}
-  .home-page .current-period-heading{margin:0 auto 6px !important;}
+  .home-page .settlement-cards .memory-card,
+  .home-page .settlement-group.is-paired .memory-card{
+    max-width:none !important;
+  }
+  .home-page .period-divider{
+    margin:18px auto 0 !important;
+  }
+}
+
+/* Enlarged-text mode: readability beats paired panels. */
+html.a11y-text-scaled body.home-page .memorial-grid{
+  grid-template-columns:1fr !important;
+}
+html.a11y-text-scaled body.home-page .settlement-group{
+  grid-column:1 / -1 !important;
 }

@@ -106,25 +106,41 @@ function createMemoryCard(p){
   return b;
 }
 function appendSettlementGroups(items){
-  let lastLabel='',section=null,cards=null;
+  const groups=[];
   for(const p of items){
     const label=groupLabel(p);
-    if(label!==lastLabel){
-      section=document.createElement('section');
-      section.className='settlement-group';
-      section.setAttribute('aria-label',label);
-      const h=document.createElement('h3');
-      h.className='settlement-divider';
-      h.innerHTML=`<span>${e(label)}</span>`;
-      cards=document.createElement('div');
-      cards.className='settlement-cards';
-      section.append(h,cards);
-      grid.append(section);
-      lastLabel=label;
-    }
-    cards.append(createMemoryCard(p));
+    let group=groups.at(-1);
+    if(!group||group.label!==label){group={label,items:[]};groups.push(group)}
+    group.items.push(p);
   }
+
+  /* Pair consecutive small settlements on wide screens. This preserves the
+     exact sorted order while avoiding an entire empty row for a 1–6 person
+     settlement. A single small group before a large one stays full-width. */
+  const paired=new Set();
+  for(let i=0;i<groups.length-1;i++){
+    if(paired.has(i))continue;
+    const a=groups[i],b=groups[i+1];
+    if(a.items.length<=6&&b.items.length<=6){paired.add(i);paired.add(i+1);i++}
+  }
+
+  groups.forEach((group,index)=>{
+    const section=document.createElement('section');
+    const isPaired=paired.has(index);
+    section.className=`settlement-group ${isPaired?'is-paired':'is-full'}`;
+    section.dataset.count=String(group.items.length);
+    section.setAttribute('aria-label',group.label);
+    const h=document.createElement('h3');
+    h.className='settlement-divider';
+    h.innerHTML=`<span>${e(group.label)}</span>`;
+    const cards=document.createElement('div');
+    cards.className='settlement-cards';
+    group.items.forEach(person=>cards.append(createMemoryCard(person)));
+    section.append(h,cards);
+    grid.append(section);
+  });
 }
+
 function render(){
   const q=search?.value||'';
   const list=people.filter(p=>!p.hidden&&matches(p,q)&&passesFilters(p)).sort(comparePeople);
