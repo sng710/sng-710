@@ -2523,60 +2523,6 @@
   font-weight:700 !important;
 }
 </style>
-
-<style>
-/* PATCH 164 — carry the memorial leaf motif behind the people grid. */
-.home-page .index-section{
-  background:
-    linear-gradient(180deg,rgba(20,55,87,.91),rgba(14,42,68,.955)) !important;
-  background-color:#0e2a44 !important;
-  position:relative !important;
-  isolation:isolate !important;
-  overflow:hidden !important;
-}
-.home-page .index-section::before{
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  z-index:0 !important;
-  pointer-events:none !important;
-  background-image:
-    url('assets/img/leaf-bg.webp'),
-    url('assets/img/leaf-bg.webp'),
-    url('assets/img/leaf-bg.webp') !important;
-  background-repeat:no-repeat !important;
-  background-position:
-    center 90px,
-    right -260px top 980px,
-    left -300px top 1900px !important;
-  background-size:
-    min(1500px,118vw) auto,
-    min(1120px,88vw) auto,
-    min(1120px,88vw) auto !important;
-  opacity:.28 !important;
-}
-.home-page .index-section > *{
-  position:relative !important;
-  z-index:1 !important;
-}
-@media (max-width:899px){
-  .home-page .index-section{
-    background:linear-gradient(180deg,rgba(20,55,87,.925),rgba(14,42,68,.965)) !important;
-  }
-  .home-page .index-section::before{
-    background-image:
-      url('assets/img/leaf-bg.webp'),
-      url('assets/img/leaf-bg.webp') !important;
-    background-position:
-      34% 90px,
-      70% 1040px !important;
-    background-size:
-      auto 760px,
-      auto 720px !important;
-    opacity:.24 !important;
-  }
-}
-</style>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
@@ -2727,8 +2673,8 @@
   });
 })();
 </script>
-<script defer="" src="assets/js/people.js?v=382"></script>
-<script defer="" src="assets/js/app.js?v=382"></script>
+<script defer="" src="assets/js/people.js?v=381"></script>
+<script defer="" src="assets/js/app.js?v=381"></script>
 <script defer src="assets/js/accessibility.js?v=369"></script>
 </body>
 </html>
