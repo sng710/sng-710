@@ -3076,7 +3076,11 @@ a,
 
   const service = person.serviceRecord || {};
   const serviceParts = [service.rank, service.unit].filter(Boolean);
-  const serviceHtml = serviceParts.length ? `<div class="service-line">${serviceParts.map((x) => `<span>${esc(topSectionText(x))}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>` : '';
+  const serviceLabel = String(service.label || '').trim();
+  const serviceText = serviceParts.map((x) => topSectionText(x)).join(' • ');
+  const serviceHtml = serviceText ? `<div class="service-line"${serviceLabel ? ' style="font-weight:400;gap:0"' : ''}>${serviceLabel ? `${esc(serviceLabel)}: ${esc(serviceText)}` : serviceParts.map((x) => `<span>${esc(topSectionText(x))}</span>`).join('<span class="dot" aria-hidden="true">•</span>')}</div>` : '';
+  const roleHtml = person.role ? `<p class="role">${esc(topSectionText(person.role))}</p>` : '';
+  const introDetailsHtml = service.afterRole ? `${roleHtml}${serviceHtml}` : `${serviceHtml}${roleHtml}`;
   const facts = (person.generalDetails || []).filter(Boolean).map((x) => `<div class="fact">${esc(topSectionText(x))}</div>`).join('');
 
   const youtubeEmbedUrl = (source) => {
@@ -3256,7 +3260,7 @@ a,
 <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
 <header class="person-topbar"><div class="person-topbar-inner"><a class="back-link" href="${esc(new URL('index.html', siteRoot).href)}">← חזרה לרשימת ההנצחה</a><a class="person-site-brand" href="${esc(new URL('index.html', siteRoot).href)}" aria-label="שער הנגב זוכרת – לדף הבית"><img alt="" src="${esc(assetUrl('img/sng-council-logo-20260903.png'))}"><span dir="rtl">שער הנגב זוכרת</span></a></div></header>
 <main class="person-main" id="mainContent">
-  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${serviceHtml}${person.role ? `<p class="role">${esc(topSectionText(person.role))}</p>` : ''}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
+  <section class="person-intro" aria-labelledby="personName"><figure class="person-portrait">${portrait}</figure><div class="person-head"><p class="place">${esc(person.place || '')}</p><h1 id="personName">${esc(displayName(person.name))}</h1>${introDetailsHtml}</div>${facts ? `<div class="facts-panel">${facts}</div>` : ''}</section>
   ${renderTopMedia()}
   ${storyHtml}
   ${pageLinks}
